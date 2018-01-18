@@ -1,0 +1,18 @@
+import db from '../db/db';
+import CryptoJS from 'crypto-js';
+
+export function setPass(pass) {
+  var phrase = CryptoJS.lib.WordArray.random(128/8);
+  var encrypted = CryptoJS.AES.encrypt(
+    `${pass} ${phrase}`, pass
+  );
+  db.key.put({
+    key: encrypted.toString(),
+    id: 1
+  });
+
+  return {
+    type: "SET_PASS",
+    payload: true
+  }
+}
