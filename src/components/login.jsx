@@ -10,7 +10,8 @@ export default class Login extends Component {
             <label>Enter Password</label>
             <input />
           </Form.Field>
-          <Button type='submit'>Submit</Button>
+          <Button>Submit</Button>
+          <Button>Reset App</Button>
         </Form>
       </div>
     );
