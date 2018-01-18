@@ -1,6 +1,6 @@
 import db from '../db';
 import CryptoJS from 'crypto-js';
-import { SET_PASS, RESET_APP, USER_LOGIN } from './types';
+import { SET_PASS, RESET_APP, USER_LOGIN, USER_LOGOUT } from './types';
 
 export function setPass(pass) {
   var phrase = CryptoJS.lib.WordArray.random(128/8);
@@ -41,6 +41,12 @@ export function userLogin(pass) {
       }
     })
   }
+}
+
+export function userLogout() {
+  return {
+    type: USER_LOGOUT
+  };
 }
 
 
