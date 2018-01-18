@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
+import passwordStatusReducer from './password-status-reducer';
 
 const rootReducer = combineReducers({
-  state: (state = {}) => state
+  passSet: passwordStatusReducer
 });
 
 export default rootReducer;
