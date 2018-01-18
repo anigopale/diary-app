@@ -22,7 +22,7 @@ db.key.get(1)
       console.log("inside if", response.key);
       store.dispatch({ type: SET_PASS });
     }
-  })
+  });
 
 ReactDOM.render(
   <Provider store={store}>

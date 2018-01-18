@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form } from 'semantic-ui-react';
-import { resetApp } from '../actions';
+import { resetApp, userLogin } from '../actions';
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { term: "" };
+  }
+
+  handleLogin() {
+    this.props.userLogin(this.state.term);
+  }
 
   handleReset() {
     this.props.resetApp();
   }
-
 
   render() {
     return (
@@ -16,9 +23,9 @@ class Login extends Component {
         <Form>
           <Form.Field>
             <label>Enter Password</label>
-            <input />
+            <input onChange={(event) => this.setState({ term: event.target.value })} />
           </Form.Field>
-          <Button>Submit</Button>
+          <Button onClick={this.handleLogin.bind(this)}>Submit</Button>
           <Button onClick={this.handleReset.bind(this)}>Reset App</Button>
         </Form>
       </div>
@@ -26,4 +33,4 @@ class Login extends Component {
   }
 }
 
-export default connect(null, { resetApp })(Login);
+export default connect(null, { resetApp, userLogin })(Login);
