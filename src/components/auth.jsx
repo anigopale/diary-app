@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Login from './login';
 import SetPass from './set_password';
 
-export default class Auth extends Component {
+class Auth extends Component {
+
+  renderComponents() {
+    if(this.props.passSet) {
+      return <Login />;
+    }
+    return <SetPass />;
+  }
+
   render() {
     return (
-      <SetPass />
+      <div>
+        {this.renderComponents()}
+      </div>
     )
   }
 }
+
+function mapStateToProps({ passSet }) {
+  return { passSet };
+}
+
+export default connect(mapStateToProps)(Auth);
