@@ -23,6 +23,7 @@ export function resetApp() {
     key: "",
     id: 1
   });
+  db.data.clear();
   return {
     type: RESET_APP
   }

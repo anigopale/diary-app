@@ -17,7 +17,6 @@ const store = createStoreWithMiddleware(reducers);
 
 db.key.get(1)
   .then((response) => {
-    console.log(response);
     if(response) {
       if(response.key)
         store.dispatch({ type: SET_PASS });
