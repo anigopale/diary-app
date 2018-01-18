@@ -1,4 +1,4 @@
-import db from '../db/db';
+import db from '../db';
 import CryptoJS from 'crypto-js';
 import { SET_PASS, RESET_APP } from './types';
 
@@ -13,8 +13,7 @@ export function setPass(pass) {
   });
 
   return {
-    type: SET_PASS,
-    payload: true
+    type: SET_PASS
   }
 }
 
@@ -25,7 +24,6 @@ export function resetApp() {
     id: 1
   });
   return {
-    type: RESET_APP,
-    payload: false
+    type: RESET_APP
   }
 }
