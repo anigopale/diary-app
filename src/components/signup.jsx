@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, Grid, Item } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { createUserDB, login } from '../actions';
 
 class Signup extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class Signup extends Component {
   }
 
   handleSignup() {
-
+    this.props.createUserDB(this.state.uterm, this.state.pterm);
   }
 
   render() {
@@ -30,6 +31,7 @@ class Signup extends Component {
             <Form.Field>
               <Button onClick={this.handleSignup.bind(this)} fluid>Submit</Button>
             </Form.Field>
+            <Button onClick={()=>{this.props.login(this.state.uterm)}}>Login</Button>
           </Form>
         </Grid.Column>
         </Grid.Row>
@@ -40,4 +42,4 @@ class Signup extends Component {
   }
 }
 
-export default connect(null)(Signup);
+export default connect(null, { createUserDB, login })(Signup);

@@ -1,49 +1,6 @@
 import db from '../db';
-import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
 import { SET_PASS, RESET_APP, USER_LOGIN, USER_LOGOUT } from './types';
-
-export function createUserDB(username, password) {
-  //createDB
-  var d = new Dexie(`${username}`);
-  console.log("creatingDB");
-  d.version(1).stores({
-    data: '++id, time, note',
-    key: '++id, key'
-  });
-  d.open();
-
-  //Store pass phrase
-  var phrase = CryptoJS.lib.WordArray.random(128/8);
-  var encrypted = CryptoJS.AES.encrypt(
-    `${password} ${phrase}`, password
-  );
-  d.key.put({
-    key: encrypted.toString(),
-    id: 1
-  });
-  return { type: ""}
-}
-
-
-
-export function login(username) {
-  var d = new Dexie(`${username}`);
-  d.open()
-  .then((response) => {
-    console.log(response);
-  })
-  .catch(e => {
-    console.log(e);
-  });
-  return { type: ""}
-}
-
-
-
-
-
-
 
 export function setPass(pass) {
   var phrase = CryptoJS.lib.WordArray.random(128/8);
