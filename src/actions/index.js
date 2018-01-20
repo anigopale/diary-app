@@ -1,11 +1,11 @@
 import db from '../db';
 import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
-import { SET_PASS, RESET_APP, USER_LOGIN, USER_LOGOUT } from './types';
+import { SET_PASS, RESET_APP, USER_LOGIN, USER_LOGOUT, USER } from './types';
 
 export function createUserDB(username, password) {
   //createDB
-  var d = new Dexie(`${username}`);
+  var d = new Dexie(username);
   console.log("creatingDB");
   d.version(1).stores({
     data: '++id, time, note',
@@ -28,15 +28,20 @@ export function createUserDB(username, password) {
 
 
 export function login(username) {
-  var d = new Dexie(`${username}`);
-  d.open()
-  .then((response) => {
-    console.log(response);
-  })
-  .catch(e => {
-    console.log(e);
-  });
-  return { type: ""}
+  return function(dispatch) {
+    var d = new Dexie(username);
+    d.open()
+    .then((response) => {
+      console.log(response);
+      dispatch({
+        type: USER,
+        payload: username
+      })
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  }
 }
 
 
