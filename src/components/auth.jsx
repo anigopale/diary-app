@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Login from './login';
 import SetPass from './set_password';
+import Signup from './signup';
 import Diary from './auth/diary';
+import { Route } from 'react-router-dom';
 
 class Auth extends Component {
 
@@ -16,10 +18,13 @@ class Auth extends Component {
     return <SetPass />;
   }
 
+
+
   render() {
     return (
       <div>
-        {this.renderComponents()}
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup}/>
       </div>
     )
   }

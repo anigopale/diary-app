@@ -8,11 +8,11 @@ import { Container } from 'semantic-ui-react';
 class App extends Component {
   render() {
     return (
-      <Container>
+      <div>
         <BrowserRouter>
           <Route path="/" component={Auth}/>
         </BrowserRouter>
-      </Container>
+      </div>
     );
   }
 }
