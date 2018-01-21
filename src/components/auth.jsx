@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Diary from './auth/diary';
+import Landing from './landing';
 
 class Auth extends Component {
   renderComponents() {
@@ -11,7 +12,7 @@ class Auth extends Component {
     }
     return (
       <div>
-        you must be logged in
+        <Landing />
       </div>
     )
   }
