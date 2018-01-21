@@ -4,24 +4,34 @@ import CryptoJS from 'crypto-js';
 import { RESET_APP, USER, LOGIN, LOGOUT } from './types';
 
 export function createUserDB(username, password) {
-  //createDB
-  var d = new Dexie(username);
-  console.log("creatingDB");
-  d.version(1).stores({
-    data: '++id, time, note',
-    key: '++id, key'
-  });
-  d.open();
+  Dexie.exists(username)
+  .then((exists) => {
+    if(exists) {
+      alert('username already in use');
+    }
+    else {
+      //createDB
+      var d = new Dexie(username);
+      console.log("creatingDB");
+      d.version(1).stores({
+        data: '++id, time, note',
+        key: '++id, key'
+      });
+      d.open();
 
-  //Store pass phrase
-  var phrase = CryptoJS.lib.WordArray.random(128/8);
-  var encrypted = CryptoJS.AES.encrypt(
-    `${password} ${phrase}`, password
-  );
-  d.key.put({
-    key: encrypted.toString(),
-    id: 1
+      //Store pass phrase
+      var phrase = CryptoJS.lib.WordArray.random(128/8);
+      var encrypted = CryptoJS.AES.encrypt(
+        `${password} ${phrase}`, password
+      );
+      d.key.put({
+        key: encrypted.toString(),
+        id: 1
+      });
+    }
   });
+
+
   return { type: ""}
 }
 
