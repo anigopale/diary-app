@@ -1,22 +1,45 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
-import { logout } from '../../actions';
+import Dmenu from './diary-menu';
+import Mmenu from './mmenu';
+import { Link } from 'react-router-dom';
+import { Segment, Sidebar, Menu, Responsive } from 'semantic-ui-react';
 
-class Diary extends Component {
+export default class Diary extends Component {
+
+  state = { visible: false }
+
+  renderItems() {
+    return this.items.map((item) => {
+      return (
+        <Link to={item.key}>
+          <Menu.Item
+            >
+            {item.name}
+          </Menu.Item>
+        </Link>
+      )
+    })
+  }
+
 
   handleLogout() {
     this.props.userLogout();
   }
 
   render() {
+
     return (
       <div>
-        <Button onClick={this.props.logout.bind(this)} floated="right">Logout</Button>
-        <h1>Diary App</h1>
+          <Responsive minWidth={720}>
+            <Dmenu />
+          </Responsive>
+
+        <Responsive maxWidth={720} inverted as={Segment}>
+          <Mmenu />
+        </Responsive>
+
       </div>
     );
   }
 }
-
-export default connect(null, { logout })(Diary);

@@ -18,6 +18,7 @@ export default class Landing extends Component {
           vertical
           style={{ minHeight: 400, padding: '1em 0em' }}
           >
+
           <Container>
             <Container text>
                 <Header
@@ -27,20 +28,23 @@ export default class Landing extends Component {
                   style={{ fontSize: '4em', fontWeight: 'normal', marginBottom: 0, marginTop: '1.5em' }}
                 />
               <Divider inverted white />
-                <Divider hidden />
-                <Segment inverted>
-                  <Button.Group>
-                    <Link to='/login'>
-                      <Button basic color="white" inverted>Login</Button>
-                     </Link>
-                    <Button.Or />
-                     <Link to='/signup'>
-                       <Button basic color="white" inverted>Sign Up</Button>
-                     </Link>
-                   </Button.Group>
-                 </Segment>
+              <Divider hidden />
+
+              <Segment inverted>
+                <Button.Group>
+                  <Link to='/login'>
+                    <Button basic color="white" inverted>Login</Button>
+                   </Link>
+                  <Button.Or />
+                   <Link to='/signup'>
+                     <Button basic color="white" inverted>Sign Up</Button>
+                   </Link>
+                 </Button.Group>
+               </Segment>
+
             </Container>
           </Container>
+          
         </Segment>
         <Divider hidden />
         <Container
