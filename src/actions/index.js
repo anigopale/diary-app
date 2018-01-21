@@ -67,6 +67,7 @@ export function password(username, password) {
       console.log(response);
       let key = checkPassword(response.key, password);
       if(key) {
+        key = key.replace(`${password} `,"");
         localStorage.setItem('key', key);
         dispatch({
           type: LOGIN
@@ -114,6 +115,26 @@ export function deleteAccount() {
   }
 }
 
+export function changePass(password) {
+  let d = new Dexie(localStorage.getItem('user'))
+  d.version(1).stores({
+    data: '++id, time, note',
+    key: '++id, key'
+  });
+
+  var phrase = localStorage.getItem('key');
+  var encrypted = CryptoJS.AES.encrypt(
+    `${password} ${phrase}`, password
+  );
+  d.key.put({
+    key: encrypted.toString(),
+    id: 1
+  });
+
+  return {
+    type: ""
+  }
+}
 
 function checkPassword(key, pass) {
 
