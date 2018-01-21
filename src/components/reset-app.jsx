@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { resetApp } from '../actions';
 import { Link } from 'react-router-dom';
-import { Container, Segment, Divider, Button, Header } from 'semantic-ui-react';
+import { Container, Segment, Button, Header } from 'semantic-ui-react';
 
 class ResetApp extends Component {
   render() {
@@ -30,7 +30,6 @@ class ResetApp extends Component {
             Resetting the app will delete all the data
           </p>
           <Button basic color="white" inverted onClick={() => {this.props.resetApp()}}>Reset App</Button>
-          <Divider hidden />
         </Container>
       </Segment>
 
