@@ -4,7 +4,7 @@ import Dmenu from './diary-menu';
 import Mmenu from './mmenu';
 import Settings from './settings';
 import { Link, Route } from 'react-router-dom';
-import { Segment, Sidebar, Menu, Responsive } from 'semantic-ui-react';
+import { Segment, Sidebar, Menu, Responsive, Divider } from 'semantic-ui-react';
 
 export default class Diary extends Component {
 
@@ -38,6 +38,7 @@ export default class Diary extends Component {
           <Responsive>
             <Dmenu />
           </Responsive>
+          <Divider hidden />
           {this.renderContent()}
       </div>
     );

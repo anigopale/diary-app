@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DeleteAcc from './delete-acc';
 import ChangePass from './change-pass';
 import { Route } from 'react-router-dom';
-import { Menu, Container } from 'semantic-ui-react';
+import { Menu, Container, Responsive, Sidebar, Segment, Grid } from 'semantic-ui-react';
 
 export default class Settings extends Component {
 
@@ -15,18 +15,45 @@ export default class Settings extends Component {
     )
   }
 
+  renderSettingsMenu() {
+    return [
+
+        <Menu.Item>
+          Delete Account
+        </Menu.Item>,
+        <Menu.Item>
+          Change Password
+        </Menu.Item>
+
+    ]
+  }
+
+
   render() {
     return (
       <Container>
-        <Menu>
-          <Menu.Item>
-            Delete Account
-          </Menu.Item>
-          <Menu.Item>
-            Change Password
-          </Menu.Item>
-        </Menu>
-        {this.renderSettings()}
+        <Responsive maxWidth={720}>
+          <Menu>
+            {this.renderSettingsMenu()}
+          </Menu>
+          {this.renderSettings()}
+        </Responsive>
+
+        <Responsive minWidth={720}>
+          <Grid>
+            <Grid.Column width={4}>
+              <Menu vertical>
+                {this.renderSettingsMenu()}
+              </Menu>
+            </Grid.Column>
+            <Grid.Column width={12} stretched>
+              <Segment>
+                {this.renderSettings()}
+              </Segment>
+            </Grid.Column>
+          </Grid>
+        </Responsive>
+
       </Container>
     )
   }
