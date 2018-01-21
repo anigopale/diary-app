@@ -1,7 +1,6 @@
-import db from '../db';
 import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
-import { RESET_APP, USER, LOGIN, LOGOUT } from './types';
+import { RESET_APP, USER, LOGIN, LOGOUT, DELETE } from './types';
 
 export function createUserDB(username, password) {
   Dexie.exists(username)
@@ -58,7 +57,6 @@ export function password(username, password) {
   return function(dispatch) {
 
     let d = new Dexie(username)
-    console.log("db",db);
     d.version(1).stores({
       data: '++id, time, note',
       key: '++id, key'
@@ -69,6 +67,7 @@ export function password(username, password) {
       console.log(response);
       let key = checkPassword(response.key, password);
       if(key) {
+        key = key.replace(`${password} `,"");
         localStorage.setItem('key', key);
         dispatch({
           type: LOGIN
@@ -83,17 +82,17 @@ export function password(username, password) {
 
 
 
-export function resetApp() {
-  db.key.put({
-    key: "",
-    id: 1
-  });
-  db.data.clear();
-  return {
-    type: RESET_APP
-  }
-}
-
+// export function resetApp() {
+//   db.key.put({
+//     key: "",
+//     id: 1
+//   });
+//   db.data.clear();
+//   return {
+//     type: RESET_APP
+//   }
+// }
+//
 
 
 export function logout() {
@@ -104,6 +103,38 @@ export function logout() {
 }
 
 
+export function deleteAccount() {
+  return function(dispatch) {
+    Dexie.delete(localStorage.getItem('user'))
+    .then(() => {
+      localStorage.clear();
+      dispatch({
+        type: LOGOUT
+      })
+    })
+  }
+}
+
+export function changePass(password) {
+  let d = new Dexie(localStorage.getItem('user'))
+  d.version(1).stores({
+    data: '++id, time, note',
+    key: '++id, key'
+  });
+
+  var phrase = localStorage.getItem('key');
+  var encrypted = CryptoJS.AES.encrypt(
+    `${password} ${phrase}`, password
+  );
+  d.key.put({
+    key: encrypted.toString(),
+    id: 1
+  });
+
+  return {
+    type: ""
+  }
+}
 
 function checkPassword(key, pass) {
 
