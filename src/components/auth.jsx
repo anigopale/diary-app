@@ -1,24 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Login from './login';
-import Signup from './signup';
 import Diary from './auth/diary';
-import { Route } from 'react-router-dom';
 
 class Auth extends Component {
+  renderComponents() {
+    if(this.props.loggedin) {
+      return (
+        <Diary />
+      )
+    }
+    return (
+      <div>
+        you must be logged in
+      </div>
+    )
+  }
 
   render() {
     return (
       <div>
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup}/>
+        {this.renderComponents()}
       </div>
     )
   }
 }
 
-function mapStateToProps({ passSet, login }) {
-  return { passSet, login };
+function mapStateToProps({ loggedin }) {
+  return { loggedin };
 }
 
 export default connect(mapStateToProps)(Auth);

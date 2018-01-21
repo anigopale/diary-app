@@ -1,7 +1,7 @@
 import db from '../db';
 import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
-import { RESET_APP, USER, PASSWORD } from './types';
+import { RESET_APP, USER, LOGIN } from './types';
 
 export function createUserDB(username, password) {
   //createDB
@@ -58,9 +58,9 @@ export function password(username, password) {
       console.log(response);
       let key = checkPassword(response.key, password);
       if(key) {
+        localStorage.setItem('key', key);
         dispatch({
-          type: PASSWORD,
-          payload: key
+          type: LOGIN
         });
       }
     });

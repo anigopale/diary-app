@@ -9,6 +9,14 @@ class Login extends Component {
     super(props);
     this.state = { uterm: "", pterm: "" };
   }
+  componentDidMount() {
+    if(this.props.loggedin)
+      this.props.history.push('/');
+  }
+  componentDidUpdate() {
+    if(this.props.loggedin)
+      this.props.history.push('/');
+  }
 
   handleLogin() {
     this.props.login(this.state.uterm);
@@ -50,6 +58,7 @@ class Login extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <Grid container centered>
         <Grid.Row stretched>
@@ -67,8 +76,8 @@ class Login extends Component {
   }
 }
 
-function mapStateToProps({ user }) {
-  return { user }
+function mapStateToProps({ user, loggedin }) {
+  return { user, loggedin };
 }
 
 export default connect(mapStateToProps, { login, password })(Login);

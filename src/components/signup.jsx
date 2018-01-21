@@ -9,6 +9,14 @@ class Signup extends Component {
     super(props);
     this.state = { uterm: "", pterm: "" };
   }
+  componentDidMount() {
+    if(this.props.passsword)
+      this.props.history.push('/');
+  }
+  componentDidUpdate() {
+    if(this.props.passsword)
+      this.props.history.push('/');
+  }
 
   handleSignup() {
     this.props.createUserDB(this.state.uterm, this.state.pterm);
@@ -41,4 +49,8 @@ class Signup extends Component {
   }
 }
 
-export default connect(null, { createUserDB })(Signup);
+function mapStateToProps({ password }) {
+  return { password }
+}
+
+export default connect(mapStateToProps, { createUserDB })(Signup);
