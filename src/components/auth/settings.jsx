@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DeleteAcc from './delete-acc';
 import ChangePass from './change-pass';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { Menu, Container, Responsive, Sidebar, Segment, Grid } from 'semantic-ui-react';
 
 export default class Settings extends Component {
@@ -11,18 +11,23 @@ export default class Settings extends Component {
       <div>
         <Route path="/settings/delete" component={DeleteAcc}/>
         <Route path="/settings/change" component={ChangePass}/>
+        <Route exact path="/settings" component={Sett} />
       </div>
     )
   }
 
   renderSettingsMenu() {
     return [
-        <Menu.Item>
-          Delete Account
-        </Menu.Item>,
-        <Menu.Item>
-          Change Password
-        </Menu.Item>
+        <Link to="/settings/delete">
+          <Menu.Item>
+            Delete Account
+          </Menu.Item>
+        </Link>,
+        <Link to="/settings/change">
+          <Menu.Item>
+            Change Password
+          </Menu.Item>
+        </Link>
     ];
   }
 
@@ -57,4 +62,9 @@ export default class Settings extends Component {
       </Container>
     )
   }
+}
+
+
+const Sett = () => {
+  return <div>Manage your account</div>
 }

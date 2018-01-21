@@ -1,4 +1,3 @@
-import db from '../db';
 import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
 import { RESET_APP, USER, LOGIN, LOGOUT, DELETE } from './types';
@@ -58,7 +57,6 @@ export function password(username, password) {
   return function(dispatch) {
 
     let d = new Dexie(username)
-    console.log("db",db);
     d.version(1).stores({
       data: '++id, time, note',
       key: '++id, key'
@@ -83,17 +81,17 @@ export function password(username, password) {
 
 
 
-export function resetApp() {
-  db.key.put({
-    key: "",
-    id: 1
-  });
-  db.data.clear();
-  return {
-    type: RESET_APP
-  }
-}
-
+// export function resetApp() {
+//   db.key.put({
+//     key: "",
+//     id: 1
+//   });
+//   db.data.clear();
+//   return {
+//     type: RESET_APP
+//   }
+// }
+//
 
 
 export function logout() {
