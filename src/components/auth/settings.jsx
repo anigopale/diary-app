@@ -17,36 +17,36 @@ export default class Settings extends Component {
 
   renderSettingsMenu() {
     return [
-
         <Menu.Item>
           Delete Account
         </Menu.Item>,
         <Menu.Item>
           Change Password
         </Menu.Item>
-
-    ]
+    ];
   }
 
 
   render() {
     return (
       <Container>
-        <Responsive maxWidth={720}>
+        <Responsive maxWidth={768}>
           <Menu>
             {this.renderSettingsMenu()}
           </Menu>
-          {this.renderSettings()}
+          <Container text>
+            {this.renderSettings()}
+          </Container>
         </Responsive>
 
-        <Responsive minWidth={720}>
+        <Responsive minWidth={768}>
           <Grid>
             <Grid.Column width={4}>
               <Menu vertical>
                 {this.renderSettingsMenu()}
               </Menu>
             </Grid.Column>
-            <Grid.Column width={12} stretched>
+            <Grid.Column width={10} stretched>
               <Segment>
                 {this.renderSettings()}
               </Segment>

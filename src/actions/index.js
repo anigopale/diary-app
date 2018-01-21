@@ -1,7 +1,7 @@
 import db from '../db';
 import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
-import { RESET_APP, USER, LOGIN, LOGOUT } from './types';
+import { RESET_APP, USER, LOGIN, LOGOUT, DELETE } from './types';
 
 export function createUserDB(username, password) {
   Dexie.exists(username)
@@ -103,6 +103,18 @@ export function logout() {
   };
 }
 
+
+export function deleteAccount() {
+  return function(dispatch) {
+    Dexie.delete(localStorage.getItem('user'))
+    .then(() => {
+      localStorage.clear();
+      dispatch({
+        type: LOGOUT
+      })
+    })
+  }
+}
 
 
 function checkPassword(key, pass) {
