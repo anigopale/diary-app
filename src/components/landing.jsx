@@ -29,13 +29,15 @@ export default class Landing extends Component {
               <Divider inverted white />
                 <Divider hidden />
                 <Segment inverted>
-                  <Link to='/login'>
-                    <Button basic color="white" inverted>Login</Button>
-                   </Link>
-                   or
-                   <Link to='/signup'>
-                     <Button basic color="white" inverted>Sign Up</Button>
-                   </Link>
+                  <Button.Group>
+                    <Link to='/login'>
+                      <Button basic color="white" inverted>Login</Button>
+                     </Link>
+                    <Button.Or />
+                     <Link to='/signup'>
+                       <Button basic color="white" inverted>Sign Up</Button>
+                     </Link>
+                   </Button.Group>
                  </Segment>
             </Container>
           </Container>
