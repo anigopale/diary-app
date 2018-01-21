@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import passwordStatusReducer from './password-status-reducer';
-import loginStatusReducer from './login-status-reducer';
+import user from './user-reducer';
+import auth from './auth-reducer';
 
 const rootReducer = combineReducers({
-  passSet: passwordStatusReducer,
-  login: loginStatusReducer
+  user: user,
+  loggedin: auth
 });
 
 export default rootReducer;

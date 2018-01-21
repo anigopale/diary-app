@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
-import { userLogout } from '../../actions';
+import { logout } from '../../actions';
 
 class Diary extends Component {
 
@@ -12,11 +12,11 @@ class Diary extends Component {
   render() {
     return (
       <div>
-        <Button onClick={this.handleLogout.bind(this)} floated="right">Logout</Button>
+        <Button onClick={this.props.logout.bind(this)} floated="right">Logout</Button>
         <h1>Diary App</h1>
       </div>
     );
   }
 }
 
-export default connect(null, { userLogout })(Diary);
+export default connect(null, { logout })(Diary);
