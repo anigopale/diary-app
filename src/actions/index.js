@@ -78,21 +78,19 @@ export function password(username, password) {
 }
 
 
+export function resetApp() {
+  Dexie.getDatabaseNames()
+  .then((response) => {
+    response.map((db) => {
+      Dexie.delete(db);
+    })
+  })
 
+  return {
+    type: ""
+  }
+}
 
-
-
-// export function resetApp() {
-//   db.key.put({
-//     key: "",
-//     id: 1
-//   });
-//   db.data.clear();
-//   return {
-//     type: RESET_APP
-//   }
-// }
-//
 
 
 export function logout() {
