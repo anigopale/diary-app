@@ -40,7 +40,6 @@ export default class Landing extends Component {
                      <Button basic color="white" inverted>Sign Up</Button>
                    </Link>
                  </Button.Group>
-                 <Divider hidden />
                </Segment>
 
             </Container>
@@ -57,6 +56,7 @@ export default class Landing extends Component {
           <Link to='/reset'>
             <Button color="red">Reset App</Button>
           </Link>
+          <Divider hidden />
         </Container>
 
       </div>
