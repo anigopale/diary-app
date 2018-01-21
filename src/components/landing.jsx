@@ -40,6 +40,7 @@ export default class Landing extends Component {
                      <Button basic color="white" inverted>Sign Up</Button>
                    </Link>
                  </Button.Group>
+                 <Divider hidden />
                </Segment>
 
             </Container>
