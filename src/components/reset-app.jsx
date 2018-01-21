@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { resetApp } from '../actions';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Button, Header } from 'semantic-ui-react';
 
-export default class ResetApp extends Component {
+class ResetApp extends Component {
   render() {
     return (
       <Segment
@@ -27,10 +29,12 @@ export default class ResetApp extends Component {
           <p>
             Resetting the app will delete all the data
           </p>
-          <Button basic color="white" inverted>Reset App</Button>
+          <Button basic color="white" inverted onClick={() => {this.props.resetApp()}}>Reset App</Button>
         </Container>
       </Segment>
 
     )
   }
 }
+
+export default connect(null, { resetApp })(ResetApp);
