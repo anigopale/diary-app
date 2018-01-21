@@ -30,6 +30,7 @@ class Login extends Component {
     if(this.props.user) {
       return(
         <div>
+          Hi {this.props.user}!
           <Form.Field>
             <label>Enter Password</label>
             <input onChange={(event) => this.setState({ pterm: event.target.value })} value={this.state.pterm} type="password" />

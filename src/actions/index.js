@@ -33,6 +33,7 @@ export function login(username) {
     Dexie.exists(username)
     .then((exists) => {
       if(exists) {
+        localStorage.setItem('user', username);
         dispatch({
           type: USER,
           payload: username
