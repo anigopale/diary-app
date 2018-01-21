@@ -35,7 +35,7 @@ export default class Settings extends Component {
   render() {
     return (
       <Container>
-        <Responsive maxWidth={768}>
+        <Responsive maxWidth={767}>
           <Menu>
             {this.renderSettingsMenu()}
           </Menu>
@@ -47,7 +47,7 @@ export default class Settings extends Component {
         <Responsive minWidth={768}>
           <Grid>
             <Grid.Column width={4}>
-              <Menu vertical>
+              <Menu fluid vertical tabular>
                 {this.renderSettingsMenu()}
               </Menu>
             </Grid.Column>
