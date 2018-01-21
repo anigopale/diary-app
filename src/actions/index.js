@@ -1,7 +1,7 @@
 import db from '../db';
 import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
-import { RESET_APP, USER, LOGIN } from './types';
+import { RESET_APP, USER, LOGIN, LOGOUT } from './types';
 
 export function createUserDB(username, password) {
   //createDB
@@ -86,9 +86,10 @@ export function resetApp() {
 
 
 
-export function userLogout() {
+export function logout() {
+  localStorage.clear();
   return {
-    type: "USER_LOGOUT"
+    type: LOGOUT
   };
 }
 

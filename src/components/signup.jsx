@@ -49,8 +49,8 @@ class Signup extends Component {
   }
 }
 
-function mapStateToProps({ password }) {
-  return { password }
+function mapStateToProps({  }) {
+  return {  }
 }
 
 export default connect(mapStateToProps, { createUserDB })(Signup);
