@@ -1,7 +1,7 @@
 import db from '../db';
 import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
-import { SET_PASS, RESET_APP, USER_LOGIN, USER_LOGOUT, USER } from './types';
+import { RESET_APP, USER, PASSWORD } from './types';
 
 export function createUserDB(username, password) {
   //createDB
@@ -29,17 +29,40 @@ export function createUserDB(username, password) {
 
 export function login(username) {
   return function(dispatch) {
-    var d = new Dexie(username);
-    d.open()
+
+    Dexie.exists(username)
+    .then((exists) => {
+      if(exists) {
+        dispatch({
+          type: USER,
+          payload: username
+        })
+      }
+    });
+  }
+
+}
+
+export function password(username, password) {
+  return function(dispatch) {
+
+    let d = new Dexie(username)
+    console.log("db",db);
+    d.version(1).stores({
+      data: '++id, time, note',
+      key: '++id, key'
+    });
+
+    d.key.get(1)
     .then((response) => {
       console.log(response);
-      dispatch({
-        type: USER,
-        payload: username
-      })
-    })
-    .catch(e => {
-      console.log(e);
+      let key = checkPassword(response.key, password);
+      if(key) {
+        dispatch({
+          type: PASSWORD,
+          payload: key
+        });
+      }
     });
   }
 }
@@ -47,23 +70,6 @@ export function login(username) {
 
 
 
-
-
-
-export function setPass(pass) {
-  var phrase = CryptoJS.lib.WordArray.random(128/8);
-  var encrypted = CryptoJS.AES.encrypt(
-    `${pass} ${phrase}`, pass
-  );
-  db.key.put({
-    key: encrypted.toString(),
-    id: 1
-  });
-
-  return {
-    type: SET_PASS
-  }
-}
 
 
 export function resetApp() {
@@ -78,22 +84,10 @@ export function resetApp() {
 }
 
 
-export function userLogin(pass) {
-  return function(dispatch) {
-    db.key.get(1)
-    .then((response) => {
-      if(checkPassword(response.key, pass)) {
-        dispatch({
-          type: USER_LOGIN
-        });
-      }
-    })
-  }
-}
 
 export function userLogout() {
   return {
-    type: USER_LOGOUT
+    type: "USER_LOGOUT"
   };
 }
 

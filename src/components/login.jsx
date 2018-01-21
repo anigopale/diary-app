@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, Grid, Item } from 'semantic-ui-react';
-import { resetApp, login } from '../actions';
+import { resetApp, login, password } from '../actions';
 import { Link } from 'react-router-dom';
 
 class Login extends Component {
@@ -27,7 +27,7 @@ class Login extends Component {
             <input onChange={(event) => this.setState({ pterm: event.target.value })} value={this.state.pterm} type="password" />
           </Form.Field>
           <Form.Field>
-            <Button fluid>Submit</Button>
+            <Button onClick={()=>{this.props.password(this.props.user, this.state.pterm)}} fluid>Submit</Button>
           </Form.Field>
         </div>
       )
@@ -71,4 +71,4 @@ function mapStateToProps({ user }) {
   return { user }
 }
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, password })(Login);
