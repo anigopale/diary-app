@@ -29,7 +29,7 @@ export default class Mmenu extends Component {
   render() {
     return (
       <div>
-        <Segment inverted>
+
           <h1>Diary App</h1>
 
           <Button onClick={() => {this.setState({ visible: !this.state.visible})}}></Button>
@@ -42,7 +42,7 @@ export default class Mmenu extends Component {
                 Log out
               </Menu.Item>
             </Sidebar>
-
+        
 
             <Sidebar.Pusher>
               <Segment basic>
@@ -55,7 +55,7 @@ export default class Mmenu extends Component {
             </Sidebar.Pusher>
 
           </Sidebar.Pushable>
-        </Segment>
+
       </div>
     )
   }

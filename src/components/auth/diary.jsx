@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react';
 import Dmenu from './diary-menu';
 import Mmenu from './mmenu';
-import { Link } from 'react-router-dom';
+import Settings from './settings';
+import { Link, Route } from 'react-router-dom';
 import { Segment, Sidebar, Menu, Responsive } from 'semantic-ui-react';
 
 export default class Diary extends Component {
@@ -22,6 +23,9 @@ export default class Diary extends Component {
     })
   }
 
+  renderContent() {
+    return <Route path="/settings" component={Settings} />
+  }
 
   handleLogout() {
     this.props.userLogout();
@@ -31,14 +35,10 @@ export default class Diary extends Component {
 
     return (
       <div>
-          <Responsive minWidth={720}>
+          <Responsive>
             <Dmenu />
           </Responsive>
-
-        <Responsive maxWidth={720} inverted as={Segment}>
-          <Mmenu />
-        </Responsive>
-
+          {this.renderContent()}
       </div>
     );
   }
