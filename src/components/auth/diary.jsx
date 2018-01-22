@@ -4,24 +4,50 @@ import Dmenu from './diary-menu';
 import Mmenu from './mmenu';
 import Settings from './settings';
 import { Link, Route } from 'react-router-dom';
-import { Segment, Sidebar, Menu, Responsive, Divider } from 'semantic-ui-react';
+import {
+  Header,
+  Segment,
+  Sidebar,
+  Menu,
+  Responsive,
+  Divider,
+  Icon,
+  Container
+} from 'semantic-ui-react';
+
 
 export default class Diary extends Component {
 
-  state = { visible: false }
+  state = { visible: false, height: window.innerHeight - 200 }
+
+  componentDidMount() {
+    this.setState({ height: window.innerHeight - 50 });
+  }
 
   renderItems() {
-    return this.items.map((item) => {
-      return (
-        <Link to={item.key}>
-          <Menu.Item
-            >
-            {item.name}
-          </Menu.Item>
-        </Link>
-      )
-    })
-  }
+
+    return [
+      <Link to='/'>
+        <Menu.Item
+          >
+          Home
+        </Menu.Item>
+      </Link>,
+      <Link to='/settings'>
+        <Menu.Item
+          >
+          Settings
+        </Menu.Item>
+      </Link>,
+      <Menu.Item
+        position="right"
+        onClick={() => {this.props.logout()}}
+        >
+        Log out
+      </Menu.Item>
+    ];
+
+  };
 
   renderContent() {
     return <Route path="/settings" component={Settings} />
@@ -35,11 +61,39 @@ export default class Diary extends Component {
 
     return (
       <div>
-          <Responsive>
-            <Dmenu />
+          <Responsive minWidth={768}>
+            <Segment inverted>
+              <Divider hidden />
+              <Header as="h1" inverted>Diary app</Header>
+              <Dmenu vertical={false} />
+            </Segment>
           </Responsive>
-          <Divider hidden />
-          {this.renderContent()}
+
+          <Responsive maxWidth={720}>
+            <Segment inverted>
+              <Icon name="sidebar" size="big" onClick={() => {this.setState({ visible: !this.state.visible })}} />
+            </Segment>
+          </Responsive>
+
+
+          <Sidebar.Pushable>
+            <Responsive maxWidth={720}>
+                <Sidebar visible={this.state.visible} animation="overlay" inverted onClick={()=>{this.setState({ visible: false })}} as={Segment}>
+                  <Header as="h1" textAlign="center" inverted>Diary app</Header>
+                  <Dmenu vertical={true} />
+                </Sidebar>
+            </Responsive>
+
+            <Sidebar.Pusher>
+              <Segment style={{ minHeight: this.state.height }}>
+                <Divider hidden />
+                {this.renderContent()}
+              </Segment>
+            </Sidebar.Pusher>
+          </Sidebar.Pushable>
+
+
+
       </div>
     );
   }
