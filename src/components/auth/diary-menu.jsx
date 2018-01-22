@@ -6,39 +6,41 @@ import { logout } from '../../actions';
 
 class Dmenu extends Component {
 
-  items = [
-    { key: "/", name: "Home" },
-    { key: "/settings", name: "Settings" }
-  ];
+
 
   renderItems() {
-    return this.items.map((item) => {
-      return (
-        <Link to={item.key}>
-          <Menu.Item
-            >
-            {item.name}
-          </Menu.Item>
-        </Link>
-      )
-    })
-  }
+
+    return [
+      <Link to='/'>
+        <Menu.Item
+          >
+          Home
+        </Menu.Item>
+      </Link>,
+      <Link to='/settings'>
+        <Menu.Item
+          >
+          Settings
+        </Menu.Item>
+      </Link>,
+      <Menu.Item
+        position="right"
+        onClick={() => {this.props.logout()}}
+        >
+        Log out
+      </Menu.Item>
+    ];
+
+  };
+
+
+
 
   render() {
     return (
-      <Segment inverted>
-        <h1>Diary App</h1>
-        <Menu inverted>
-          {this.renderItems()}
-          <Menu.Item
-            position="right"
-            onClick={() => {this.props.logout()}}
-            >
-            Log out
-          </Menu.Item>
-        </Menu>
-      </Segment>
-
+      <Menu inverted vertical={this.props.vertical}>
+        {this.renderItems()}
+      </Menu>
     )
   }
 }

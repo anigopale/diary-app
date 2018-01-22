@@ -15,7 +15,7 @@ class ResetApp extends Component {
         >
         <Container
           style={{ fontSize: '2em', fontWeight: 'normal', marginBottom: 0, marginTop: '1.5em' }}
-          >
+          text>
           <Link to="/">
             <Button primary>Back</Button>
           </Link>
@@ -24,7 +24,7 @@ class ResetApp extends Component {
             as='h1'
             content='Warning!'
             inverted
-            style={{ fontSize: '4em', fontWeight: 'normal', marginBottom: 0, marginTop: '1em' }}
+            style={{ fontSize: '2em', fontWeight: 'normal', marginBottom: 0, marginTop: '1em' }}
           />
           <p>
             Resetting the app will delete all the data
