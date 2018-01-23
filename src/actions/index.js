@@ -1,5 +1,6 @@
 import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
+import history from './history';
 import { RESET_APP, USER, LOGIN, LOGOUT, DELETE } from './types';
 
 export function createUserDB(username, password) {
@@ -37,7 +38,6 @@ export function createUserDB(username, password) {
         })
       }
     });
-
   }
 }
 
@@ -86,15 +86,19 @@ export function password(username, password) {
 
 
 export function resetApp() {
-  Dexie.getDatabaseNames()
-  .then((response) => {
-    response.map((db) => {
-      Dexie.delete(db);
-    })
-  })
-
-  return {
-    type: ""
+  return function(dispatch) {
+    Dexie.getDatabaseNames()
+    .then((response) => {
+      response.map((db) => {
+        Dexie.delete(db);
+      })
+    });
+    
+    localStorage.clear();
+    dispatch({
+      type: LOGOUT
+    });
+    history.push('/');
   }
 }
 
@@ -102,6 +106,7 @@ export function resetApp() {
 
 export function logout() {
   localStorage.clear();
+  history.push('/');
   return {
     type: LOGOUT
   };
@@ -117,6 +122,7 @@ export function deleteAccount() {
         type: LOGOUT
       })
     })
+    history.push('/');
   }
 }
 
