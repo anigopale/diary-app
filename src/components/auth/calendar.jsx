@@ -18,7 +18,7 @@ export default class Calendar extends Component {
     }
   }
 
-  week = [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ];
+  week = [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ];
 
   upYear() {
     this.setState({
@@ -112,7 +112,7 @@ export default class Calendar extends Component {
 
   renderCalendarBody() {
     return (
-      <Table celled color="black">
+      <Table celled color="black" unstackable fixed>
         <Table.Header>
           <Table.Row>
             {this.renderWeek()}
@@ -128,7 +128,7 @@ export default class Calendar extends Component {
 
   renderCalendarHead() {
     return (
-      <Table celled color="black" textAlign="center" unstackable>
+      <Table celled color="black" textAlign="center" unstackable fixed>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell onClick={this.downYear.bind(this)}>
