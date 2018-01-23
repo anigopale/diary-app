@@ -81,12 +81,16 @@ export default class Calendar extends Component {
 
   renderDays(week) {
     return week.map((d) => {
-      if(d === 0) return <Table.Cell> </Table.Cell>
-      if(d === this.props.day
+      if(d)
+      {
+        if(d === this.props.day
         && this.state.year === this.state.today.y
         && this.state.month === this.state.today.m )
-        return <Table.Cell><Header color="blue">{d}</Header></Table.Cell>
-      return <Table.Cell onClick={()=>this.setState({selected: d})}>{d}</Table.Cell>
+          return <Table.Cell active><Header>{d}</Header></Table.Cell>
+
+        return <Table.Cell>{d}</Table.Cell>
+      }
+      return <Table.Cell></Table.Cell>
     })
   }
 
@@ -106,6 +110,59 @@ export default class Calendar extends Component {
     })
   }
 
+  renderCalendarBody() {
+    return (
+      <Table celled color="black">
+        <Table.Header>
+          <Table.Row>
+            {this.renderWeek()}
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
+          {this.renderMonth()}
+        </Table.Body>
+      </Table>
+    )
+  }
+
+  renderCalendarHead() {
+    return (
+      <Table celled color="black" textAlign="center" unstackable>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell onClick={this.downYear.bind(this)}>
+              <Icon name="chevron left" />
+            </Table.HeaderCell>
+
+            <Table.HeaderCell>
+              {this.state.year}
+            </Table.HeaderCell>
+
+            <Table.HeaderCell onClick={this.upYear.bind(this)}>
+              <Icon name="chevron right" />
+            </Table.HeaderCell>
+          </Table.Row>
+
+          <Table.Row>
+            <Table.HeaderCell onClick={this.downMonth.bind(this)}>
+              <Icon name="chevron left" />
+            </Table.HeaderCell>
+
+            <Table.HeaderCell>
+              {this.state.monthStr}
+            </Table.HeaderCell>
+
+            <Table.HeaderCell onClick={this.upMonth.bind(this)}>
+              <Icon name="chevron right" />
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+      </Table>
+
+    )
+  }
+
 
   render() {
     console.log(calendar().of(2018, 2));
@@ -114,29 +171,9 @@ export default class Calendar extends Component {
       <div>
         <Segment textAlign="center">
 
-          <h2>
-            <Icon name="chevron left" onClick={this.downYear.bind(this)} />
-            {this.state.year}
-            <Icon name="chevron right" onClick={this.upYear.bind(this)} />
-          </h2>
+          {this.renderCalendarHead()}
 
-          <h2>
-            <Icon name="chevron left" onClick={this.downMonth.bind(this)} />
-            {this.state.monthStr}
-            <Icon name="chevron right" onClick={this.upMonth.bind(this)} />
-          </h2>
-
-          <Table celled>
-            <Table.Header>
-              <Table.Row>
-                {this.renderWeek()}
-              </Table.Row>
-            </Table.Header>
-
-            <Table.Body>
-              {this.renderMonth()}
-            </Table.Body>
-          </Table>
+          {this.renderCalendarBody()}
         </Segment>
       </div>
     )
