@@ -1,37 +1,44 @@
 import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
+import history from './history';
 import { RESET_APP, USER, LOGIN, LOGOUT, DELETE } from './types';
 
 export function createUserDB(username, password) {
-  Dexie.exists(username)
-  .then((exists) => {
-    if(exists) {
-      alert('username already in use');
-    }
-    else {
-      //createDB
-      var d = new Dexie(username);
-      console.log("creatingDB");
-      d.version(1).stores({
-        data: '++id, time, note',
-        key: '++id, key'
-      });
-      d.open();
+  return function(dispatch) {
+    Dexie.exists(username)
+    .then((exists) => {
+      if(exists) {
+        alert('username already in use');
+      }
+      else {
+        //createDB
+        var d = new Dexie(username);
+        console.log("creatingDB");
+        d.version(1).stores({
+          data: '++id, time, note',
+          key: '++id, key'
+        });
+        d.open();
 
-      //Store pass phrase
-      var phrase = CryptoJS.lib.WordArray.random(128/8);
-      var encrypted = CryptoJS.AES.encrypt(
-        `${password} ${phrase}`, password
-      );
-      d.key.put({
-        key: encrypted.toString(),
-        id: 1
-      });
-    }
-  });
+        //Store pass phrase
+        var phrase = CryptoJS.lib.WordArray.random(128/8);
+        var encrypted = CryptoJS.AES.encrypt(
+          `${password} ${phrase}`, password
+        );
+        d.key.put({
+          key: encrypted.toString(),
+          id: 1
+        });
 
+        localStorage.setItem('user', username);
+        localStorage.setItem('key', encrypted.toString());
 
-  return { type: ""}
+        dispatch({
+          type: LOGIN
+        })
+      }
+    });
+  }
 }
 
 
@@ -79,15 +86,19 @@ export function password(username, password) {
 
 
 export function resetApp() {
-  Dexie.getDatabaseNames()
-  .then((response) => {
-    response.map((db) => {
-      Dexie.delete(db);
-    })
-  })
-
-  return {
-    type: ""
+  return function(dispatch) {
+    Dexie.getDatabaseNames()
+    .then((response) => {
+      response.map((db) => {
+        Dexie.delete(db);
+      })
+    });
+    
+    localStorage.clear();
+    dispatch({
+      type: LOGOUT
+    });
+    history.push('/');
   }
 }
 
@@ -95,6 +106,7 @@ export function resetApp() {
 
 export function logout() {
   localStorage.clear();
+  history.push('/');
   return {
     type: LOGOUT
   };
@@ -110,6 +122,7 @@ export function deleteAccount() {
         type: LOGOUT
       })
     })
+    history.push('/');
   }
 }
 

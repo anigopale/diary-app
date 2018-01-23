@@ -18,7 +18,7 @@ import {
 
 export default class Diary extends Component {
 
-  state = { visible: false, height: window.innerHeight - 200 }
+  state = { visible: false, height: window.innerHeight - 50 }
 
   componentDidMount() {
     this.setState({ height: window.innerHeight - 50 });
