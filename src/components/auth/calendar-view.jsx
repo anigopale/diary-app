@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Grid } from 'semantic-ui-react';
 import Calendar from './calendar';
 
 export default class CalendarView extends Component {
@@ -9,14 +10,24 @@ export default class CalendarView extends Component {
   }
   componentDidMount() {
     var d = new Date();
-    this.setState({ year: d.getFullYear() });
+    this.setState({
+      year: d.getFullYear(),
+      month: d.getMonth(),
+      day: d.getDate()
+    });
   }
 
   render() {
     return (
-      <div>
-        <Calendar year={this.state.year} month={8} day={1} />
-      </div>
+      <Grid>
+        <Grid.Column width={6}>
+        <Calendar
+          year={this.state.year}
+          month={this.state.month}
+          day={this.state.day}
+          />
+        </Grid.Column>
+      </Grid>
     )
   }
 }

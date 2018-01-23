@@ -9,7 +9,12 @@ export default class Calendar extends Component {
       cal: calendar().of(this.props.year, this.props.month).calendar,
       monthStr: calendar().of(this.props.year, this.props.month).month,
       month: this.props.month,
-      year: this.props.year
+      year: this.props.year,
+      today: {
+        m: this.props.month,
+        y: this.props.year,
+        d: this.props.day
+      }
     }
   }
 
@@ -19,7 +24,10 @@ export default class Calendar extends Component {
   renderWeek(week) {
     return week.map((d) => {
       if(d === 0) return <Grid.Column></Grid.Column>
-      if(d === this.props.day) return <Grid.Column><Header color="blue">{d}</Header></Grid.Column>
+      if(d === this.props.day
+        && this.state.year === this.state.today.y
+        && this.state.month === this.state.today.m )
+        return <Grid.Column><Header color="blue">{d}</Header></Grid.Column>
       return <Grid.Column onClick={()=>this.setState({selected: d})}>{d}</Grid.Column>
     })
   }
@@ -28,7 +36,7 @@ export default class Calendar extends Component {
     return this.state.cal.map((week) => {
       return (
         <div>
-          <Grid horizontal >
+          <Grid horizontal textAlign="center">
             {this.renderWeek(week)}
           </Grid>
           <br />
@@ -97,7 +105,8 @@ export default class Calendar extends Component {
     console.log(this.props.year);
     return(
       <div>
-        <Segment>
+        <Segment textAlign="center">
+
           <h2>
             <Icon name="chevron left" onClick={this.downYear.bind(this)} />
             {this.state.year}
