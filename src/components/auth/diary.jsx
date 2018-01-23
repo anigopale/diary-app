@@ -3,7 +3,8 @@ import { Button } from 'semantic-ui-react';
 import Dmenu from './diary-menu';
 import Mmenu from './mmenu';
 import Settings from './settings';
-import { Link, Route } from 'react-router-dom';
+import CalendarView from './calendar-view';
+import { Link, Route, Switch } from 'react-router-dom';
 import {
   Header,
   Segment,
@@ -50,7 +51,14 @@ export default class Diary extends Component {
   };
 
   renderContent() {
-    return <Route path="/settings" component={Settings} />
+    return (
+      <div>
+        <Switch>
+          <Route path="/settings" component={Settings} />
+          <Route path="/" component={CalendarView} />
+        </Switch>
+      </div>
+    )
   }
 
   handleLogout() {
