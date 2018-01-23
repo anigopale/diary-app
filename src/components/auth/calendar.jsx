@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Segment, Header, Icon } from 'semantic-ui-react';
+import { Table, Grid, Segment, Header, Icon } from 'semantic-ui-react';
 import calendar from 'calendar-js';
 
 export default class Calendar extends Component {
@@ -18,32 +18,7 @@ export default class Calendar extends Component {
     }
   }
 
-  month = calendar().of(this.props.year, this.props.month).month;
-  cal = calendar().of(this.props.year, this.props.month).calendar;
-
-  renderWeek(week) {
-    return week.map((d) => {
-      if(d === 0) return <Grid.Column></Grid.Column>
-      if(d === this.props.day
-        && this.state.year === this.state.today.y
-        && this.state.month === this.state.today.m )
-        return <Grid.Column><Header color="blue">{d}</Header></Grid.Column>
-      return <Grid.Column onClick={()=>this.setState({selected: d})}>{d}</Grid.Column>
-    })
-  }
-
-  renderMonth() {
-    return this.state.cal.map((week) => {
-      return (
-        <div>
-          <Grid horizontal textAlign="center">
-            {this.renderWeek(week)}
-          </Grid>
-          <br />
-        </div>
-      )
-    })
-  }
+  week = [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ];
 
   upYear() {
     this.setState({
@@ -53,6 +28,7 @@ export default class Calendar extends Component {
       year: this.state.year + 1
     });
   }
+
   downYear() {
     this.setState({
       cal: calendar().of(this.state.year - 1, this.state.month).calendar,
@@ -61,6 +37,7 @@ export default class Calendar extends Component {
       year: this.state.year - 1
     });
   }
+
   upMonth() {
     if(this.state.month === 11) {
       this.upYear();
@@ -80,6 +57,7 @@ export default class Calendar extends Component {
       });
     }
   }
+
   downMonth() {
     if(this.state.month === 0) {
       this.downYear();
@@ -100,6 +78,35 @@ export default class Calendar extends Component {
     }
   }
 
+
+  renderDays(week) {
+    return week.map((d) => {
+      if(d === 0) return <Table.Cell> </Table.Cell>
+      if(d === this.props.day
+        && this.state.year === this.state.today.y
+        && this.state.month === this.state.today.m )
+        return <Table.Cell><Header color="blue">{d}</Header></Table.Cell>
+      return <Table.Cell onClick={()=>this.setState({selected: d})}>{d}</Table.Cell>
+    })
+  }
+
+  renderMonth() {
+    return this.state.cal.map((week) => {
+      return (
+          <Table.Row>
+            {this.renderDays(week)}
+          </Table.Row>
+      )
+    })
+  }
+
+  renderWeek() {
+    return this.week.map((day) => {
+      return <Table.HeaderCell>{day}</Table.HeaderCell>
+    })
+  }
+
+
   render() {
     console.log(calendar().of(2018, 2));
     console.log(this.props.year);
@@ -119,7 +126,17 @@ export default class Calendar extends Component {
             <Icon name="chevron right" onClick={this.upMonth.bind(this)} />
           </h2>
 
-          {this.renderMonth()}
+          <Table celled>
+            <Table.Header>
+              <Table.Row>
+                {this.renderWeek()}
+              </Table.Row>
+            </Table.Header>
+
+            <Table.Body>
+              {this.renderMonth()}
+            </Table.Body>
+          </Table>
         </Segment>
       </div>
     )
