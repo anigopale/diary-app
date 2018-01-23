@@ -10,11 +10,11 @@ class Signup extends Component {
     this.state = { uterm: "", pterm: "" };
   }
   componentDidMount() {
-    if(this.props.passsword)
+    if(this.props.loggedin)
       this.props.history.push('/');
   }
   componentDidUpdate() {
-    if(this.props.passsword)
+    if(this.props.loggedin)
       this.props.history.push('/');
   }
 
@@ -34,7 +34,7 @@ class Signup extends Component {
             </Form.Field>
             <Form.Field>
               <label>Enter a Password</label>
-              <input onChange={(event) => this.setState({ pterm: event.target.value })} />
+              <input onChange={(event) => this.setState({ pterm: event.target.value })} type="password" />
             </Form.Field>
             <Form.Field>
               <Button onClick={this.handleSignup.bind(this)} fluid>Submit</Button>
@@ -49,8 +49,8 @@ class Signup extends Component {
   }
 }
 
-function mapStateToProps({  }) {
-  return {  }
+function mapStateToProps({ loggedin }) {
+  return { loggedin }
 }
 
 export default connect(mapStateToProps, { createUserDB })(Signup);

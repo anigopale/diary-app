@@ -3,35 +3,42 @@ import CryptoJS from 'crypto-js';
 import { RESET_APP, USER, LOGIN, LOGOUT, DELETE } from './types';
 
 export function createUserDB(username, password) {
-  Dexie.exists(username)
-  .then((exists) => {
-    if(exists) {
-      alert('username already in use');
-    }
-    else {
-      //createDB
-      var d = new Dexie(username);
-      console.log("creatingDB");
-      d.version(1).stores({
-        data: '++id, time, note',
-        key: '++id, key'
-      });
-      d.open();
+  return function(dispatch) {
+    Dexie.exists(username)
+    .then((exists) => {
+      if(exists) {
+        alert('username already in use');
+      }
+      else {
+        //createDB
+        var d = new Dexie(username);
+        console.log("creatingDB");
+        d.version(1).stores({
+          data: '++id, time, note',
+          key: '++id, key'
+        });
+        d.open();
 
-      //Store pass phrase
-      var phrase = CryptoJS.lib.WordArray.random(128/8);
-      var encrypted = CryptoJS.AES.encrypt(
-        `${password} ${phrase}`, password
-      );
-      d.key.put({
-        key: encrypted.toString(),
-        id: 1
-      });
-    }
-  });
+        //Store pass phrase
+        var phrase = CryptoJS.lib.WordArray.random(128/8);
+        var encrypted = CryptoJS.AES.encrypt(
+          `${password} ${phrase}`, password
+        );
+        d.key.put({
+          key: encrypted.toString(),
+          id: 1
+        });
 
+        localStorage.setItem('user', username);
+        localStorage.setItem('key', encrypted.toString());
 
-  return { type: ""}
+        dispatch({
+          type: LOGIN
+        })
+      }
+    });
+
+  }
 }
 
 
