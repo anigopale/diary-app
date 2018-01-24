@@ -6,6 +6,7 @@ export default class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
       cal: calendar().of(this.props.year, this.props.month).calendar,
       monthStr: calendar().of(this.props.year, this.props.month).month,
       month: this.props.month,

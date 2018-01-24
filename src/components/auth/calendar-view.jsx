@@ -30,7 +30,7 @@ export default class CalendarView extends Component {
           <Grid.Column width={5} floated="left">
             <Calendar
               year={this.state.year}
-              month={this.state.month}
+              month={this.state.month - 1}
               day={this.state.day}
               />
             <Segment>
