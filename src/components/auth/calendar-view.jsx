@@ -26,8 +26,8 @@ export default class CalendarView extends Component {
             Add new Entry
           </Button>
         </Segment>
-        <Grid>
-          <Grid.Column width={5}>
+        <Grid stackable>
+          <Grid.Column width={5} floated="left">
             <Calendar
               year={this.state.year}
               month={this.state.month}
@@ -40,7 +40,7 @@ export default class CalendarView extends Component {
 
           <Grid.Column width={11}>
             <Segment>
-              
+
             </Segment>
           </Grid.Column>
         </Grid>
