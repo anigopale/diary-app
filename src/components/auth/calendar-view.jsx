@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Grid, Container, Button, Segment, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Calendar from './calendar';
+import { setNowDate } from '../../actions';
 
-export default class CalendarView extends Component {
+class CalendarView extends Component {
   constructor(props) {
     super(props);
     var d = new Date();
@@ -23,12 +25,12 @@ export default class CalendarView extends Component {
       <Container>
 
         <Segment>
-          <Link to="/editor">
-            <Button fluid secondary>
-              <Icon name="add to calendar" />
-              Add new Entry
-            </Button>
-          </Link>
+
+          <Button fluid secondary onClick={()=>{this.props.setNowDate()}}>
+            <Icon name="add to calendar" />
+            Add new Entry
+          </Button>
+
         </Segment>
 
         <Grid stackable>
@@ -53,3 +55,5 @@ export default class CalendarView extends Component {
     )
   }
 }
+
+export default connect(null, { setNowDate })(CalendarView);

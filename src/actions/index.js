@@ -1,7 +1,8 @@
 import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
+import moment from 'moment';
 import history from './history';
-import { RESET_APP, USER, LOGIN, LOGOUT, DELETE } from './types';
+import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE } from './types';
 
 export function createUserDB(username, password) {
   return function(dispatch) {
@@ -93,7 +94,7 @@ export function resetApp() {
         Dexie.delete(db);
       })
     });
-    
+
     localStorage.clear();
     dispatch({
       type: LOGOUT
@@ -144,6 +145,19 @@ export function changePass(password) {
 
   return {
     type: ""
+  }
+}
+
+
+export function setNowDate() {
+  var d = moment();
+  history.push('/editor');
+  return {
+    type: SET_DATE,
+    payload: {
+      stamp: d.format('x'),
+      format: d.format('YYYY-MM-DD hh:mm A')
+    }
   }
 }
 
