@@ -184,6 +184,12 @@ export function putEntry(date, note) {
   }
 }
 
+export function deleteDate() {
+  return {
+    type: DELETE_DATE
+  }
+}
+
 
 function checkPassword(key, pass) {
 

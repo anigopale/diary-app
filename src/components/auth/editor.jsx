@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Segment, Container, Grid, Form, Button, Divider } from 'semantic-ui-react';
-import { putEntry } from '../../actions';
+import { putEntry, deleteDate } from '../../actions';
 
 class Editor extends Component {
   constructor(props) {
@@ -21,15 +21,22 @@ class Editor extends Component {
   renderDate() {
     if(this.props.date.format) {
       return (
-        <h3>
-          {this.props.date.display}
-        </h3>
+        <p>
+          <h3 onClick={() => {
+              this.setState({ date: this.props.date.format })
+              this.props.deleteDate()
+            }}>
+            {this.props.date.display}
+          </h3>
+          (click to edit)
+        </p>
       );
     }
     return (
       <Form.Field>
         <input
           placeholder="ex: 2010-12-31 4:30 PM"
+          value={this.state.date}
           onChange={(event) => {this.setState({ datetime: event.target.value })}}
           />
       </Form.Field>
@@ -67,4 +74,4 @@ function mapStateToProps({ date }) {
   return { date };
 }
 
-export default connect(mapStateToProps, { putEntry })(Editor);
+export default connect(mapStateToProps, { putEntry, deleteDate })(Editor);
