@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Segment, Container, Grid, Form, Button, Divider } from 'semantic-ui-react';
 import marked from 'marked';
 import { putEntry, deleteDate } from '../../actions';
@@ -66,6 +67,9 @@ class Editor extends Component {
                   <Form.Field>
                     <Button onClick={this.handleFormSubmit.bind(this)} secondary>Save</Button>
                     <Button onClick={() => {this.setState({ text: "" })}}>Clear</Button>
+                    <Link to="/">
+                      <Button floated="right" secondary>Cancel</Button>
+                    </Link>
                   </Form.Field>
 
                   {this.renderDate()}
