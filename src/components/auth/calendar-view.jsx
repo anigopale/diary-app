@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Container, Button, Segment, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import Calendar from './calendar';
 
 export default class CalendarView extends Component {
@@ -20,12 +21,16 @@ export default class CalendarView extends Component {
   render() {
     return (
       <Container>
+
         <Segment>
-          <Button fluid secondary>
-            <Icon name="add to calendar" />
-            Add new Entry
-          </Button>
+          <Link to="/editor">
+            <Button fluid secondary>
+              <Icon name="add to calendar" />
+              Add new Entry
+            </Button>
+          </Link>
         </Segment>
+
         <Grid stackable>
           <Grid.Column width={5} floated="left">
             <Calendar
