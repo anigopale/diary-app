@@ -16,7 +16,7 @@ export function createUserDB(username, password) {
         var d = new Dexie(username);
         console.log("creatingDB");
         d.version(1).stores({
-          data: '++id, time, note',
+          data: '++id, date, time, note',
           key: '++id, key'
         });
         d.open();
@@ -66,7 +66,7 @@ export function password(username, password) {
 
     let d = new Dexie(username)
     d.version(1).stores({
-      data: '++id, time, note',
+      data: '++id, date, time, note',
       key: '++id, key'
     });
 
@@ -130,7 +130,7 @@ export function deleteAccount() {
 export function changePass(password) {
   let d = new Dexie(localStorage.getItem('user'))
   d.version(1).stores({
-    data: '++id, time, note',
+    data: '++id, date, time, note',
     key: '++id, key'
   });
 
@@ -155,10 +155,14 @@ export function setNowDate() {
   return {
     type: SET_DATE,
     payload: {
-      stamp: d.format('x'),
-      format: d.format('YYYY-MM-DD hh:mm A')
+      format: d.format('YYYY-MM-DD hh:mm:ss a'),
+      display: d.format('Do MMMM YYYY, hh:mm A')
     }
   }
+}
+
+export function putEntry() {
+
 }
 
 function checkPassword(key, pass) {
