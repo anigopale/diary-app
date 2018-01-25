@@ -4,6 +4,7 @@ import Dmenu from './diary-menu';
 import Mmenu from './mmenu';
 import Settings from './settings';
 import CalendarView from './calendar-view';
+import Editor from './editor';
 import { Link, Route, Switch } from 'react-router-dom';
 import {
   Header,
@@ -55,6 +56,7 @@ export default class Diary extends Component {
       <div>
         <Switch>
           <Route path="/settings" component={Settings} />
+          <Route path="/editor" component={Editor} />
           <Route path="/" component={CalendarView} />
         </Switch>
       </div>

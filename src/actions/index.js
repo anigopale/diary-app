@@ -1,7 +1,8 @@
 import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
+import moment from 'moment';
 import history from './history';
-import { RESET_APP, USER, LOGIN, LOGOUT, DELETE } from './types';
+import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE } from './types';
 
 export function createUserDB(username, password) {
   return function(dispatch) {
@@ -15,7 +16,7 @@ export function createUserDB(username, password) {
         var d = new Dexie(username);
         console.log("creatingDB");
         d.version(1).stores({
-          data: '++id, time, note',
+          data: '++id, date, time, note',
           key: '++id, key'
         });
         d.open();
@@ -31,7 +32,7 @@ export function createUserDB(username, password) {
         });
 
         localStorage.setItem('user', username);
-        localStorage.setItem('key', encrypted.toString());
+        localStorage.setItem('key', phrase.toString());
 
         dispatch({
           type: LOGIN
@@ -65,7 +66,7 @@ export function password(username, password) {
 
     let d = new Dexie(username)
     d.version(1).stores({
-      data: '++id, time, note',
+      data: '++id, date, time, note',
       key: '++id, key'
     });
 
@@ -93,7 +94,7 @@ export function resetApp() {
         Dexie.delete(db);
       })
     });
-    
+
     localStorage.clear();
     dispatch({
       type: LOGOUT
@@ -129,7 +130,7 @@ export function deleteAccount() {
 export function changePass(password) {
   let d = new Dexie(localStorage.getItem('user'))
   d.version(1).stores({
-    data: '++id, time, note',
+    data: '++id, date, time, note',
     key: '++id, key'
   });
 
@@ -146,6 +147,49 @@ export function changePass(password) {
     type: ""
   }
 }
+
+
+export function setNowDate() {
+  var date = moment();
+  history.push('/editor');
+  return {
+    type: SET_DATE,
+    payload: {
+      format: date.format('YYYY-MM-DD hh:mm:ss a'),
+      display: date.format('Do MMMM YYYY, hh:mm A')
+    }
+  }
+}
+
+export function putEntry(date, note) {
+  let db = new Dexie(localStorage.getItem('user'))
+  db.version(1).stores({
+    data: '++id, date, time, note',
+    key: '++id, key'
+  });
+  var d = moment(date);
+
+  var encrypted = CryptoJS.AES.encrypt(
+    `${note}`, localStorage.getItem('key')
+  );
+
+  db.data.put({
+    time: d.format('x'),
+    date: date,
+    note: encrypted.toString(),
+  });
+  history.push('/');
+  return {
+    type: DELETE_DATE
+  }
+}
+
+export function deleteDate() {
+  return {
+    type: DELETE_DATE
+  }
+}
+
 
 function checkPassword(key, pass) {
 
