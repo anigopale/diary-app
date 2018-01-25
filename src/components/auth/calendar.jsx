@@ -166,8 +166,6 @@ export default class Calendar extends Component {
 
 
   render() {
-    console.log(calendar().of(2018, 2));
-    console.log(this.props.year);
     return(
       <div>
         <Segment textAlign="center">

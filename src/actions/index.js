@@ -2,7 +2,7 @@ import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
 import moment from 'moment';
 import history from './history';
-import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE } from './types';
+import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE } from './types';
 
 export function createUserDB(username, password) {
   return function(dispatch) {
@@ -32,7 +32,7 @@ export function createUserDB(username, password) {
         });
 
         localStorage.setItem('user', username);
-        localStorage.setItem('key', encrypted.toString());
+        localStorage.setItem('key', phrase.toString());
 
         dispatch({
           type: LOGIN
@@ -150,20 +150,40 @@ export function changePass(password) {
 
 
 export function setNowDate() {
-  var d = moment();
+  var date = moment();
   history.push('/editor');
   return {
     type: SET_DATE,
     payload: {
-      format: d.format('YYYY-MM-DD hh:mm:ss a'),
-      display: d.format('Do MMMM YYYY, hh:mm A')
+      format: date.format('YYYY-MM-DD hh:mm:ss a'),
+      display: date.format('Do MMMM YYYY, hh:mm A')
     }
   }
 }
 
-export function putEntry() {
+export function putEntry(date, note) {
+  let db = new Dexie(localStorage.getItem('user'))
+  db.version(1).stores({
+    data: '++id, date, time, note',
+    key: '++id, key'
+  });
+  var d = moment(date);
 
+  var encrypted = CryptoJS.AES.encrypt(
+    `${note}`, localStorage.getItem('key')
+  );
+
+  db.data.put({
+    time: d.format('x'),
+    date: date,
+    note: encrypted.toString(),
+  });
+  history.push('/');
+  return {
+    type: DELETE_DATE
+  }
 }
+
 
 function checkPassword(key, pass) {
 

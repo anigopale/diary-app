@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Segment, Container, Grid, Form, Button, Divider } from 'semantic-ui-react';
+import { putEntry } from '../../actions';
 
 class Editor extends Component {
   constructor(props) {
@@ -66,4 +67,4 @@ function mapStateToProps({ date }) {
   return { date };
 }
 
-export default connect(mapStateToProps)(Editor);
+export default connect(mapStateToProps, { putEntry })(Editor);
