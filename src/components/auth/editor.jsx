@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Segment, Container, Grid, Form, Button, Divider } from 'semantic-ui-react';
+import marked from 'marked';
 import { putEntry, deleteDate } from '../../actions';
 
 class Editor extends Component {
@@ -16,6 +17,13 @@ class Editor extends Component {
     else {
       this.props.putEntry(this.state.date, this.state.text)
     }
+  }
+
+  markUp() {
+    let text = marked(this.state.text, {sanitize:true});
+    return {
+      __html: text
+    };
   }
 
   renderDate() {
@@ -43,28 +51,40 @@ class Editor extends Component {
     )
   }
 
+  renderPreview() {
+    return <div dangerouslySetInnerHTML={this.markUp()} />
+  }
+
   render() {
     return (
       <Container>
-        <Segment>
-          <Grid stackable>
+
+          <Grid stackable columns={2}>
             <Grid.Column>
+              <Segment>
+                <Form>
+                  <Form.Field>
+                    <Button onClick={this.handleFormSubmit.bind(this)} secondary>Save</Button>
+                    <Button onClick={() => {this.setState({ text: "" })}}>Clear</Button>
+                  </Form.Field>
 
-              <Form>
-                <Form.Field>
-                  <Button onClick={this.handleFormSubmit.bind(this)} secondary>Save</Button>
-                  <Button onClick={() => {this.setState({ text: "" })}}>Clear</Button>
-                </Form.Field>
+                  {this.renderDate()}
 
-                {this.renderDate()}
-
-                <Form.Field>
-                  <textarea onChange={(event) => {this.setState({ text: event.target.value })}} value={this.state.text} />
-                </Form.Field>
-              </Form>
+                  <Form.Field>
+                    <textarea onChange={(event) => {this.setState({ text: event.target.value })}} value={this.state.text} />
+                  </Form.Field>
+                </Form>
+              </Segment>
             </Grid.Column>
+
+            <Grid.Column>
+              <h2>Preview</h2>
+              {this.renderPreview()}
+            </Grid.Column>
+
+
           </Grid>
-        </Segment>
+
       </Container>
     )
   }
