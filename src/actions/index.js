@@ -156,10 +156,24 @@ export function setNowDate() {
     type: SET_DATE,
     payload: {
       format: date.format('YYYY-MM-DD hh:mm:ss a'),
-      display: date.format('Do MMMM YYYY, hh:mm A')
+      display: date.format('Do MMM YYYY, hh:mm A')
     }
   }
 }
+
+export function setSelectedDate( d, m, y) {
+
+  let time = moment().format('hh:mm:ss a');
+  history.push('/editor');
+  return {
+    type: SET_DATE,
+    payload: {
+      format: moment(`${y}-${m}-${d} ${time}`).format(`YYYY-MM-DD hh:mm:ss a`),
+      display: moment(`${y} ${m} ${d}, ${time}`).format('Do MMM YYYY, hh:mm A')
+    }
+  }
+}
+
 
 export function putEntry(date, note) {
   let db = new Dexie(localStorage.getItem('user'))

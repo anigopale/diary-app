@@ -24,10 +24,10 @@ class Editor extends Component {
   markUp() {
     let date;
     if(this.props.date.format) {
-      date = marked(`## ${moment(this.props.date.format).format('Do MMMM YYYY, hh:mm A')}`, {sanitize: true})
+      date = marked(`${moment(this.props.date.format).format('Do MMM YYYY, hh:mm A')}`, {sanitize: true})
     }
     else {
-      date = marked(`## ${moment(this.state.date).format('Do MMMM YYYY, hh:mm A')}`, {sanitize: true})
+      date = marked(`${moment(this.state.date).format('Do MMM YYYY, hh:mm A')}`, {sanitize: true})
     }
 
     let text = marked(this.state.text, {sanitize: true});
@@ -71,7 +71,7 @@ class Editor extends Component {
 
           <Grid stackable columns={2}>
             <Grid.Column>
-              <Segment>
+              <Segment color="black">
                 <Form>
                   <Form.Field>
                     <Button onClick={this.handleFormSubmit.bind(this)} secondary>Save</Button>
