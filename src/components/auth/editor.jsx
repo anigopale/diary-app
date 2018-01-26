@@ -40,12 +40,12 @@ class Editor extends Component {
     if(this.props.date.format) {
       return (
         <p>
-          <h3 onClick={() => {
+          <p onClick={() => {
               this.setState({ date: this.props.date.format })
               this.props.deleteDate()
             }}>
             {this.props.date.display}
-          </h3>
+          </p>
           (click to edit)
         </p>
       );

@@ -15,7 +15,8 @@ export default class Calendar extends Component {
         m: this.props.month,
         y: this.props.year,
         d: this.props.day
-      }
+      },
+      selected: 0
     }
   }
 
@@ -87,9 +88,19 @@ export default class Calendar extends Component {
         if(d === this.props.day
         && this.state.year === this.state.today.y
         && this.state.month === this.state.today.m )
-          return <Table.Cell active><Header>{d}</Header></Table.Cell>
+          return (
+            <Table.Cell onClick={()=>{this.setState({ selected: d })}}>
+              <Header color="blue">{d}</Header>
+            </Table.Cell>
+          )
 
-        return <Table.Cell>{d}</Table.Cell>
+        return (
+          <Table.Cell
+            onClick={() => {this.setState({ selected: d })}}
+            active={d === this.state.selected}
+            >
+            {d}
+          </Table.Cell>)
       }
       return <Table.Cell></Table.Cell>
     })
