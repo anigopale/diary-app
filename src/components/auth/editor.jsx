@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Segment, Container, Grid, Form, Button, Divider } from 'semantic-ui-react';
 import marked from 'marked';
+import moment from 'moment';
 import { putEntry, deleteDate } from '../../actions';
 
 class Editor extends Component {
@@ -21,9 +22,17 @@ class Editor extends Component {
   }
 
   markUp() {
-    let text = marked(this.state.text, {sanitize:true});
+    let date;
+    if(this.props.date.format) {
+      date = marked(`${moment(this.props.date.format).format('Do MMM YYYY, hh:mm A')}`, {sanitize: true})
+    }
+    else {
+      date = marked(`${moment(this.state.date).format('Do MMM YYYY, hh:mm A')}`, {sanitize: true})
+    }
+
+    let text = marked(this.state.text, {sanitize: true});
     return {
-      __html: text
+      __html: date+text
     };
   }
 
@@ -31,12 +40,12 @@ class Editor extends Component {
     if(this.props.date.format) {
       return (
         <p>
-          <h3 onClick={() => {
+          <p onClick={() => {
               this.setState({ date: this.props.date.format })
               this.props.deleteDate()
             }}>
             {this.props.date.display}
-          </h3>
+          </p>
           (click to edit)
         </p>
       );
@@ -46,7 +55,7 @@ class Editor extends Component {
         <input
           placeholder="ex: 2010-12-31 4:30 PM"
           value={this.state.date}
-          onChange={(event) => {this.setState({ datetime: event.target.value })}}
+          onChange={(event) => {this.setState({ date: event.target.value })}}
           />
       </Form.Field>
     )
@@ -62,7 +71,7 @@ class Editor extends Component {
 
           <Grid stackable columns={2}>
             <Grid.Column>
-              <Segment>
+              <Segment color="black">
                 <Form>
                   <Form.Field>
                     <Button onClick={this.handleFormSubmit.bind(this)} secondary>Save</Button>

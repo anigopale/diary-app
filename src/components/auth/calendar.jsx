@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Table, Grid, Segment, Header, Icon } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Table, Grid, Segment, Header, Icon, Button } from 'semantic-ui-react';
 import calendar from 'calendar-js';
+import { setSelectedDate } from '../../actions';
 
-export default class Calendar extends Component {
+class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
       cal: calendar().of(this.props.year, this.props.month).calendar,
       monthStr: calendar().of(this.props.year, this.props.month).month,
       month: this.props.month,
@@ -15,7 +16,8 @@ export default class Calendar extends Component {
         m: this.props.month,
         y: this.props.year,
         d: this.props.day
-      }
+      },
+      selected: 0
     }
   }
 
@@ -87,9 +89,19 @@ export default class Calendar extends Component {
         if(d === this.props.day
         && this.state.year === this.state.today.y
         && this.state.month === this.state.today.m )
-          return <Table.Cell active><Header>{d}</Header></Table.Cell>
+          return (
+            <Table.Cell onClick={()=>{this.setState({ selected: d })}}>
+              <Header color="blue">{d}</Header>
+            </Table.Cell>
+          )
 
-        return <Table.Cell>{d}</Table.Cell>
+        return (
+          <Table.Cell
+            onClick={() => {this.setState({ selected: d })}}
+            active={d === this.state.selected}
+            >
+            {d}
+          </Table.Cell>)
       }
       return <Table.Cell></Table.Cell>
     })
@@ -171,10 +183,24 @@ export default class Calendar extends Component {
         <Segment textAlign="center">
 
           {this.renderCalendarHead()}
-
+          <Button fluid color="black"
+            disabled={this.state.selected === 0}
+            onClick={() => {
+              this.props.setSelectedDate(this.state.selected, this.state.month + 1, this.state.year)
+            }}
+            >
+            <Icon name="add to calendar" />
+            Add
+          </Button>
           {this.renderCalendarBody()}
+
+
+
         </Segment>
       </div>
     )
   }
 }
+
+
+export default connect(null, { setSelectedDate })(Calendar);
