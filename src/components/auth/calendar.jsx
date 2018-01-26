@@ -83,34 +83,35 @@ class Calendar extends Component {
 
 
   renderDays(week) {
-    return week.map((d) => {
+    return week.map((d, i) => {
       if(d)
       {
         if(d === this.props.day
         && this.state.year === this.state.today.y
         && this.state.month === this.state.today.m )
           return (
-            <Table.Cell onClick={()=>{this.setState({ selected: d })}}>
+            <Table.Cell onClick={()=>{this.setState({ selected: d })}} key={i}>
               <Header color="blue">{d}</Header>
             </Table.Cell>
           )
 
         return (
           <Table.Cell
+            key={i}
             onClick={() => {this.setState({ selected: d })}}
             active={d === this.state.selected}
             >
             {d}
           </Table.Cell>)
       }
-      return <Table.Cell></Table.Cell>
+      return <Table.Cell key={i}></Table.Cell>
     })
   }
 
   renderMonth() {
-    return this.state.cal.map((week) => {
+    return this.state.cal.map((week, i) => {
       return (
-          <Table.Row>
+          <Table.Row key={i}>
             {this.renderDays(week)}
           </Table.Row>
       )
@@ -118,8 +119,8 @@ class Calendar extends Component {
   }
 
   renderWeek() {
-    return this.week.map((day) => {
-      return <Table.HeaderCell>{day}</Table.HeaderCell>
+    return this.week.map((day, i) => {
+      return <Table.HeaderCell key={i}>{day}</Table.HeaderCell>
     })
   }
 
