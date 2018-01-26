@@ -2,7 +2,7 @@ import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
 import moment from 'moment';
 import history from './history';
-import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE, FETCH_DATA } from './types';
+import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE, FETCH_DATA, SELECT_DATA } from './types';
 
 export function createUserDB(username, password) {
   return function(dispatch) {
@@ -227,8 +227,8 @@ export function showSelectedEntry(data) {
   return {
     type: SELECT_DATA,
     payload: {
-      date: date.data,
-      note: decrypt.toString(CryptoJS.enc.Utf8);
+      date: data.date,
+      note: decrypt.toString(CryptoJS.enc.Utf8)
     }
   }
 }

@@ -6,7 +6,7 @@ import { fetchData, showSelectedEntry } from '../../actions';
 class ShowEntries extends Component {
   constructor(props) {
     super(props);
-    this.state = { selected: false, data: {} }
+    this.state = { selected: false }
   }
 
   componentDidMount() {
@@ -17,8 +17,8 @@ class ShowEntries extends Component {
     return (
       <Container>
         <Button onClick={() => {this.setState({ selected: false })}}>Back</Button>
-        <h2>{this.state.data.date}</h2>
-        <p>{this.state.data.note}</p>
+        <h2>{this.props.selected_data.date}</h2>
+        <p>{this.props.selected_data.note}</p>
       </Container>
     )
   }
@@ -27,9 +27,18 @@ class ShowEntries extends Component {
     if(!this.props.data) {
       return <h1>No entries found</h1>
     }
+    if(this.state.selected) {
+      return this.showEntry();
+    }
+
     return this.props.data.map((data) => {
       return (
-        <Segment color="black" onClick={this.props.showSelectedEntry(data)}>
+        <Segment color="black"
+          onClick={() => {
+            this.props.showSelectedEntry(data)
+            this.setState({ selected: true })
+          }}
+          >
           {data.date}
         </Segment>
       )
