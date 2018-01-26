@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Grid, Container, Button, Segment, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Calendar from './calendar';
+import ShowEntries from './show-entries';
 import { setNowDate } from '../../actions';
 
 class CalendarView extends Component {
@@ -47,7 +48,7 @@ class CalendarView extends Component {
 
           <Grid.Column width={11}>
             <Segment>
-
+              <ShowEntries />
             </Segment>
           </Grid.Column>
         </Grid>
