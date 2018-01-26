@@ -5,3 +5,4 @@ export const LOGOUT = 'LOGOUT';
 export const DELETE = 'DELETE';
 export const SET_DATE = 'SET_DATE';
 export const DELETE_DATE = 'DELETE_DATE';
+export const FETCH_DATA = 'FETCH_DATA';

@@ -2,7 +2,7 @@ import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
 import moment from 'moment';
 import history from './history';
-import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE } from './types';
+import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE, FETCH_DATA } from './types';
 
 export function createUserDB(username, password) {
   return function(dispatch) {
@@ -201,6 +201,24 @@ export function putEntry(date, note) {
 export function deleteDate() {
   return {
     type: DELETE_DATE
+  }
+}
+
+export function fetchData() {
+  return function(dispatch) {
+    let db = new Dexie(localStorage.getItem('user'));
+    db.version(1).stores({
+      data: '++id, date, time, note',
+      key: '++id, key'
+    });
+
+    db.data.toArray()
+    .then((data) => {
+      dispatch({
+        type: FETCH_DATA,
+        payload: data
+      })
+    })
   }
 }
 
