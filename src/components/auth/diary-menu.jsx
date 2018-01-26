@@ -11,19 +11,20 @@ class Dmenu extends Component {
   renderItems() {
 
     return [
-      <Link to='/'>
+      <Link to='/' key={1}>
         <Menu.Item
           >
           Home
         </Menu.Item>
       </Link>,
-      <Link to='/settings'>
+      <Link to='/settings' key={2}>
         <Menu.Item
           >
           Settings
         </Menu.Item>
       </Link>,
       <Menu.Item
+        key={3}
         position="right"
         onClick={() => {this.props.logout()}}
         >

@@ -29,7 +29,7 @@ class ResetApp extends Component {
           <p>
             Resetting the app will delete all the data
           </p>
-          <Button basic color="white" inverted onClick={() => {this.props.resetApp()}}>Reset App</Button>
+          <Button basic inverted onClick={() => {this.props.resetApp()}} color="white">Reset App</Button>
         </Container>
       </Segment>
 
