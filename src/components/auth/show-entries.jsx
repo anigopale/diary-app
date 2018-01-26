@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment } from 'semantic-ui-react';
-import { fetchData } from '../../actions';
+import { Segment, Container, Button } from 'semantic-ui-react';
+import { fetchData, showSelectedEntry } from '../../actions';
 
 class ShowEntries extends Component {
   constructor(props) {
     super(props);
-    this.state = { selected: false }
+    this.state = { selected: false, data: {} }
   }
 
   componentDidMount() {
     this.props.fetchData();
+  }
+
+  showEntry() {
+    return (
+      <Container>
+        <Button onClick={() => {this.setState({ selected: false })}}>Back</Button>
+        <h2>{this.state.data.date}</h2>
+        <p>{this.state.data.note}</p>
+      </Container>
+    )
   }
 
   renderEntries() {
@@ -19,7 +29,7 @@ class ShowEntries extends Component {
     }
     return this.props.data.map((data) => {
       return (
-        <Segment>
+        <Segment color="black" onClick={this.props.showSelectedEntry(data)}>
           {data.date}
         </Segment>
       )
@@ -35,8 +45,8 @@ class ShowEntries extends Component {
   }
 }
 
-function mapStateToProps({ data }) {
-  return { data };
+function mapStateToProps({ data, selected_data }) {
+  return { data, selected_data };
 }
 
-export default connect(mapStateToProps, { fetchData })(ShowEntries);
+export default connect(mapStateToProps, { fetchData, showSelectedEntry })(ShowEntries);

@@ -222,6 +222,16 @@ export function fetchData() {
   }
 }
 
+export function showSelectedEntry(data) {
+  var decrypt = CryptoJS.AES.decrypt(data.note, localStorage.getItem('key'));
+  return {
+    type: SELECT_DATA,
+    payload: {
+      date: date.data,
+      note: decrypt.toString(CryptoJS.enc.Utf8);
+    }
+  }
+}
 
 function checkPassword(key, pass) {
 
