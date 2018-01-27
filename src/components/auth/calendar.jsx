@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, Grid, Segment, Header, Icon, Button } from 'semantic-ui-react';
 import calendar from 'calendar-js';
-import { setSelectedDate } from '../../actions';
+import { setSelectedDate, filterEntries } from '../../actions';
 
 class Calendar extends Component {
   constructor(props) {
@@ -104,9 +104,8 @@ class Calendar extends Component {
           <Table.Cell
             key={i}
             onClick={() => {
-              if(this.state.selected)
-                this.setState({ selected: 0 })
-              else this.setState({ selected: d })
+              this.setState({ selected: d })
+              this.props.filterEntries(d, this.state.month + 1, this.state.year)
             }}
             active={d === this.state.selected}
             >
@@ -218,4 +217,4 @@ function mapStateToProps({ calendar }) {
 }
 
 
-export default connect(mapStateToProps, { setSelectedDate })(Calendar);
+export default connect(mapStateToProps, { setSelectedDate, filterEntries })(Calendar);

@@ -175,6 +175,16 @@ export function setSelectedDate( d, m, y) {
   }
 }
 
+export function filterEntries( d, m, y) {
+  console.log(d, m, y);
+  return {
+    type: SET_DATE,
+    payload: {
+      format: moment(`${y}-${m}-${d}`).format(`YYYY-MM-DD`),
+      display: moment(`${y} ${m} ${d}`).format('Do MMM YYYY')
+    }
+  }
+}
 
 export function putEntry(date, note) {
   let db = new Dexie(localStorage.getItem('user'))
@@ -221,7 +231,8 @@ export function fetchData() {
         let dmy = {
           year : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('YYYY'),
           month : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('M'),
-          day : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('D')
+          day : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('D'),
+          dateOnly: moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('YYYY-MM-DD')
         };
 
         newDate.push(moment(d.date).format('YYYY M D'));
@@ -234,8 +245,9 @@ export function fetchData() {
       dispatch({
         type: FETCH_DATA,
         payload: {
-          data: newData,
+          data: _.sortBy(newData, o => o.time),
           date: newDate
+
         }
       })
     })
