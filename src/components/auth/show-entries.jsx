@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment, Container, Button } from 'semantic-ui-react';
+import { Segment, Container, Button, Divider } from 'semantic-ui-react';
 import marked from 'marked';
-import { fetchData, showSelectedEntry } from '../../actions';
+import { fetchData, showSelectedEntry, deleteDate } from '../../actions';
 
 class ShowEntries extends Component {
   constructor(props) {
@@ -26,11 +26,12 @@ class ShowEntries extends Component {
     return (
       <Container text>
         <Button onClick={() => {this.setState({ selected: false })}}>Back</Button>
-        <h2>{this.props.selected_data.date}</h2>
+        <h4>{this.props.selected_data.dateDisplay}, {this.props.selected_data.time}</h4>
+        <Segment basic style={{ minHeight: 270 }}>
         <p
           dangerouslySetInnerHTML={this.markUp(this.props.selected_data.note)}
           />
-
+        </Segment>
       </Container>
     )
   }
@@ -42,6 +43,20 @@ class ShowEntries extends Component {
     if(this.state.selected) {
       return this.showEntry();
     }
+    if(this.props.date.format) {
+      return this.props.data.map(data => {
+        if(this.props.date.format === data.dateOnly) {
+          return <Segment color="black"
+            onClick={() => {
+              this.props.showSelectedEntry(data)
+              this.setState({ selected: true })
+            }}
+            >
+            {data.timeOnly}
+          </Segment>
+        }
+      })
+    }
 
     return this.props.data.map((data) => {
       return (
@@ -51,23 +66,46 @@ class ShowEntries extends Component {
             this.setState({ selected: true })
           }}
           >
-          {data.date}
+          {data.dateDisplay}, {data.timeOnly}
         </Segment>
       )
     })
   }
 
+  renderHead() {
+    if(!this.props.date.display) {
+      return <h2>All Entries</h2>
+    }
+    return (
+      <div>
+        <h2>
+          {this.props.date.display}
+        </h2>
+        <Button
+          color="black"
+          onClick={() => {
+            this.props.deleteDate()
+            this.setState({ selected: false })
+          }}>
+          Show all
+        </Button>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div>
+        {this.renderHead()}
+        <Divider />
         {this.renderEntries()}
       </div>
     )
   }
 }
 
-function mapStateToProps({ data, selected_data }) {
-  return { data, selected_data };
+function mapStateToProps({ data, selected_data, date }) {
+  return { data, selected_data, date };
 }
 
-export default connect(mapStateToProps, { fetchData, showSelectedEntry })(ShowEntries);
+export default connect(mapStateToProps, { fetchData, showSelectedEntry, deleteDate })(ShowEntries);

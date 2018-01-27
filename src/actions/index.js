@@ -175,6 +175,15 @@ export function setSelectedDate( d, m, y) {
   }
 }
 
+export function filterEntries( d, m, y) {
+  return {
+    type: SET_DATE,
+    payload: {
+      format: moment(`${y}-${m}-${d}`).format(`YYYY-MM-DD`),
+      display: moment(`${y} ${m} ${d}`).format('Do MMM YYYY')
+    }
+  }
+}
 
 export function putEntry(date, note) {
   let db = new Dexie(localStorage.getItem('user'))
@@ -209,6 +218,7 @@ export function fetchData() {
   return function(dispatch) {
     let db = new Dexie(localStorage.getItem('user'));
     let newData = [], newDate = [];
+    let tempDate;
 
     db.version(1).stores({
       data: '++id, date, time, note',
@@ -218,10 +228,14 @@ export function fetchData() {
     db.data.toArray()
     .then((data) => {
       data.map(d => {
+        tempDate = moment(d.date, 'YYYY-MM-DD hh:mm:ss a');
         let dmy = {
-          year : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('YYYY'),
-          month : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('M'),
-          day : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('D')
+          year : tempDate.format('YYYY'),
+          month : tempDate.format('M'),
+          day : tempDate.format('D'),
+          dateOnly: tempDate.format('YYYY-MM-DD'),
+          dateDisplay: tempDate.format('YYYY-MMM-DD'),
+          timeOnly: tempDate.format('hh:mm A')
         };
 
         newDate.push(moment(d.date).format('YYYY M D'));
@@ -234,8 +248,9 @@ export function fetchData() {
       dispatch({
         type: FETCH_DATA,
         payload: {
-          data: newData,
+          data: _.sortBy(newData, o => o.time),
           date: newDate
+
         }
       })
     })
@@ -247,7 +262,10 @@ export function showSelectedEntry(data) {
   return {
     type: SELECT_DATA,
     payload: {
+      id: data.id,
       date: data.date,
+      time: data.timeOnly,
+      dateDisplay: data.dateDisplay,
       note: decrypt.toString(CryptoJS.enc.Utf8)
     }
   }
