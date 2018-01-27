@@ -26,7 +26,7 @@ class ShowEntries extends Component {
     return (
       <Container text>
         <Button onClick={() => {this.setState({ selected: false })}}>Back</Button>
-        <h4>{this.props.selected_data.date}, {this.props.selected_data.time}</h4>
+        <h4>{this.props.selected_data.dateDisplay}, {this.props.selected_data.time}</h4>
         <Segment basic style={{ minHeight: 270 }}>
         <p
           dangerouslySetInnerHTML={this.markUp(this.props.selected_data.note)}
@@ -66,7 +66,7 @@ class ShowEntries extends Component {
             this.setState({ selected: true })
           }}
           >
-          {data.dateOnly}, {data.timeOnly}
+          {data.dateDisplay}, {data.timeOnly}
         </Segment>
       )
     })

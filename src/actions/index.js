@@ -234,6 +234,7 @@ export function fetchData() {
           month : tempDate.format('M'),
           day : tempDate.format('D'),
           dateOnly: tempDate.format('YYYY-MM-DD'),
+          dateDisplay: tempDate.format('YYYY-MMM-DD'),
           timeOnly: tempDate.format('hh:mm A')
         };
 
@@ -261,8 +262,10 @@ export function showSelectedEntry(data) {
   return {
     type: SELECT_DATA,
     payload: {
-      date: data.dateOnly,
+      id: data.id,
+      date: data.date,
       time: data.timeOnly,
+      dateDisplay: data.dateDisplay,
       note: decrypt.toString(CryptoJS.enc.Utf8)
     }
   }
