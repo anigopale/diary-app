@@ -42,6 +42,20 @@ class ShowEntries extends Component {
     if(this.state.selected) {
       return this.showEntry();
     }
+    if(this.props.date.format) {
+      return this.props.data.map(data => {
+        if(this.props.date.format === data.dateOnly) {
+          return <Segment color="black"
+            onClick={() => {
+              this.props.showSelectedEntry(data)
+              this.setState({ selected: true })
+            }}
+            >
+            {data.timeOnly}
+          </Segment>
+        }
+      })
+    }
 
     return this.props.data.map((data) => {
       return (
@@ -60,14 +74,18 @@ class ShowEntries extends Component {
   render() {
     return (
       <div>
+        <h2>
+          {this.props.date.display}
+        </h2>
         {this.renderEntries()}
       </div>
     )
   }
 }
 
-function mapStateToProps({ data, selected_data }) {
-  return { data, selected_data };
+function mapStateToProps({ data, selected_data, date }) {
+  console.log(selected_data);
+  return { data, selected_data, date };
 }
 
 export default connect(mapStateToProps, { fetchData, showSelectedEntry })(ShowEntries);
