@@ -2,6 +2,7 @@ import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
 import moment from 'moment';
 import history from './history';
+import _ from 'lodash';
 import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE, FETCH_DATA, SELECT_DATA } from './types';
 
 export function createUserDB(username, password) {
@@ -207,6 +208,8 @@ export function deleteDate() {
 export function fetchData() {
   return function(dispatch) {
     let db = new Dexie(localStorage.getItem('user'));
+    let newData = [], newDate = [];
+
     db.version(1).stores({
       data: '++id, date, time, note',
       key: '++id, key'
@@ -214,9 +217,26 @@ export function fetchData() {
 
     db.data.toArray()
     .then((data) => {
+      data.map(d => {
+        let dmy = {
+          year : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('YYYY'),
+          month : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('M'),
+          day : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('D')
+        };
+
+        newDate.push(moment(d.date).format('YYYY M D'));
+
+        newData.push(
+          _.merge(d, dmy)
+        );
+      });
+      console.log(newData);
       dispatch({
         type: FETCH_DATA,
-        payload: data
+        payload: {
+          data: newData,
+          date: newDate
+        }
       })
     })
   }
