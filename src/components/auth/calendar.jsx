@@ -81,39 +81,38 @@ class Calendar extends Component {
     }
   }
 
+  renderDay(d) {
+    if(d === this.props.day
+        && this.state.year === this.state.today.y
+        && this.state.month === this.state.today.m )
+          return (
+              <Header color="teal" as="h3" content={d} />
+          )
+
+      if(this.props.calendar.includes(`${this.state.year} ${this.state.month + 1} ${d}`)) {
+        return <Header color="green" as="h4" icon="calendar" />
+      }
+
+    return <Header as="h4" content={d} color="grey" />
+  }
 
   renderDays(week) {
     return week.map((d, i) => {
       if(d)
       {
-        if(d === this.props.day
-        && this.state.year === this.state.today.y
-        && this.state.month === this.state.today.m )
-          return (
-            <Table.Cell onClick={()=>{this.setState({ selected: d })}} key={i}>
-              <Header color="teal" as="h3" content={d} />
-            </Table.Cell>
-          )
-        if(this.props.calendar.includes(`${this.state.year} ${this.state.month + 1} ${d}`)) {
-          return (
-            <Table.Cell
-              key={i}
-              onClick={() => {this.setState({ selected: d })}}
-              active={d === this.state.selected}
-              >
-                <Header color="green" as="h4" icon="calendar" />
-            </Table.Cell>
-          )
-        }
-
         return (
           <Table.Cell
             key={i}
-            onClick={() => {this.setState({ selected: d })}}
+            onClick={() => {
+              if(this.state.selected)
+                this.setState({ selected: 0 })
+              else this.setState({ selected: d })
+            }}
             active={d === this.state.selected}
             >
-            <Header as="h4" content={d} color="grey" />
-          </Table.Cell>)
+            {this.renderDay(d)}
+          </Table.Cell>
+        )
       }
       return <Table.Cell key={i}></Table.Cell>
     })
