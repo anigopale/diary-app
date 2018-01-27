@@ -26,11 +26,12 @@ class ShowEntries extends Component {
     return (
       <Container text>
         <Button onClick={() => {this.setState({ selected: false })}}>Back</Button>
-        <h2>{this.props.selected_data.date}, {this.props.selected_data.time}</h2>
+        <h4>{this.props.selected_data.date}, {this.props.selected_data.time}</h4>
+        <Segment basic style={{ minHeight: 270 }}>
         <p
           dangerouslySetInnerHTML={this.markUp(this.props.selected_data.note)}
           />
-
+        </Segment>
       </Container>
     )
   }
@@ -73,14 +74,21 @@ class ShowEntries extends Component {
 
   renderHead() {
     if(!this.props.date.display) {
-      return <h2>Your Entries</h2>
+      return <h2>All Entries</h2>
     }
     return (
       <div>
         <h2>
           {this.props.date.display}
         </h2>
-        <Button color="black" onClick={() => {this.props.deleteDate()}}>Show all</Button>
+        <Button
+          color="black"
+          onClick={() => {
+            this.props.deleteDate()
+            this.setState({ selected: false })
+          }}>
+          Show all
+        </Button>
       </div>
     )
   }
