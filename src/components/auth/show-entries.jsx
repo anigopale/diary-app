@@ -62,6 +62,7 @@ class ShowEntries extends Component {
     return this.props.data.map((data) => {
       return (
         <Segment color="black"
+          style={{ cursor: "pointer" }}
           onClick={() => {
             this.props.showSelectedEntry(data)
             this.setState({ selected: true })

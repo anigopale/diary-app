@@ -108,6 +108,7 @@ class Calendar extends Component {
               this.props.filterEntries(d, this.state.month + 1, this.state.year)
             }}
             active={d === this.state.selected}
+            style={{ cursor: "pointer" }}
             >
             {this.renderDay(d)}
           </Table.Cell>
@@ -154,7 +155,7 @@ class Calendar extends Component {
       <Table celled color="black" textAlign="center" unstackable fixed>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell onClick={this.downYear.bind(this)}>
+            <Table.HeaderCell onClick={this.downYear.bind(this)} style={{ cursor: "pointer" }}>
               <Icon name="chevron left" />
             </Table.HeaderCell>
 
@@ -162,13 +163,13 @@ class Calendar extends Component {
               {this.state.year}
             </Table.HeaderCell>
 
-            <Table.HeaderCell onClick={this.upYear.bind(this)}>
+            <Table.HeaderCell onClick={this.upYear.bind(this)} style={{ cursor: "pointer" }}>
               <Icon name="chevron right" />
             </Table.HeaderCell>
           </Table.Row>
 
           <Table.Row>
-            <Table.HeaderCell onClick={this.downMonth.bind(this)}>
+            <Table.HeaderCell onClick={this.downMonth.bind(this)} style={{ cursor: "pointer" }}>
               <Icon name="chevron left" />
             </Table.HeaderCell>
 
@@ -176,7 +177,7 @@ class Calendar extends Component {
               {this.state.monthStr}
             </Table.HeaderCell>
 
-            <Table.HeaderCell onClick={this.upMonth.bind(this)}>
+            <Table.HeaderCell onClick={this.upMonth.bind(this)} style={{ cursor: "pointer" }}>
               <Icon name="chevron right" />
             </Table.HeaderCell>
           </Table.Row>
