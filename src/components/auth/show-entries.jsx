@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment, Container, Button } from 'semantic-ui-react';
+import { Segment, Container, Button, Divider } from 'semantic-ui-react';
 import marked from 'marked';
-import { fetchData, showSelectedEntry } from '../../actions';
+import { fetchData, showSelectedEntry, deleteDate } from '../../actions';
 
 class ShowEntries extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class ShowEntries extends Component {
     return (
       <Container text>
         <Button onClick={() => {this.setState({ selected: false })}}>Back</Button>
-        <h2>{this.props.selected_data.date}</h2>
+        <h2>{this.props.selected_data.date}, {this.props.selected_data.time}</h2>
         <p
           dangerouslySetInnerHTML={this.markUp(this.props.selected_data.note)}
           />
@@ -65,18 +65,31 @@ class ShowEntries extends Component {
             this.setState({ selected: true })
           }}
           >
-          {data.date}
+          {data.dateOnly}, {data.timeOnly}
         </Segment>
       )
     })
   }
 
-  render() {
+  renderHead() {
+    if(!this.props.date.display) {
+      return <h2>Your Entries</h2>
+    }
     return (
       <div>
         <h2>
           {this.props.date.display}
         </h2>
+        <Button color="black" onClick={() => {this.props.deleteDate()}}>Show all</Button>
+      </div>
+    )
+  }
+
+  render() {
+    return (
+      <div>
+        {this.renderHead()}
+        <Divider />
         {this.renderEntries()}
       </div>
     )
@@ -84,8 +97,7 @@ class ShowEntries extends Component {
 }
 
 function mapStateToProps({ data, selected_data, date }) {
-  console.log(selected_data);
   return { data, selected_data, date };
 }
 
-export default connect(mapStateToProps, { fetchData, showSelectedEntry })(ShowEntries);
+export default connect(mapStateToProps, { fetchData, showSelectedEntry, deleteDate })(ShowEntries);

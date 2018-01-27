@@ -261,7 +261,8 @@ export function showSelectedEntry(data) {
   return {
     type: SELECT_DATA,
     payload: {
-      date: data.date,
+      date: data.dateOnly,
+      time: data.timeOnly,
       note: decrypt.toString(CryptoJS.enc.Utf8)
     }
   }
