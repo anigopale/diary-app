@@ -232,8 +232,10 @@ export function fetchData() {
       console.log(newData);
       dispatch({
         type: FETCH_DATA,
-        payload: newData,
-        date: newDate
+        payload: {
+          data: newData,
+          date: newDate
+        }
       })
     })
   }
