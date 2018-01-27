@@ -220,10 +220,11 @@ export function fetchData() {
       data.map(d => {
         let dmy = {
           year : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('YYYY'),
-          month : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('MM'),
-          day : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('DD')
+          month : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('M'),
+          day : moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('D')
         };
-        newDate.push(dmy);
+
+        newDate.push(moment(d.date).format('YYYY M D'));
 
         newData.push(
           _.merge(d, dmy)
