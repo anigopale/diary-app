@@ -42,7 +42,7 @@ export default class Mmenu extends Component {
                 Log out
               </Menu.Item>
             </Sidebar>
-        
+
 
             <Sidebar.Pusher>
               <Segment basic>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Menu, Sidebar, Segment, Button } from 'semantic-ui-react';
+import { Menu, Sidebar, Segment, Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { logout } from '../../actions';
 
@@ -14,13 +14,13 @@ class Dmenu extends Component {
       <Link to='/' key={1}>
         <Menu.Item
           >
-          Home
+          <Icon name="home" />Home
         </Menu.Item>
       </Link>,
       <Link to='/settings' key={2}>
         <Menu.Item
           >
-          Settings
+          <Icon name="settings" />Settings
         </Menu.Item>
       </Link>,
       <Menu.Item
@@ -28,7 +28,7 @@ class Dmenu extends Component {
         position="right"
         onClick={() => {this.props.logout()}}
         >
-        Log out
+        <Icon name="log out" />Logout
       </Menu.Item>
     ];
 

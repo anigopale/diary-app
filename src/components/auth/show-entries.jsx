@@ -26,6 +26,11 @@ class ShowEntries extends Component {
     return (
       <Container text>
         <Button onClick={() => {this.setState({ selected: false })}}>Back</Button>
+        <Button.Group floated='right'>
+          <Button>Edit</Button>
+          <Button.Or />
+          <Button>Delete</Button>
+        </Button.Group>
         <h4>{this.props.selected_data.dateDisplay}, {this.props.selected_data.time}</h4>
         <Divider />
         <Segment basic style={{ minHeight: 270 }}>
