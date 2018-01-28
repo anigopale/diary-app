@@ -3,7 +3,7 @@ import CryptoJS from 'crypto-js';
 import moment from 'moment';
 import history from './history';
 import _ from 'lodash';
-import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE, FETCH_DATA, SELECT_DATA, DELETE_SELECTED, SET_FILTER } from './types';
+import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE, FETCH_DATA, SELECT_DATA, DELETE_SELECTED, SET_FILTER, DELETE_FILTER } from './types';
 
 export function createUserDB(username, password) {
   return function(dispatch) {
@@ -250,6 +250,12 @@ export function putEntry(date, note, id) {
 export function deleteDate() {
   return {
     type: DELETE_DATE
+  }
+}
+
+export function deleteFilter() {
+  return {
+    type: DELETE_FILTER
   }
 }
 

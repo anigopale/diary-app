@@ -1,11 +1,11 @@
-import { SET_FILTER, LOGOUT, DELETE_DATE } from '../actions/types';
+import { SET_FILTER, LOGOUT, DELETE_FILTER } from '../actions/types';
 
 export default function(state = {}, action) {
   switch (action.type) {
     case SET_FILTER:
       return action.payload;
       break;
-    case DELETE_DATE:
+    case DELETE_FILTER:
       return {};
       break;
     case LOGOUT:
