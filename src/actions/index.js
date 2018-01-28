@@ -175,6 +175,25 @@ export function setSelectedDate( d, m, y) {
   }
 }
 
+export function setEditorData(date, note) {
+  return function(dispatch) {
+    history.push('/editor');
+    dispatch({
+      type: SET_DATE,
+      payload: {
+        format: date,
+        display: moment(date).format('Do MMM YYYY, hh:mm A')
+      }
+    })
+  }
+}
+
+export function removeSelected() {
+  return {
+    type: DELETE_SELECTED
+  }
+}
+
 export function filterEntries( d, m, y) {
   return {
     type: SET_DATE,
@@ -185,7 +204,7 @@ export function filterEntries( d, m, y) {
   }
 }
 
-export function putEntry(date, note) {
+export function putEntry(date, note, id) {
   let db = new Dexie(localStorage.getItem('user'))
   db.version(1).stores({
     data: '++id, date, time, note',
@@ -196,6 +215,14 @@ export function putEntry(date, note) {
   var encrypted = CryptoJS.AES.encrypt(
     `${note}`, localStorage.getItem('key')
   );
+  if(id) {
+    db.data.put({
+      id: id,
+      time: d.format('x'),
+      date: date,
+      note: encrypted.toString(),
+    });
+  }
 
   db.data.put({
     time: d.format('x'),
@@ -252,6 +279,9 @@ export function fetchData() {
           date: newDate
 
         }
+      })
+      dispatch({
+        type: DELETE_SELECTED
       })
     })
   }
