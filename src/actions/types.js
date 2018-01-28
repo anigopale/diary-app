@@ -8,3 +8,4 @@ export const DELETE_DATE = 'DELETE_DATE';
 export const FETCH_DATA = 'FETCH_DATA';
 export const SELECT_DATA = 'SELECT_DATA';
 export const DELETE_SELECTED = 'DELETE_SELECTED';
+export const SET_FILTER = 'SET_FILTER';

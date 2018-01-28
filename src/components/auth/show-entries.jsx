@@ -12,7 +12,11 @@ class ShowEntries extends Component {
 
   componentDidMount() {
     this.props.fetchData();
+    if(this.props.selected_data.id) {
+      this.setState({ selected: true })
+    }
   }
+
 
   markUp(note) {
 
@@ -65,9 +69,9 @@ class ShowEntries extends Component {
     if(this.state.selected) {
       return this.showEntry();
     }
-    if(this.props.date.format) {
+    if(this.props.date_filter.format) {
       return this.props.data.map(data => {
-        if(this.props.date.format === data.dateOnly) {
+        if(this.props.date_filter.format === data.dateOnly) {
           return <Segment color="black"
             onClick={() => {
               this.props.showSelectedEntry(data)
@@ -97,7 +101,7 @@ class ShowEntries extends Component {
 
   renderHead() {
     if(!this.state.selected) {
-      if(!this.props.date.display) {
+      if(!this.props.date_filter.display) {
         return (
           <div>
             <h2>All Entries</h2>
@@ -108,7 +112,7 @@ class ShowEntries extends Component {
       return (
         <div>
           <h2>
-            {this.props.date.display}
+            {this.props.date_filter.display}
           </h2>
           <Button
             color="black"
@@ -134,8 +138,8 @@ class ShowEntries extends Component {
   }
 }
 
-function mapStateToProps({ data, selected_data, date }) {
-  return { data, selected_data, date };
+function mapStateToProps({ data, selected_data, date_filter }) {
+  return { data, selected_data, date_filter };
 }
 
 export default connect(mapStateToProps, { fetchData, showSelectedEntry, deleteDate, deleteEntry, setEditorData, removeSelected })(ShowEntries);
