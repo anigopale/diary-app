@@ -12,9 +12,6 @@ class ShowEntries extends Component {
 
   componentDidMount() {
     this.props.fetchData();
-    if(this.props.selected_data.id) {
-      this.setState({ selected: true })
-    }
   }
 
 
