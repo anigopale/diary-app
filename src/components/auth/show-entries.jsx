@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Segment, Container, Button, Divider } from 'semantic-ui-react';
 import marked from 'marked';
-import { fetchData, showSelectedEntry, deleteDate } from '../../actions';
+import { fetchData, showSelectedEntry, deleteFilter, deleteEntry, setEditorData, removeSelected } from '../../actions';
 
 class ShowEntries extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class ShowEntries extends Component {
   componentDidMount() {
     this.props.fetchData();
   }
+
 
   markUp(note) {
 
@@ -25,7 +26,28 @@ class ShowEntries extends Component {
   showEntry() {
     return (
       <Container text>
-        <Button onClick={() => {this.setState({ selected: false })}}>Back</Button>
+        <Button
+          onClick={() => {
+            this.setState({ selected: false })
+          }}>
+          Back
+        </Button>
+        <Button.Group floated='right'>
+          <Button onClick={() => {
+              this.props.setEditorData(this.props.selected_data.date)
+            }}>
+            Edit
+          </Button>
+          <Button.Or />
+          <Button
+            onClick={() => {
+              this.props.deleteEntry(this.props.selected_data.id)
+              this.props.fetchData()
+              this.setState({ selected: false })
+            }}>
+            Delete
+          </Button>
+        </Button.Group>
         <h4>{this.props.selected_data.dateDisplay}, {this.props.selected_data.time}</h4>
         <Divider />
         <Segment basic style={{ minHeight: 270 }}>
@@ -44,10 +66,11 @@ class ShowEntries extends Component {
     if(this.state.selected) {
       return this.showEntry();
     }
-    if(this.props.date.format) {
+    if(this.props.date_filter.format) {
       return this.props.data.map(data => {
-        if(this.props.date.format === data.dateOnly) {
+        if(this.props.date_filter.format === data.dateOnly) {
           return <Segment color="black"
+            style={{ cursor: "pointer" }}
             onClick={() => {
               this.props.showSelectedEntry(data)
               this.setState({ selected: true })
@@ -62,6 +85,7 @@ class ShowEntries extends Component {
     return this.props.data.map((data) => {
       return (
         <Segment color="black"
+          style={{ cursor: "pointer" }}
           onClick={() => {
             this.props.showSelectedEntry(data)
             this.setState({ selected: true })
@@ -75,7 +99,7 @@ class ShowEntries extends Component {
 
   renderHead() {
     if(!this.state.selected) {
-      if(!this.props.date.display) {
+      if(!this.props.date_filter.display) {
         return (
           <div>
             <h2>All Entries</h2>
@@ -86,12 +110,12 @@ class ShowEntries extends Component {
       return (
         <div>
           <h2>
-            {this.props.date.display}
+            {this.props.date_filter.display}
           </h2>
           <Button
             color="black"
             onClick={() => {
-              this.props.deleteDate()
+              this.props.deleteFilter()
               this.setState({ selected: false })
             }}>
             Show all
@@ -112,8 +136,8 @@ class ShowEntries extends Component {
   }
 }
 
-function mapStateToProps({ data, selected_data, date }) {
-  return { data, selected_data, date };
+function mapStateToProps({ data, selected_data, date_filter }) {
+  return { data, selected_data, date_filter };
 }
 
-export default connect(mapStateToProps, { fetchData, showSelectedEntry, deleteDate })(ShowEntries);
+export default connect(mapStateToProps, { fetchData, showSelectedEntry, deleteFilter, deleteEntry, setEditorData, removeSelected })(ShowEntries);

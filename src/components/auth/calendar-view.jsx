@@ -41,9 +41,6 @@ class CalendarView extends Component {
               month={this.state.month - 1}
               day={this.state.day}
               />
-            <Segment>
-
-            </Segment>
           </Grid.Column>
 
           <Grid.Column width={11}>

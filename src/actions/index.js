@@ -3,7 +3,7 @@ import CryptoJS from 'crypto-js';
 import moment from 'moment';
 import history from './history';
 import _ from 'lodash';
-import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE, FETCH_DATA, SELECT_DATA } from './types';
+import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE, FETCH_DATA, SELECT_DATA, DELETE_SELECTED, SET_FILTER, DELETE_FILTER } from './types';
 
 export function createUserDB(username, password) {
   return function(dispatch) {
@@ -151,33 +151,61 @@ export function changePass(password) {
 
 
 export function setNowDate() {
-  var date = moment();
-  history.push('/editor');
-  return {
-    type: SET_DATE,
-    payload: {
-      format: date.format('YYYY-MM-DD hh:mm:ss a'),
-      display: date.format('Do MMM YYYY, hh:mm A')
-    }
+  return function(dispatch) {
+    var date = moment();
+    history.push('/editor');
+    dispatch({
+      type: SET_DATE,
+      payload: {
+        format: date.format('YYYY-MM-DD hh:mm:ss a'),
+        display: date.format('Do MMM YYYY, hh:mm A')
+      }
+    })
+    dispatch({
+      type: DELETE_SELECTED
+    })
   }
 }
 
 export function setSelectedDate( d, m, y) {
+  return function(dispatch) {
+    let time = moment().format('hh:mm:ss a');
+    history.push('/editor');
+    dispatch({
+      type: SET_DATE,
+      payload: {
+        format: moment(`${y}-${m}-${d} ${time}`).format(`YYYY-MM-DD hh:mm:ss a`),
+        display: moment(`${y} ${m} ${d}, ${time}`).format('Do MMM YYYY, hh:mm A')
+      }
+    })
+    dispatch({
+      type: DELETE_SELECTED
+    })
+  }
+}
 
-  let time = moment().format('hh:mm:ss a');
-  history.push('/editor');
+export function setEditorData(date, note) {
+  return function(dispatch) {
+    history.push('/editor');
+    dispatch({
+      type: SET_DATE,
+      payload: {
+        format: date,
+        display: moment(date).format('Do MMM YYYY, hh:mm A')
+      }
+    })
+  }
+}
+
+export function removeSelected() {
   return {
-    type: SET_DATE,
-    payload: {
-      format: moment(`${y}-${m}-${d} ${time}`).format(`YYYY-MM-DD hh:mm:ss a`),
-      display: moment(`${y} ${m} ${d}, ${time}`).format('Do MMM YYYY, hh:mm A')
-    }
+    type: DELETE_SELECTED
   }
 }
 
 export function filterEntries( d, m, y) {
   return {
-    type: SET_DATE,
+    type: SET_FILTER,
     payload: {
       format: moment(`${y}-${m}-${d}`).format(`YYYY-MM-DD`),
       display: moment(`${y} ${m} ${d}`).format('Do MMM YYYY')
@@ -185,7 +213,7 @@ export function filterEntries( d, m, y) {
   }
 }
 
-export function putEntry(date, note) {
+export function putEntry(date, note, id) {
   let db = new Dexie(localStorage.getItem('user'))
   db.version(1).stores({
     data: '++id, date, time, note',
@@ -196,12 +224,23 @@ export function putEntry(date, note) {
   var encrypted = CryptoJS.AES.encrypt(
     `${note}`, localStorage.getItem('key')
   );
+  if(id) {
+    db.data.put({
+      id: id,
+      time: d.format('x'),
+      date: date,
+      note: encrypted.toString(),
+    });
+  }
+  else {
+    db.data.put({
+      time: d.format('x'),
+      date: date,
+      note: encrypted.toString(),
+    });
+  }
 
-  db.data.put({
-    time: d.format('x'),
-    date: date,
-    note: encrypted.toString(),
-  });
+
   history.push('/');
   return {
     type: DELETE_DATE
@@ -211,6 +250,12 @@ export function putEntry(date, note) {
 export function deleteDate() {
   return {
     type: DELETE_DATE
+  }
+}
+
+export function deleteFilter() {
+  return {
+    type: DELETE_FILTER
   }
 }
 
@@ -253,6 +298,9 @@ export function fetchData() {
 
         }
       })
+      // dispatch({
+      //   type: DELETE_SELECTED
+      // })
     })
   }
 }
@@ -268,6 +316,19 @@ export function showSelectedEntry(data) {
       dateDisplay: data.dateDisplay,
       note: decrypt.toString(CryptoJS.enc.Utf8)
     }
+  }
+}
+
+export function deleteEntry(id) {
+  let db = new Dexie(localStorage.getItem('user'));
+  db.version(1).stores({
+    data: '++id, date, time, note',
+    key: '++id, key'
+  });
+
+  db.data.delete(id);
+  return {
+    type: DELETE_SELECTED
   }
 }
 

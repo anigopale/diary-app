@@ -5,6 +5,7 @@ import date from './date-reducer';
 import data from './data-reducer';
 import selected_data from './selected-data-reducer';
 import calendar from './calendar-reducer';
+import date_filter from './date-filter-reducer';
 
 const rootReducer = combineReducers({
   user,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   date,
   data,
   selected_data,
-  calendar
+  calendar,
+  date_filter
 });
 
 export default rootReducer;
