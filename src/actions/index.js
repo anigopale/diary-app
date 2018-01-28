@@ -151,27 +151,36 @@ export function changePass(password) {
 
 
 export function setNowDate() {
-  var date = moment();
-  history.push('/editor');
-  return {
-    type: SET_DATE,
-    payload: {
-      format: date.format('YYYY-MM-DD hh:mm:ss a'),
-      display: date.format('Do MMM YYYY, hh:mm A')
-    }
+  return function(dispatch) {
+    var date = moment();
+    history.push('/editor');
+    dispatch({
+      type: SET_DATE,
+      payload: {
+        format: date.format('YYYY-MM-DD hh:mm:ss a'),
+        display: date.format('Do MMM YYYY, hh:mm A')
+      }
+    })
+    dispatch({
+      type: DELETE_SELECTED
+    })
   }
 }
 
 export function setSelectedDate( d, m, y) {
-
-  let time = moment().format('hh:mm:ss a');
-  history.push('/editor');
-  return {
-    type: SET_DATE,
-    payload: {
-      format: moment(`${y}-${m}-${d} ${time}`).format(`YYYY-MM-DD hh:mm:ss a`),
-      display: moment(`${y} ${m} ${d}, ${time}`).format('Do MMM YYYY, hh:mm A')
-    }
+  return function(dispatch) {
+    let time = moment().format('hh:mm:ss a');
+    history.push('/editor');
+    dispatch({
+      type: SET_DATE,
+      payload: {
+        format: moment(`${y}-${m}-${d} ${time}`).format(`YYYY-MM-DD hh:mm:ss a`),
+        display: moment(`${y} ${m} ${d}, ${time}`).format('Do MMM YYYY, hh:mm A')
+      }
+    })
+    dispatch({
+      type: DELETE_SELECTED
+    })
   }
 }
 
@@ -223,12 +232,15 @@ export function putEntry(date, note, id) {
       note: encrypted.toString(),
     });
   }
+  else {
+    db.data.put({
+      time: d.format('x'),
+      date: date,
+      note: encrypted.toString(),
+    });
+  }
 
-  db.data.put({
-    time: d.format('x'),
-    date: date,
-    note: encrypted.toString(),
-  });
+
   history.push('/');
   return {
     type: DELETE_DATE

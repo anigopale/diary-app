@@ -13,13 +13,17 @@ class Editor extends Component {
   }
 
   componentDidMount() {
-    if(this.props.selected_data.date)
-      this.setState({ text: this.props.selected_data.note });
+    if(this.props.selected_data.id) {
+      this.setState({
+        text: this.props.selected_data.note,
+        date: this.props.selected_data.date
+      });
+    }
   }
 
   handleFormSubmit() {
-    if(this.props.selected_data) {
-      this.props.putEntry(this.props.date.format, this.state.text, this.props.selected_data.id);
+    if(this.props.selected_data.id) {
+      this.props.putEntry(this.state.date, this.state.text, this.props.selected_data.id);
       return;
     }
     if(this.props.date.format) {

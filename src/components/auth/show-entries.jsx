@@ -27,7 +27,6 @@ class ShowEntries extends Component {
       <Container text>
         <Button
           onClick={() => {
-            this.props.removeSelected()
             this.setState({ selected: false })
           }}>
           Back
@@ -75,6 +74,7 @@ class ShowEntries extends Component {
               this.setState({ selected: true })
             }}
             >
+            {data.id}:
             {data.timeOnly}
           </Segment>
         }
@@ -90,7 +90,7 @@ class ShowEntries extends Component {
             this.setState({ selected: true })
           }}
           >
-          {data.dateDisplay}, {data.timeOnly}
+          {data.id}:{data.dateDisplay}, {data.timeOnly}
         </Segment>
       )
     })
