@@ -74,7 +74,6 @@ class ShowEntries extends Component {
               this.setState({ selected: true })
             }}
             >
-            {data.id}:
             {data.timeOnly}
           </Segment>
         }
@@ -90,7 +89,7 @@ class ShowEntries extends Component {
             this.setState({ selected: true })
           }}
           >
-          {data.id}:{data.dateDisplay}, {data.timeOnly}
+          {data.dateDisplay}, {data.timeOnly}
         </Segment>
       )
     })
