@@ -293,7 +293,7 @@ export function fetchData() {
       dispatch({
         type: FETCH_DATA,
         payload: {
-          data: _.sortBy(newData, o => o.time),
+          data: _.sortBy(newData, o => parseInt(o.time)),
           date: newDate
 
         }
