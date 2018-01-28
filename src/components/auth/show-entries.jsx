@@ -70,6 +70,7 @@ class ShowEntries extends Component {
       return this.props.data.map(data => {
         if(this.props.date_filter.format === data.dateOnly) {
           return <Segment color="black"
+            style={{ cursor: "pointer" }}
             onClick={() => {
               this.props.showSelectedEntry(data)
               this.setState({ selected: true })
