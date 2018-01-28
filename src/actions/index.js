@@ -3,7 +3,7 @@ import CryptoJS from 'crypto-js';
 import moment from 'moment';
 import history from './history';
 import _ from 'lodash';
-import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE, FETCH_DATA, SELECT_DATA } from './types';
+import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE, FETCH_DATA, SELECT_DATA, DELETE_SELECTED } from './types';
 
 export function createUserDB(username, password) {
   return function(dispatch) {
@@ -268,6 +268,19 @@ export function showSelectedEntry(data) {
       dateDisplay: data.dateDisplay,
       note: decrypt.toString(CryptoJS.enc.Utf8)
     }
+  }
+}
+
+export function deleteEntry(id) {
+  let db = new Dexie(localStorage.getItem('user'));
+  db.version(1).stores({
+    data: '++id, date, time, note',
+    key: '++id, key'
+  });
+
+  db.data.delete(id);
+  return {
+    type: DELETE_SELECTED
   }
 }
 

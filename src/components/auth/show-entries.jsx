@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Segment, Container, Button, Divider } from 'semantic-ui-react';
 import marked from 'marked';
-import { fetchData, showSelectedEntry, deleteDate } from '../../actions';
+import { fetchData, showSelectedEntry, deleteDate, deleteEntry } from '../../actions';
 
 class ShowEntries extends Component {
   constructor(props) {
@@ -29,7 +29,14 @@ class ShowEntries extends Component {
         <Button.Group floated='right'>
           <Button>Edit</Button>
           <Button.Or />
-          <Button>Delete</Button>
+          <Button
+            onClick={() => {
+              this.props.deleteEntry(this.props.selected_data.id)
+              this.props.fetchData()
+              this.setState({ selected: false })
+            }}>
+            Delete
+          </Button>
         </Button.Group>
         <h4>{this.props.selected_data.dateDisplay}, {this.props.selected_data.time}</h4>
         <Divider />
@@ -122,4 +129,4 @@ function mapStateToProps({ data, selected_data, date }) {
   return { data, selected_data, date };
 }
 
-export default connect(mapStateToProps, { fetchData, showSelectedEntry, deleteDate })(ShowEntries);
+export default connect(mapStateToProps, { fetchData, showSelectedEntry, deleteDate, deleteEntry })(ShowEntries);
