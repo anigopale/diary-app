@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { saveAs } from 'file-saver';
 import { Button } from 'semantic-ui-react';
 import { fetchData } from '../../actions';
 
@@ -12,14 +13,18 @@ class ExportCal extends Component {
   exportCal() {
     let ical_begin = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//DiaryApp//\n`
     let ical_end = `END:VCALENDAR`;
+    let filename = `${localStorage.getItem('user')}_diary`
     let ical_events = '';
     this.props.data.map((d) => {
       let date = moment(d.time, 'x').format('YYYYMMDD');
       let time = moment(d.time, 'x').format('HHmmss');
       let dtstamp = `${date}T${time}Z`;
-      ical_events = ical_events + `BEGIN:VEVENT\nUID:${localStorage.getItem('user')}\nDTSTAMP:${dtstamp}\nSUMMARY:${d.note}\nEND:VEVENT\n`;
+      let note = d.note.replace(/(\r\n|\n|\r)/gm," ");
+      ical_events = ical_events + `BEGIN:VEVENT\nUID:${localStorage.getItem('user')}\nDTSTAMP:${dtstamp}\nDTSTART:${dtstamp}\nDTEND:${dtstamp}\nSUMMARY:Diary entry\nDESCRIPTION:${note}\nEND:VEVENT\n`;
     });
-    console.log(`${ical_begin}${ical_events}${ical_end}`);
+    let ical = `${ical_begin}${ical_events}${ical_end}`;
+    let blob = new Blob([ical], {type: "text/plain"});
+    saveAs(blob, `${filename}.ics`);
   }
 
   render() {

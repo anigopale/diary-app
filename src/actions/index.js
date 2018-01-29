@@ -73,7 +73,6 @@ export function password(username, password) {
 
     d.key.get(1)
     .then((response) => {
-      console.log(response);
       let key = checkPassword(response.key, password);
       if(key) {
         key = key.replace(`${password} `,"");
@@ -291,7 +290,7 @@ export function fetchData() {
           _.merge(d, dmy)
         );
       });
-      console.log(newData);
+
       dispatch({
         type: FETCH_DATA,
         payload: {
