@@ -13,9 +13,9 @@ class ChangePass extends Component {
         <Form>
           <Form.Field>
             <label>Enter new password:</label>
-            <input onChange={(event)=>{this.setState({ term: event.target.value })}} />
+            <input onChange={(event)=>{this.setState({ term: event.target.value })}} type="password" />
           </Form.Field>
-          <Button onClick={()=>{this.props.changePass(this.state.term)}}>Change</Button>
+          <Button onClick={()=>{this.props.changePass(this.state.term)}} primary>Change</Button>
         </Form>
       </div>
     )

@@ -9,7 +9,7 @@ class DeleteAcc extends Component {
       <div>
         <h2>Delete Account</h2>
         <p>
-          Sorry to see you here. Want to delete your account?? Click Delete Account Button.
+          Sorry to see you here. Want to delete your account?
         </p>
         <Button
           onClick={() => {this.props.deleteAccount()}}

@@ -44,9 +44,9 @@ class CalendarView extends Component {
           </Grid.Column>
 
           <Grid.Column width={11}>
-            <Segment>
+            <div>
               <ShowEntries />
-            </Segment>
+            </div>
           </Grid.Column>
         </Grid>
       </Container>
