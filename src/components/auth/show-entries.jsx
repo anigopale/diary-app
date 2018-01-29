@@ -25,6 +25,7 @@ class ShowEntries extends Component {
 
   showEntry() {
     return (
+      <Segment>
       <Container text>
         <Button
           onClick={() => {
@@ -56,6 +57,7 @@ class ShowEntries extends Component {
           />
         </Segment>
       </Container>
+      </Segment>
     )
   }
 
