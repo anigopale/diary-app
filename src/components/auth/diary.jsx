@@ -71,7 +71,7 @@ export default class Diary extends Component {
 
     return (
       <div>
-          <Responsive minWidth={768}>
+          <Responsive minWidth={Responsive.onlyTablet.minWidth}>
             <Segment inverted>
               <Divider hidden />
               <Header as="h1" inverted>Diary app</Header>
@@ -79,7 +79,7 @@ export default class Diary extends Component {
             </Segment>
           </Responsive>
 
-          <Responsive maxWidth={720}>
+          <Responsive {...Responsive.onlyMobile}>
             <Segment inverted>
               <Icon name="sidebar" size="big" onClick={() => {this.setState({ visible: !this.state.visible })}} />
             </Segment>
@@ -87,7 +87,7 @@ export default class Diary extends Component {
 
 
           <Sidebar.Pushable>
-            <Responsive maxWidth={720}>
+            <Responsive {...Responsive.onlyMobile}>
                 <Sidebar visible={this.state.visible} animation="overlay" inverted onClick={()=>{this.setState({ visible: false })}} as={Segment}>
                   <Header as="h1" textAlign="center" inverted>Diary app</Header>
                   <Dmenu vertical={true} />
