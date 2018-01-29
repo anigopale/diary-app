@@ -1,63 +1,50 @@
 import React, { Component } from 'react';
 import DeleteAcc from './delete-acc';
 import ChangePass from './change-pass';
-import { Route, Link } from 'react-router-dom';
+import ExportCal from './export-cal';
+import { Route, Switch, Link } from 'react-router-dom';
 import { Menu, Container, Responsive, Sidebar, Segment, Grid } from 'semantic-ui-react';
 
 export default class Settings extends Component {
 
+  settings = [
+    { link: "/settings/delete", name: "Delete Account" },
+    { link: "/settings/change", name: "Change Password" },
+    { link: "/settings/export", name: "Export Calendar" }
+  ]
+
   renderSettings() {
     return (
-      <div>
+      <Switch>
         <Route path="/settings/delete" component={DeleteAcc}/>
         <Route path="/settings/change" component={ChangePass}/>
-        <Route exact path="/settings" component={Sett} />
-      </div>
+        <Route path="/settings/export" component={ExportCal} />
+        <Route path="/settings" component={Sett} />
+      </Switch>
     )
   }
 
   renderSettingsMenu() {
-    return [
-        <Link to="/settings/delete">
-          <Menu.Item>
-            Delete Account
-          </Menu.Item>
-        </Link>,
-        <Link to="/settings/change">
-          <Menu.Item>
-            Change Password
-          </Menu.Item>
+    return this.settings.map((item) => {
+      return (
+        <Link to={item.link}>
+          <Menu.Item name={item.name} active={this.props.history.location.pathname === item.link} />
         </Link>
-    ];
+      )
+    });
   }
 
 
   render() {
     return (
       <Container>
-        <Responsive maxWidth={767}>
-          <Menu fluid>
+
+          <Menu pointing secondary>
             {this.renderSettingsMenu()}
           </Menu>
-          <Container text>
+          <Container>
             {this.renderSettings()}
           </Container>
-        </Responsive>
-
-        <Responsive minWidth={768}>
-          <Grid>
-            <Grid.Column width={4}>
-              <Menu fluid vertical tabular>
-                {this.renderSettingsMenu()}
-              </Menu>
-            </Grid.Column>
-            <Grid.Column width={10} stretched>
-
-                {this.renderSettings()}
-
-            </Grid.Column>
-          </Grid>
-        </Responsive>
 
       </Container>
     )
