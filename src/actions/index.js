@@ -264,6 +264,7 @@ export function fetchData() {
     let db = new Dexie(localStorage.getItem('user'));
     let newData = [], newDate = [];
     let tempDate;
+    var decrypt;
 
     db.version(1).stores({
       data: '++id, date, time, note',
@@ -282,7 +283,8 @@ export function fetchData() {
           dateDisplay: tempDate.format('YYYY-MMM-DD'),
           timeOnly: tempDate.format('hh:mm A')
         };
-
+        decrypt = CryptoJS.AES.decrypt(d.note, localStorage.getItem('key'));
+        d.note = decrypt.toString(CryptoJS.enc.Utf8)
         newDate.push(moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('YYYY M D'));
 
         newData.push(
@@ -306,7 +308,6 @@ export function fetchData() {
 }
 
 export function showSelectedEntry(data) {
-  var decrypt = CryptoJS.AES.decrypt(data.note, localStorage.getItem('key'));
   return {
     type: SELECT_DATA,
     payload: {
@@ -314,7 +315,7 @@ export function showSelectedEntry(data) {
       date: data.date,
       time: data.timeOnly,
       dateDisplay: data.dateDisplay,
-      note: decrypt.toString(CryptoJS.enc.Utf8)
+      note: data.note
     }
   }
 }
