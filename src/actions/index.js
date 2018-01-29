@@ -116,13 +116,11 @@ export function logout() {
 
 export function deleteAccount() {
   return function(dispatch) {
-    Dexie.delete(localStorage.getItem('user'))
-    .then(() => {
-      localStorage.clear();
-      dispatch({
-        type: LOGOUT
-      })
-    })
+    Dexie.delete(localStorage.getItem('user'));
+    localStorage.clear();
+    dispatch({
+      type: LOGOUT
+    });
     history.push('/');
   }
 }
