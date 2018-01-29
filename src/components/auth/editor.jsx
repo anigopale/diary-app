@@ -37,10 +37,10 @@ class Editor extends Component {
   markUp() {
     let date;
     if(this.props.date.format) {
-      date = marked(`${moment(this.props.date.format).format('Do MMM YYYY, hh:mm A')}`, {sanitize: true})
+      date = marked(`${moment(this.props.date.format, 'YYYY-MM-DD hh:mm:ss a').format('Do MMM YYYY, hh:mm A')}`, {sanitize: true})
     }
     else {
-      date = marked(`${moment(this.state.date).format('Do MMM YYYY, hh:mm A')}`, {sanitize: true})
+      date = marked(`${moment(this.state.date, 'YYYY-MM-DD hh:mm:ss a').format('Do MMM YYYY, hh:mm A')}`, {sanitize: true})
     }
 
     let text = marked(this.state.text, {sanitize: true});
@@ -105,6 +105,7 @@ class Editor extends Component {
 
             <Grid.Column>
               <h2>Preview</h2>
+              <Divider />
               {this.renderPreview()}
             </Grid.Column>
 
