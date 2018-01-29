@@ -174,8 +174,8 @@ export function setSelectedDate( d, m, y) {
     dispatch({
       type: SET_DATE,
       payload: {
-        format: moment(`${y}-${m}-${d} ${time}`).format(`YYYY-MM-DD hh:mm:ss a`),
-        display: moment(`${y} ${m} ${d}, ${time}`).format('Do MMM YYYY, hh:mm A')
+        format: moment(`${y}-${m}-${d} ${time}`, 'YYYY-MM-DD hh:mm:ss a').format(`YYYY-MM-DD hh:mm:ss a`),
+        display: moment(`${y} ${m} ${d}, ${time}`, 'YYYY-MM-DD, hh:mm:ss a').format('Do MMM YYYY, hh:mm A')
       }
     })
     dispatch({
@@ -191,7 +191,7 @@ export function setEditorData(date, note) {
       type: SET_DATE,
       payload: {
         format: date,
-        display: moment(date).format('Do MMM YYYY, hh:mm A')
+        display: moment(date, 'YYYY-MM-DD hh:mm:ss a').format('Do MMM YYYY, hh:mm A')
       }
     })
   }
@@ -207,8 +207,8 @@ export function filterEntries( d, m, y) {
   return {
     type: SET_FILTER,
     payload: {
-      format: moment(`${y}-${m}-${d}`).format(`YYYY-MM-DD`),
-      display: moment(`${y} ${m} ${d}`).format('Do MMM YYYY')
+      format: moment(`${y}-${m}-${d}`, 'YYYY-MM-DD').format(`YYYY-MM-DD`),
+      display: moment(`${y} ${m} ${d}`, 'YYYY MM DD').format('Do MMM YYYY')
     }
   }
 }
@@ -219,7 +219,7 @@ export function putEntry(date, note, id) {
     data: '++id, date, time, note',
     key: '++id, key'
   });
-  var d = moment(date);
+  var d = moment(date, 'YYYY-MM-DD hh:mm:ss a');
 
   var encrypted = CryptoJS.AES.encrypt(
     `${note}`, localStorage.getItem('key')
@@ -283,7 +283,7 @@ export function fetchData() {
           timeOnly: tempDate.format('hh:mm A')
         };
 
-        newDate.push(moment(d.date).format('YYYY M D'));
+        newDate.push(moment(d.date, 'YYYY-MM-DD hh:mm:ss a').format('YYYY M D'));
 
         newData.push(
           _.merge(d, dmy)
