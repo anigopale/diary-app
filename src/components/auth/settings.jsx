@@ -38,7 +38,7 @@ export default class Settings extends Component {
   render() {
     return (
       <Container>
-
+        <h1>Settings</h1>
           <Menu pointing secondary>
             {this.renderSettingsMenu()}
           </Menu>
