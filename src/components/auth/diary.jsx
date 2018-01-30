@@ -90,6 +90,7 @@ export default class Diary extends Component {
             <Responsive {...Responsive.onlyMobile}>
                 <Sidebar visible={this.state.visible} animation="overlay" inverted onClick={()=>{this.setState({ visible: false })}} as={Segment}>
                   <Header as="h1" textAlign="center" inverted>Diary app</Header>
+                  <Header as="h2" inverted><Icon name="user" />{localStorage.getItem('user')}</Header>
                   <Dmenu vertical={true} />
                 </Sidebar>
             </Responsive>
