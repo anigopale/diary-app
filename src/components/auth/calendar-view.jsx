@@ -10,7 +10,7 @@ class CalendarView extends Component {
   constructor(props) {
     super(props);
     var d = new Date();
-    this.state = { year: 2018, month: 1, day: 1, height: window.innerHeight - 50 };
+    this.state = { year: 2018, month: 1, day: 1, height: window.innerHeight};
   }
   componentDidMount() {
     var d = new Date();
@@ -25,7 +25,7 @@ class CalendarView extends Component {
     return (
 
         <Grid stackable>
-          <Grid.Column width={4} color="black" style={{ minHeight: this.state.height }}>
+          <Grid.Column width={4} color="black" style={{ minHeight: this.state.height }} stretched>
             <Calendar
               year={this.state.year}
               month={this.state.month - 1}
@@ -41,7 +41,6 @@ class CalendarView extends Component {
                   Add new Entry
                 </Button>
               </Segment>
-
               <ShowEntries />
             </div>
           </Grid.Column>

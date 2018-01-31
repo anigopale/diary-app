@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Table, Grid, Segment, Header, Icon, Button } from 'semantic-ui-react';
+import { Table, Grid, Segment, Header, Icon, Button, Divider } from 'semantic-ui-react';
 import calendar from 'calendar-js';
 import { setSelectedDate, filterEntries } from '../../actions';
 
 class Calendar extends Component {
   constructor(props) {
     super(props);
+
+      var d = new Date();
+      this.props = {
+        year: d.getFullYear(),
+        month: d.getMonth(),
+        day: d.getDate()
+      };
+
+
     this.state = {
       cal: calendar().of(this.props.year, this.props.month).calendar,
       monthStr: calendar().of(this.props.year, this.props.month).month,
@@ -192,7 +201,7 @@ class Calendar extends Component {
     return(
 
         <div>
-
+          <Divider />
           {this.renderCalendarHead()}
           <Button fluid color="black"
             disabled={this.state.selected === 0}

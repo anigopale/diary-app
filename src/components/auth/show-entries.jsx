@@ -25,7 +25,7 @@ class ShowEntries extends Component {
 
   showEntry() {
     return (
-      <Segment>
+      <Segment basic>
       <Container text>
         <Button
           onClick={() => {
