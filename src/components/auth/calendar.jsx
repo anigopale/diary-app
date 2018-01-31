@@ -7,15 +7,6 @@ import { setSelectedDate, filterEntries } from '../../actions';
 class Calendar extends Component {
   constructor(props) {
     super(props);
-
-      var d = new Date();
-      this.props = {
-        year: d.getFullYear(),
-        month: d.getMonth(),
-        day: d.getDate()
-      };
-
-
     this.state = {
       cal: calendar().of(this.props.year, this.props.month).calendar,
       monthStr: calendar().of(this.props.year, this.props.month).month,

@@ -26,7 +26,7 @@ class ShowEntries extends Component {
   showEntry() {
     return (
       <Segment basic>
-      <Container text>
+      <Container>
         <Button
           onClick={() => {
             this.setState({ selected: false })
@@ -52,9 +52,11 @@ class ShowEntries extends Component {
         <h4>{this.props.selected_data.dateDisplay}, {this.props.selected_data.time}</h4>
         <Divider />
         <Segment basic style={{ minHeight: 270 }}>
-        <p
-          dangerouslySetInnerHTML={this.markUp(this.props.selected_data.note)}
-          />
+          <Container text>
+            <p
+              dangerouslySetInnerHTML={this.markUp(this.props.selected_data.note)}
+              />
+          </Container>
         </Segment>
       </Container>
       </Segment>

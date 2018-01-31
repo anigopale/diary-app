@@ -10,7 +10,7 @@ import Calendar from './calendar';
 class Editor extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: "", date: "", height: window.innerHeight };
+    this.state = { text: "", date: "", year: 2018, month: 1, day: 1, height: window.innerHeight };
   }
 
   componentDidMount() {
@@ -20,6 +20,12 @@ class Editor extends Component {
         date: this.props.selected_data.date
       });
     }
+    var d = new Date();
+    this.setState({
+      year: d.getFullYear(),
+      month: d.getMonth(),
+      day: d.getDate()
+    });
   }
 
   handleFormSubmit() {
@@ -83,9 +89,14 @@ class Editor extends Component {
     return (
         <Grid>
           <Grid.Column width={4} color="black" style={{ minHeight: this.state.height }} stretched>
-            <Calendar />
+            <Calendar
+              year={this.state.year}
+              month={this.state.month - 1}
+              day={this.state.day}
+              />
           </Grid.Column>
           <Grid.Column width={12}>
+            <Divider hidden />
             <Grid stackable columns={2}>
               <Grid.Column>
                 <Segment basic>
