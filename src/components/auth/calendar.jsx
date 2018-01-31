@@ -136,7 +136,7 @@ class Calendar extends Component {
 
   renderCalendarBody() {
     return (
-      <Table celled color="black" unstackable fixed>
+      <Table inverted color="black" unstackable fixed>
         <Table.Header>
           <Table.Row>
             {this.renderWeek()}
@@ -152,7 +152,7 @@ class Calendar extends Component {
 
   renderCalendarHead() {
     return (
-      <Table celled color="black" textAlign="center" unstackable fixed>
+      <Table color="black" textAlign="center" unstackable fixed inverted>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell onClick={this.downYear.bind(this)} style={{ cursor: "pointer" }}>
@@ -190,8 +190,8 @@ class Calendar extends Component {
 
   render() {
     return(
-      <div>
-        <Segment textAlign="center">
+
+        <div>
 
           {this.renderCalendarHead()}
           <Button fluid color="black"
@@ -207,8 +207,8 @@ class Calendar extends Component {
 
 
 
-        </Segment>
-      </div>
+        </div>
+
     )
   }
 }

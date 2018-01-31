@@ -71,7 +71,7 @@ class ShowEntries extends Component {
     if(this.props.date_filter.format) {
       return this.props.data.map(data => {
         if(this.props.date_filter.format === data.dateOnly) {
-          return <Segment color="black"
+          return <Segment
             style={{ cursor: "pointer" }}
             onClick={() => {
               this.props.showSelectedEntry(data)
@@ -86,7 +86,7 @@ class ShowEntries extends Component {
 
     return this.props.data.map((data) => {
       return (
-        <Segment color="black"
+        <Segment
           style={{ cursor: "pointer" }}
           onClick={() => {
             this.props.showSelectedEntry(data)

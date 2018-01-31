@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Container, Button, Segment, Icon } from 'semantic-ui-react';
+import { Grid, Container, Sidebar, Button, Segment, Icon, Pusher } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Calendar from './calendar';
 import ShowEntries from './show-entries';
@@ -10,7 +10,7 @@ class CalendarView extends Component {
   constructor(props) {
     super(props);
     var d = new Date();
-    this.state = { year: 2018, month: 1, day: 1 };
+    this.state = { year: 2018, month: 1, day: 1, height: window.innerHeight - 50 };
   }
   componentDidMount() {
     var d = new Date();
@@ -23,19 +23,9 @@ class CalendarView extends Component {
 
   render() {
     return (
-      <Container>
-
-        <Segment>
-
-          <Button fluid secondary onClick={()=>{this.props.setNowDate()}}>
-            <Icon name="add to calendar" />
-            Add new Entry
-          </Button>
-
-        </Segment>
 
         <Grid stackable>
-          <Grid.Column width={5} floated="left">
+          <Grid.Column width={4} color="black" style={{ minHeight: this.state.height }}>
             <Calendar
               year={this.state.year}
               month={this.state.month - 1}
@@ -43,13 +33,20 @@ class CalendarView extends Component {
               />
           </Grid.Column>
 
-          <Grid.Column width={11}>
+          <Grid.Column width={12}>
             <div>
+              <Segment basic>
+                <Button fluid secondary onClick={()=>{this.props.setNowDate()}}>
+                  <Icon name="add to calendar" />
+                  Add new Entry
+                </Button>
+              </Segment>
+
               <ShowEntries />
             </div>
           </Grid.Column>
         </Grid>
-      </Container>
+
     )
   }
 }
