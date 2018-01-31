@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Table, Grid, Segment, Header, Icon, Button } from 'semantic-ui-react';
+import { Table, Grid, Segment, Header, Icon, Button, Divider } from 'semantic-ui-react';
 import calendar from 'calendar-js';
 import { setSelectedDate, filterEntries } from '../../actions';
 
@@ -136,7 +136,7 @@ class Calendar extends Component {
 
   renderCalendarBody() {
     return (
-      <Table celled color="black" unstackable fixed>
+      <Table inverted color="black" unstackable fixed>
         <Table.Header>
           <Table.Row>
             {this.renderWeek()}
@@ -152,7 +152,7 @@ class Calendar extends Component {
 
   renderCalendarHead() {
     return (
-      <Table celled color="black" textAlign="center" unstackable fixed>
+      <Table color="black" textAlign="center" unstackable fixed inverted>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell onClick={this.downYear.bind(this)} style={{ cursor: "pointer" }}>
@@ -190,9 +190,9 @@ class Calendar extends Component {
 
   render() {
     return(
-      <div>
-        <Segment textAlign="center">
 
+        <div>
+          <Divider />
           {this.renderCalendarHead()}
           <Button fluid color="black"
             disabled={this.state.selected === 0}
@@ -207,8 +207,8 @@ class Calendar extends Component {
 
 
 
-        </Segment>
-      </div>
+        </div>
+
     )
   }
 }

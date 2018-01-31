@@ -25,8 +25,8 @@ class ShowEntries extends Component {
 
   showEntry() {
     return (
-      <Segment>
-      <Container text>
+      <Segment basic>
+      <Container>
         <Button
           onClick={() => {
             this.setState({ selected: false })
@@ -52,9 +52,11 @@ class ShowEntries extends Component {
         <h4>{this.props.selected_data.dateDisplay}, {this.props.selected_data.time}</h4>
         <Divider />
         <Segment basic style={{ minHeight: 270 }}>
-        <p
-          dangerouslySetInnerHTML={this.markUp(this.props.selected_data.note)}
-          />
+          <Container text>
+            <p
+              dangerouslySetInnerHTML={this.markUp(this.props.selected_data.note)}
+              />
+          </Container>
         </Segment>
       </Container>
       </Segment>
@@ -71,7 +73,7 @@ class ShowEntries extends Component {
     if(this.props.date_filter.format) {
       return this.props.data.map(data => {
         if(this.props.date_filter.format === data.dateOnly) {
-          return <Segment color="black"
+          return <Segment
             style={{ cursor: "pointer" }}
             onClick={() => {
               this.props.showSelectedEntry(data)
@@ -86,7 +88,7 @@ class ShowEntries extends Component {
 
     return this.props.data.map((data) => {
       return (
-        <Segment color="black"
+        <Segment
           style={{ cursor: "pointer" }}
           onClick={() => {
             this.props.showSelectedEntry(data)

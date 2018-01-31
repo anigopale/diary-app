@@ -14,7 +14,8 @@ import {
   Responsive,
   Divider,
   Icon,
-  Container
+  Container,
+  Grid
 } from 'semantic-ui-react';
 
 
@@ -26,30 +27,6 @@ export default class Diary extends Component {
     this.setState({ height: window.innerHeight - 50 });
   }
 
-  renderItems() {
-
-    return [
-      <Link to='/'>
-        <Menu.Item
-          >
-          Home
-        </Menu.Item>
-      </Link>,
-      <Link to='/settings'>
-        <Menu.Item
-          >
-          Settings
-        </Menu.Item>
-      </Link>,
-      <Menu.Item
-        position="right"
-        onClick={() => {this.props.logout()}}
-        >
-        Log out
-      </Menu.Item>
-    ];
-
-  };
 
   renderContent() {
     return (
@@ -72,10 +49,16 @@ export default class Diary extends Component {
     return (
       <div>
           <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-            <Segment inverted>
-              <Divider hidden />
-              <Header as="h1" inverted>Diary app</Header>
-              <Dmenu vertical={false} />
+            <Segment basic inverted>
+              <Grid>
+                <Grid.Column width={4}>
+                  <Header as="h1" inverted>Diary app</Header>
+                </Grid.Column>
+                <Grid.Column width={12}>
+                  <Dmenu vertical={false} />
+                </Grid.Column>
+              </Grid>
+
             </Segment>
           </Responsive>
 
@@ -90,15 +73,13 @@ export default class Diary extends Component {
             <Responsive {...Responsive.onlyMobile}>
                 <Sidebar visible={this.state.visible} animation="overlay" inverted onClick={()=>{this.setState({ visible: false })}} as={Segment}>
                   <Header as="h1" textAlign="center" inverted>Diary app</Header>
+                  <Header as="h2" inverted><Icon name="user" />{localStorage.getItem('user')}</Header>
                   <Dmenu vertical={true} />
                 </Sidebar>
             </Responsive>
 
             <Sidebar.Pusher>
-              <Segment style={{ minHeight: this.state.height }}>
-                <Divider hidden />
-                {this.renderContent()}
-              </Segment>
+              {this.renderContent()}
             </Sidebar.Pusher>
           </Sidebar.Pushable>
 

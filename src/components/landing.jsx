@@ -4,7 +4,8 @@ import {
   Segment,
   Header,
   Button,
-  Divider
+  Divider,
+  Icon
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
@@ -40,6 +41,10 @@ export default class Landing extends Component {
                      <Button basic color="white" inverted>Sign Up</Button>
                    </Link>
                  </Button.Group>
+                 <Divider hidden />
+                 <Button color='google plus'>
+                   <Icon name='google plus' /> Login with Google
+                  </Button>
                </Segment>
 
             </Container>

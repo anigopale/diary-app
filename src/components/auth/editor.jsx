@@ -5,11 +5,12 @@ import { Segment, Container, Grid, Form, Button, Divider } from 'semantic-ui-rea
 import marked from 'marked';
 import moment from 'moment';
 import { putEntry, deleteDate } from '../../actions';
+import Calendar from './calendar';
 
 class Editor extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: "", date: "" };
+    this.state = { text: "", date: "", year: 2018, month: 1, day: 1, height: window.innerHeight };
   }
 
   componentDidMount() {
@@ -19,6 +20,12 @@ class Editor extends Component {
         date: this.props.selected_data.date
       });
     }
+    var d = new Date();
+    this.setState({
+      year: d.getFullYear(),
+      month: d.getMonth(),
+      day: d.getDate()
+    });
   }
 
   handleFormSubmit() {
@@ -80,39 +87,48 @@ class Editor extends Component {
 
   render() {
     return (
-      <Container>
+        <Grid>
+          <Grid.Column width={4} color="black" style={{ minHeight: this.state.height }} stretched>
+            <Calendar
+              year={this.state.year}
+              month={this.state.month - 1}
+              day={this.state.day}
+              />
+          </Grid.Column>
+          <Grid.Column width={12}>
+            <Divider hidden />
+            <Grid stackable columns={2}>
+              <Grid.Column>
+                <Segment basic>
+                  <Form>
+                    <Form.Field>
+                      <Button onClick={this.handleFormSubmit.bind(this)} secondary>Save</Button>
+                      <Button onClick={() => {this.setState({ text: "" })}}>Clear</Button>
+                      <Link to="/">
+                        <Button floated="right" secondary>Cancel</Button>
+                      </Link>
+                    </Form.Field>
 
-          <Grid stackable columns={2}>
-            <Grid.Column>
-              <Segment color="black">
-                <Form>
-                  <Form.Field>
-                    <Button onClick={this.handleFormSubmit.bind(this)} secondary>Save</Button>
-                    <Button onClick={() => {this.setState({ text: "" })}}>Clear</Button>
-                    <Link to="/">
-                      <Button floated="right" secondary>Cancel</Button>
-                    </Link>
-                  </Form.Field>
+                    {this.renderDate()}
 
-                  {this.renderDate()}
+                    <Form.Field>
+                      <textarea onChange={(event) => {this.setState({ text: event.target.value })}} value={this.state.text} />
+                    </Form.Field>
+                  </Form>
+                </Segment>
+              </Grid.Column>
 
-                  <Form.Field>
-                    <textarea onChange={(event) => {this.setState({ text: event.target.value })}} value={this.state.text} />
-                  </Form.Field>
-                </Form>
-              </Segment>
-            </Grid.Column>
-
-            <Grid.Column>
-              <h2>Preview</h2>
-              <Divider />
-              {this.renderPreview()}
-            </Grid.Column>
+              <Grid.Column>
+                <h2>Preview</h2>
+                <Divider />
+                {this.renderPreview()}
+              </Grid.Column>
 
 
-          </Grid>
+            </Grid>
+          </Grid.Column>
+        </Grid>
 
-      </Container>
     )
   }
 }

@@ -175,9 +175,9 @@ export function setSelectedDate( d, m, y) {
         display: moment(`${y} ${m} ${d}, ${time}`, 'YYYY-MM-DD, hh:mm:ss a').format('Do MMM YYYY, hh:mm A')
       }
     })
-    dispatch({
-      type: DELETE_SELECTED
-    })
+    // dispatch({
+    //   type: DELETE_SELECTED
+    // })
   }
 }
 
