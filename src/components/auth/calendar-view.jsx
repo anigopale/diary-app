@@ -28,7 +28,7 @@ class CalendarView extends Component {
           <Grid.Column width={4} color="black" style={{ minHeight: this.state.height }} stretched>
             <Calendar
               year={this.state.year}
-              month={this.state.month - 1}
+              month={this.state.month}
               day={this.state.day}
               />
           </Grid.Column>
