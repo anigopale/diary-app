@@ -37,23 +37,27 @@ export default class Settings extends Component {
 
   render() {
     return (
-      <Grid>
-        <Grid.Column width={4} style={{ minHeight: window.innerHeight }} id="custom-color-1">
+      <Grid stackable>
+        <Grid.Column width={4} id="custom-color-1">
           <Divider hidden />
-          <Menu vertical secondary inverted fluid id="custom-color-1">
-            {this.renderSettingsMenu()}
-          </Menu>
+          <Segment basic>
+            <Menu vertical secondary inverted fluid id="custom-color-1">
+              {this.renderSettingsMenu()}
+            </Menu>
+          </Segment>
         </Grid.Column>
-        <Grid.Column width={12}>
-          <Container>
-            <Divider hidden />
-            <Header size="huge">Settings</Header>
-            <Divider />
-              <Container>
-                {this.renderSettings()}
-              </Container>
+        <Grid.Column width={12} style={{ minHeight: window.innerHeight }} >
+          <Segment basic>
+            <Container>
+              <Divider hidden />
+              <Header size="huge">Settings</Header>
+              <Divider />
+                <Container>
+                  {this.renderSettings()}
+                </Container>
 
-          </Container>
+            </Container>
+          </Segment>
         </Grid.Column>
       </Grid>
     )

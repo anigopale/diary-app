@@ -61,7 +61,7 @@ class Dmenu extends Component {
         </Responsive>
 
         <Responsive {...Responsive.onlyMobile}>
-          <Menu inverted vertical={this.props.vertical} id="custom-color-1">
+          <Menu inverted vertical={this.props.vertical} fluid id="custom-color-1">
             {this.renderMobileItems()}
           </Menu>
         </Responsive>

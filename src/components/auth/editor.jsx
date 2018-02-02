@@ -88,7 +88,7 @@ class Editor extends Component {
   render() {
     return (
         <Grid stackable>
-          <Grid.Column width={4} style={{ minHeight: this.state.height }} stretched id="custom-color-1">
+          <Grid.Column width={4} stretched id="custom-color-1">
             <Calendar
               year={this.state.year}
               month={this.state.month}
@@ -96,7 +96,7 @@ class Editor extends Component {
               editor={true}
               />
           </Grid.Column>
-          <Grid.Column width={12}>
+          <Grid.Column width={12} style={{ minHeight: this.state.height }}>
             <Divider hidden />
             <Grid stackable columns={2}>
               <Grid.Column>
