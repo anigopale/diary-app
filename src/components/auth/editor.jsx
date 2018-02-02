@@ -29,6 +29,10 @@ class Editor extends Component {
   }
 
   handleFormSubmit() {
+    if(this.props.date.format && this.props.selected_data.id) {
+      this.props.putEntry(this.props.date.format, this.state.text, this.props.selected_data.id);
+      return;
+    }
     if(this.props.selected_data.id) {
       this.props.putEntry(this.state.date, this.state.text, this.props.selected_data.id);
       return;
