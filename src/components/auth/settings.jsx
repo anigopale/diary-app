@@ -39,7 +39,7 @@ export default class Settings extends Component {
     return (
       <Grid>
         <Grid.Column width={4} color="black" style={{ minHeight: window.innerHeight }}>
-          <Divider />
+          <Divider hidden />
           <Menu vertical secondary pointing inverted fluid>
             {this.renderSettingsMenu()}
           </Menu>

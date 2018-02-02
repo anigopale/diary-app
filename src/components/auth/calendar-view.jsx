@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Container, Sidebar, Button, Segment, Icon, Pusher } from 'semantic-ui-react';
+import { Grid, Container, Sidebar, Button, Segment, Icon, Pusher, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Calendar from './calendar';
 import ShowEntries from './show-entries';
@@ -34,15 +34,15 @@ class CalendarView extends Component {
           </Grid.Column>
 
           <Grid.Column width={12}>
-            <div>
-              <Segment basic>
+            <Segment basic>
+              <Divider hidden />
                 <Button fluid secondary onClick={()=>{this.props.setNowDate()}}>
                   <Icon name="add to calendar" />
                   Add new Entry
                 </Button>
-              </Segment>
+                <Divider hidden />
               <ShowEntries />
-            </div>
+            </Segment>
           </Grid.Column>
         </Grid>
 

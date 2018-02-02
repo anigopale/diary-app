@@ -136,7 +136,7 @@ class Calendar extends Component {
 
   renderCalendarBody() {
     return (
-      <Table inverted color="black" unstackable fixed>
+      <Table color="black" unstackable fixed inverted>
         <Table.Header>
           <Table.Row>
             {this.renderWeek()}
@@ -156,7 +156,7 @@ class Calendar extends Component {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell onClick={this.downYear.bind(this)} style={{ cursor: "pointer" }}>
-              <Icon name="chevron left" />
+              <Icon name="caret left" />
             </Table.HeaderCell>
 
             <Table.HeaderCell>
@@ -164,13 +164,13 @@ class Calendar extends Component {
             </Table.HeaderCell>
 
             <Table.HeaderCell onClick={this.upYear.bind(this)} style={{ cursor: "pointer" }}>
-              <Icon name="chevron right" />
+              <Icon name="caret right" />
             </Table.HeaderCell>
           </Table.Row>
 
           <Table.Row>
             <Table.HeaderCell onClick={this.downMonth.bind(this)} style={{ cursor: "pointer" }}>
-              <Icon name="chevron left" />
+              <Icon name="caret left" />
             </Table.HeaderCell>
 
             <Table.HeaderCell>
@@ -178,7 +178,7 @@ class Calendar extends Component {
             </Table.HeaderCell>
 
             <Table.HeaderCell onClick={this.upMonth.bind(this)} style={{ cursor: "pointer" }}>
-              <Icon name="chevron right" />
+              <Icon name="caret right" />
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -191,10 +191,10 @@ class Calendar extends Component {
   render() {
     return(
 
-        <div>
-          <Divider />
+        <Segment inverted>
+          <Divider hidden />
           {this.renderCalendarHead()}
-          <Button fluid color="black"
+          <Button fluid inverted color="black"
             disabled={this.state.selected === 0}
             onClick={() => {
               this.props.setSelectedDate(this.state.selected, this.state.month + 1, this.state.year)
@@ -207,7 +207,7 @@ class Calendar extends Component {
 
 
 
-        </div>
+        </Segment>
 
     )
   }
