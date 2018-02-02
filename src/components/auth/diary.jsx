@@ -52,14 +52,14 @@ export default class Diary extends Component {
 
               <Grid>
                 <Grid.Row>
-                <Grid.Column width={4} color="black">
+                <Grid.Column width={4} id="custom-color-1">
                   <Link to="/">
-                    <Segment inverted>
-                      <Header size="huge" textAlign="center" inverted>Diary app</Header>
+                    <Segment basic id="custom-color-1">
+                      <Header size="huge" textAlign="center" inverted id="custom-color-1">Diary app</Header>
                     </Segment>
                   </Link>
                 </Grid.Column>
-                <Grid.Column width={12} color="black">
+                <Grid.Column width={12} id="custom-color-1">
                   <Dmenu vertical={false} />
                 </Grid.Column>
                 </Grid.Row>
@@ -69,7 +69,7 @@ export default class Diary extends Component {
           </Responsive>
 
           <Responsive {...Responsive.onlyMobile}>
-            <Segment inverted basic>
+            <Segment inverted basic id="custom-color-1">
               <Icon name="sidebar" size="big" onClick={() => {this.setState({ visible: !this.state.visible })}} />
             </Segment>
           </Responsive>
@@ -77,7 +77,7 @@ export default class Diary extends Component {
 
           <Sidebar.Pushable>
             <Responsive {...Responsive.onlyMobile}>
-                <Sidebar visible={this.state.visible} animation="overlay" inverted onClick={()=>{this.setState({ visible: false })}} as={Segment}>
+                <Sidebar visible={this.state.visible} animation="overlay" inverted onClick={()=>{this.setState({ visible: false })}} as={Segment} id="custom-color-1">
                   <Header as="h1" textAlign="center" inverted>Diary app</Header>
                   <Header as="h2" inverted><Icon name="user" />{localStorage.getItem('user')}</Header>
                   <Dmenu vertical={true} />

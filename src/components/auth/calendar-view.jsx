@@ -25,7 +25,7 @@ class CalendarView extends Component {
     return (
 
         <Grid stackable>
-          <Grid.Column width={4} color="black" style={{ minHeight: this.state.height }} stretched>
+          <Grid.Column width={4} style={{ minHeight: this.state.height }} id='custom-color-1'>
             <Calendar
               year={this.state.year}
               month={this.state.month}
@@ -36,7 +36,7 @@ class CalendarView extends Component {
           <Grid.Column width={12}>
             <Segment basic>
               <Divider hidden />
-                <Button fluid secondary onClick={()=>{this.props.setNowDate()}}>
+                <Button fluid onClick={()=>{this.props.setNowDate()}} color="blue">
                   <Icon name="add to calendar" />
                   Add new Entry
                 </Button>

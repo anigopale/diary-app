@@ -3,7 +3,7 @@ import DeleteAcc from './delete-acc';
 import ChangePass from './change-pass';
 import ExportCal from './export-cal';
 import { Route, Switch, Link } from 'react-router-dom';
-import { Menu, Container, Responsive, Sidebar, Segment, Grid, Divider } from 'semantic-ui-react';
+import { Menu, Container, Responsive, Sidebar, Segment, Grid, Divider, Header } from 'semantic-ui-react';
 
 export default class Settings extends Component {
 
@@ -38,16 +38,16 @@ export default class Settings extends Component {
   render() {
     return (
       <Grid>
-        <Grid.Column width={4} color="black" style={{ minHeight: window.innerHeight }}>
+        <Grid.Column width={4} style={{ minHeight: window.innerHeight }} id="custom-color-1">
           <Divider hidden />
-          <Menu vertical secondary pointing inverted fluid>
+          <Menu vertical secondary inverted fluid id="custom-color-1">
             {this.renderSettingsMenu()}
           </Menu>
         </Grid.Column>
         <Grid.Column width={12}>
           <Container>
             <Divider hidden />
-            <h1>Settings</h1>
+            <Header size="huge">Settings</Header>
             <Divider />
               <Container>
                 {this.renderSettings()}

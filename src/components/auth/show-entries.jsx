@@ -41,6 +41,7 @@ class ShowEntries extends Component {
           </Button>
           <Button.Or />
           <Button
+            color="red"
             onClick={() => {
               this.props.deleteEntry(this.props.selected_data.id)
               this.props.fetchData()
@@ -121,7 +122,6 @@ class ShowEntries extends Component {
             {this.props.date_filter.display}
           </h2>
           <Button
-            color="black"
             onClick={() => {
               this.props.deleteFilter()
               this.setState({ selected: false })
@@ -134,13 +134,24 @@ class ShowEntries extends Component {
     }
   }
 
+  renderData() {
+    if(this.state.selected) {
+      return <div>
+        {this.renderEntries()}
+      </div>
+    }
+    return (
+      <Card.Group>
+        {this.renderEntries()}
+      </Card.Group>
+    )
+  }
+
   render() {
     return (
       <div>
         {this.renderHead()}
-        <Card.Group>
-          {this.renderEntries()}
-        </Card.Group>
+        {this.renderData()}
       </div>
     )
   }

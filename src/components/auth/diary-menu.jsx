@@ -55,13 +55,13 @@ class Dmenu extends Component {
     return (
       <div>
         <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-          <Segment floated="right" inverted>
+          <Segment basic floated="right" id="custom-color-1">
             {this.renderDesktopItems()}
             </Segment>
         </Responsive>
 
         <Responsive {...Responsive.onlyMobile}>
-          <Menu inverted vertical={this.props.vertical}>
+          <Menu inverted vertical={this.props.vertical} id="custom-color-1">
             {this.renderMobileItems()}
           </Menu>
         </Responsive>

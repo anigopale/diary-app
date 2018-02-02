@@ -88,11 +88,12 @@ class Editor extends Component {
   render() {
     return (
         <Grid stackable>
-          <Grid.Column width={4} color="black" style={{ minHeight: this.state.height }} stretched>
+          <Grid.Column width={4} style={{ minHeight: this.state.height }} stretched id="custom-color-1">
             <Calendar
               year={this.state.year}
               month={this.state.month}
               day={this.state.day}
+              editor={true}
               />
           </Grid.Column>
           <Grid.Column width={12}>
@@ -102,10 +103,10 @@ class Editor extends Component {
                 <Segment basic>
                   <Form>
                     <Form.Field>
-                      <Button onClick={this.handleFormSubmit.bind(this)} secondary>Save</Button>
+                      <Button color="teal" onClick={this.handleFormSubmit.bind(this)}>Save</Button>
                       <Button onClick={() => {this.setState({ text: "" })}}>Clear</Button>
                       <Link to="/">
-                        <Button floated="right" secondary>Cancel</Button>
+                        <Button floated="right">Cancel</Button>
                       </Link>
                     </Form.Field>
 
@@ -119,9 +120,9 @@ class Editor extends Component {
               </Grid.Column>
 
               <Grid.Column>
-                <h2>Preview</h2>
-                <Divider />
-                {this.renderPreview()}
+                <Segment basic>
+                  {this.renderPreview()}
+                </Segment>
               </Grid.Column>
 
 
