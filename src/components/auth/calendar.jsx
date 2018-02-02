@@ -86,11 +86,11 @@ class Calendar extends Component {
         && this.state.year === this.state.today.y
         && this.state.month === this.state.today.m )
           return (
-              <Header color="teal" as="h3" content={d} />
+              <Header inverted={d !== this.state.selected} as="h3" content={d} />
           )
 
       if(this.props.calendar.includes(`${this.state.year} ${this.state.month + 1} ${d}`)) {
-        return <Header color="green" as="h4" icon="calendar" />
+        return <Header inverted={d !== this.state.selected} as="h4" icon="calendar" />
       }
 
     return <Header as="h4" content={d} color="grey" />
@@ -136,7 +136,7 @@ class Calendar extends Component {
 
   renderCalendarBody() {
     return (
-      <Table inverted color="black" unstackable fixed>
+      <Table unstackable fixed inverted id="custom-color-1">
         <Table.Header>
           <Table.Row>
             {this.renderWeek()}
@@ -152,11 +152,11 @@ class Calendar extends Component {
 
   renderCalendarHead() {
     return (
-      <Table color="black" textAlign="center" unstackable fixed inverted>
+      <Table textAlign="center" unstackable fixed inverted id="custom-color-1">
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell onClick={this.downYear.bind(this)} style={{ cursor: "pointer" }}>
-              <Icon name="chevron left" />
+              <Icon name="caret left" />
             </Table.HeaderCell>
 
             <Table.HeaderCell>
@@ -164,13 +164,13 @@ class Calendar extends Component {
             </Table.HeaderCell>
 
             <Table.HeaderCell onClick={this.upYear.bind(this)} style={{ cursor: "pointer" }}>
-              <Icon name="chevron right" />
+              <Icon name="caret right" />
             </Table.HeaderCell>
           </Table.Row>
 
           <Table.Row>
             <Table.HeaderCell onClick={this.downMonth.bind(this)} style={{ cursor: "pointer" }}>
-              <Icon name="chevron left" />
+              <Icon name="caret left" />
             </Table.HeaderCell>
 
             <Table.HeaderCell>
@@ -178,7 +178,7 @@ class Calendar extends Component {
             </Table.HeaderCell>
 
             <Table.HeaderCell onClick={this.upMonth.bind(this)} style={{ cursor: "pointer" }}>
-              <Icon name="chevron right" />
+              <Icon name="caret right" />
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -187,27 +187,33 @@ class Calendar extends Component {
     )
   }
 
+  buttonName() {
+    if(this.props.editor) {
+      return "Set Date"
+    }
+    return "Add"
+  }
 
   render() {
     return(
 
-        <div>
-          <Divider />
+        <Segment basic>
+          <Divider hidden />
           {this.renderCalendarHead()}
-          <Button fluid color="black"
+          <Button fluid color="blue"
             disabled={this.state.selected === 0}
             onClick={() => {
               this.props.setSelectedDate(this.state.selected, this.state.month + 1, this.state.year)
             }}
             >
             <Icon name="add to calendar" />
-            Add
+            {this.buttonName()}
           </Button>
           {this.renderCalendarBody()}
 
 
 
-        </div>
+        </Segment>
 
     )
   }

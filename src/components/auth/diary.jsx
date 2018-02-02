@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react';
 import Dmenu from './diary-menu';
 import Mmenu from './mmenu';
 import Settings from './settings';
@@ -15,7 +14,8 @@ import {
   Divider,
   Icon,
   Container,
-  Grid
+  Grid,
+  Button
 } from 'semantic-ui-react';
 
 
@@ -49,21 +49,27 @@ export default class Diary extends Component {
     return (
       <div>
           <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-            <Segment basic inverted>
+
               <Grid>
-                <Grid.Column width={4}>
-                  <Header as="h1" inverted>Diary app</Header>
+                <Grid.Row>
+                <Grid.Column width={4} id="custom-color-1">
+                  <Link to="/">
+                    <Segment basic id="custom-color-1">
+                      <Header size="huge" textAlign="center" inverted id="custom-color-1">Diary app</Header>
+                    </Segment>
+                  </Link>
                 </Grid.Column>
-                <Grid.Column width={12}>
+                <Grid.Column width={12} id="custom-color-1">
                   <Dmenu vertical={false} />
                 </Grid.Column>
+                </Grid.Row>
               </Grid>
 
-            </Segment>
+
           </Responsive>
 
           <Responsive {...Responsive.onlyMobile}>
-            <Segment inverted>
+            <Segment inverted basic id="custom-color-1">
               <Icon name="sidebar" size="big" onClick={() => {this.setState({ visible: !this.state.visible })}} />
             </Segment>
           </Responsive>
@@ -71,7 +77,7 @@ export default class Diary extends Component {
 
           <Sidebar.Pushable>
             <Responsive {...Responsive.onlyMobile}>
-                <Sidebar visible={this.state.visible} animation="overlay" inverted onClick={()=>{this.setState({ visible: false })}} as={Segment}>
+                <Sidebar visible={this.state.visible} animation="overlay" inverted onClick={()=>{this.setState({ visible: false })}} as={Segment} id="custom-color-1">
                   <Header as="h1" textAlign="center" inverted>Diary app</Header>
                   <Header as="h2" inverted><Icon name="user" />{localStorage.getItem('user')}</Header>
                   <Dmenu vertical={true} />

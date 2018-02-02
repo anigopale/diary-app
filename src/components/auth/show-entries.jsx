@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment, Container, Button, Divider } from 'semantic-ui-react';
+import { Segment, Container, Button, Divider, Icon, Card } from 'semantic-ui-react';
 import marked from 'marked';
 import { fetchData, showSelectedEntry, deleteFilter, deleteEntry, setEditorData, removeSelected } from '../../actions';
 
@@ -41,6 +41,7 @@ class ShowEntries extends Component {
           </Button>
           <Button.Or />
           <Button
+            color="red"
             onClick={() => {
               this.props.deleteEntry(this.props.selected_data.id)
               this.props.fetchData()
@@ -73,30 +74,34 @@ class ShowEntries extends Component {
     if(this.props.date_filter.format) {
       return this.props.data.map(data => {
         if(this.props.date_filter.format === data.dateOnly) {
-          return <Segment
+          return <Card
             style={{ cursor: "pointer" }}
             onClick={() => {
               this.props.showSelectedEntry(data)
               this.setState({ selected: true })
             }}
             >
-            {data.timeOnly}
-          </Segment>
+            <Card.Content header={data.timeOnly} />
+            <Card.Content description={data.note.substring(0, 50)+'...'} />
+          </Card>
         }
       })
     }
 
     return this.props.data.map((data) => {
       return (
-        <Segment
+        <Card
           style={{ cursor: "pointer" }}
           onClick={() => {
             this.props.showSelectedEntry(data)
             this.setState({ selected: true })
           }}
+          header={`${data.dateDisplay}, ${data.timeOnly}`}
+          description={data.note.substring(0, 40)}
           >
-          {data.dateDisplay}, {data.timeOnly}
-        </Segment>
+          <Card.Content header={data.dateDisplay} meta={data.timeOnly} />
+          <Card.Content description={data.note.substring(0, 50)+'...'} />
+        </Card>
       )
     })
   }
@@ -117,7 +122,6 @@ class ShowEntries extends Component {
             {this.props.date_filter.display}
           </h2>
           <Button
-            color="black"
             onClick={() => {
               this.props.deleteFilter()
               this.setState({ selected: false })
@@ -130,11 +134,24 @@ class ShowEntries extends Component {
     }
   }
 
+  renderData() {
+    if(this.state.selected) {
+      return <div>
+        {this.renderEntries()}
+      </div>
+    }
+    return (
+      <Card.Group>
+        {this.renderEntries()}
+      </Card.Group>
+    )
+  }
+
   render() {
     return (
       <div>
         {this.renderHead()}
-        {this.renderEntries()}
+        {this.renderData()}
       </div>
     )
   }

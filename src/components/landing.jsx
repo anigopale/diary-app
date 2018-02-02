@@ -15,6 +15,7 @@ export default class Landing extends Component {
       <div>
         <Segment
           inverted
+          id="custom-color-1"
           textAlign="center"
           vertical
           style={{ minHeight: 400, padding: '1em 0em' }}
@@ -31,7 +32,7 @@ export default class Landing extends Component {
               <Divider inverted white />
               <Divider hidden />
 
-              <Segment inverted>
+              <Segment inverted id="custom-color-1">
                 <Button.Group>
                   <Link to='/login'>
                     <Button basic color="white" inverted>Login</Button>
