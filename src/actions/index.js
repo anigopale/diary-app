@@ -164,7 +164,7 @@ export function setNowDate() {
   }
 }
 
-export function setSelectedDate( d, m, y) {
+export function setSelectedDate( d, m, y, editor) {
   return function(dispatch) {
     let time = moment().format('hh:mm:ss a');
     history.push('/editor');
@@ -175,9 +175,7 @@ export function setSelectedDate( d, m, y) {
         display: moment(`${y} ${m} ${d}, ${time}`, 'YYYY-MM-DD, hh:mm:ss a').format('Do MMM YYYY, hh:mm A')
       }
     })
-    dispatch({
-      type: DELETE_SELECTED
-    })
+
   }
 }
 
@@ -190,6 +188,9 @@ export function setEditorData(date, note) {
         format: date,
         display: moment(date, 'YYYY-MM-DD hh:mm:ss a').format('Do MMM YYYY, hh:mm A')
       }
+    })
+    dispatch({
+      type: DELETE_FILTER
     })
   }
 }
@@ -211,36 +212,41 @@ export function filterEntries( d, m, y) {
 }
 
 export function putEntry(date, note, id) {
-  let db = new Dexie(localStorage.getItem('user'))
-  db.version(1).stores({
-    data: '++id, date, time, note',
-    key: '++id, key'
-  });
-  var d = moment(date, 'YYYY-MM-DD hh:mm:ss a');
-
-  var encrypted = CryptoJS.AES.encrypt(
-    `${note}`, localStorage.getItem('key')
-  );
-  if(id) {
-    db.data.put({
-      id: id,
-      time: d.format('x'),
-      date: date,
-      note: encrypted.toString(),
+  return function(dispatch) {
+    let db = new Dexie(localStorage.getItem('user'))
+    db.version(1).stores({
+      data: '++id, date, time, note',
+      key: '++id, key'
     });
-  }
-  else {
-    db.data.put({
-      time: d.format('x'),
-      date: date,
-      note: encrypted.toString(),
-    });
-  }
+    var d = moment(date, 'YYYY-MM-DD hh:mm:ss a');
+
+    var encrypted = CryptoJS.AES.encrypt(
+      `${note}`, localStorage.getItem('key')
+    );
+    if(id) {
+      db.data.put({
+        id: id,
+        time: d.format('x'),
+        date: date,
+        note: encrypted.toString(),
+      });
+    }
+    else {
+      db.data.put({
+        time: d.format('x'),
+        date: date,
+        note: encrypted.toString(),
+      });
+    }
 
 
-  history.push('/');
-  return {
-    type: DELETE_DATE
+    history.push('/');
+    dispatch({
+      type: DELETE_SELECTED
+    })
+    dispatch({
+      type: DELETE_DATE
+    })
   }
 }
 

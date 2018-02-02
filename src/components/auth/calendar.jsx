@@ -203,7 +203,7 @@ class Calendar extends Component {
           <Button fluid color="blue"
             disabled={this.state.selected === 0}
             onClick={() => {
-              this.props.setSelectedDate(this.state.selected, this.state.month + 1, this.state.year)
+              this.props.setSelectedDate(this.state.selected, this.state.month + 1, this.state.year, this.props.editor)
             }}
             >
             <Icon name="add to calendar" />
