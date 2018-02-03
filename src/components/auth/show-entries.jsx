@@ -7,7 +7,6 @@ import { fetchData, showSelectedEntry, deleteFilter, setEditorData, removeSelect
 class ShowEntries extends Component {
   constructor(props) {
     super(props);
-    this.state = { selected: false }
   }
 
   componentDidMount() {
@@ -26,7 +25,6 @@ class ShowEntries extends Component {
             style={{ cursor: "pointer" }}
             onClick={() => {
               this.props.showSelectedEntry(data)
-              this.setState({ selected: true })
             }}
             >
             <Card.Content header={data.timeOnly} />
@@ -71,7 +69,6 @@ class ShowEntries extends Component {
           <Button
             onClick={() => {
               this.props.deleteFilter()
-              this.setState({ selected: false })
             }}>
             Show all
           </Button>
