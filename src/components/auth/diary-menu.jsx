@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Menu, Sidebar, Segment, Button, Icon, Responsive, Dropdown, Input } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { logout } from '../../actions';
+import { logout, search } from '../../actions';
 import history from '../../actions/history';
 
 class Dmenu extends Component {
@@ -39,7 +39,7 @@ class Dmenu extends Component {
 
     return [
       <Menu.Item position="right">
-        <Input icon="search" />
+        <Input icon="search" onChange={(e) =>{this.props.search(e.target.value)}} />
       </Menu.Item>,
       <Menu.Item>
         <Dropdown text={localStorage.getItem('user')} icon='user' floating labeled button className='icon'>
@@ -76,4 +76,4 @@ class Dmenu extends Component {
   }
 }
 
-export default connect(null, { logout })(Dmenu);
+export default connect(null, { logout, search })(Dmenu);

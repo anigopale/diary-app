@@ -323,6 +323,19 @@ export function showSelectedEntry(data) {
   }
 }
 
+export function search(term) {
+  if(!term) {
+    history.push('/')
+    return {
+      type: ""
+    }
+  }
+  history.push('/search')
+  return {
+    type: ""
+  }
+}
+
 export function deleteEntry(id) {
   let db = new Dexie(localStorage.getItem('user'));
   db.version(1).stores({
