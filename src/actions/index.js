@@ -325,6 +325,7 @@ export function fetchData() {
 }
 
 export function showSelectedEntry(data) {
+  history.push('/show');
   return {
     type: SELECT_DATA,
     payload: {
@@ -360,6 +361,7 @@ export function deleteEntry(id) {
   });
 
   db.data.delete(id);
+  history.push('/');
   return {
     type: DELETE_SELECTED
   }

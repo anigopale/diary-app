@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Divider, Card } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { showSelectedEntry } from '../../actions';
 
 class Search extends Component {
   state = { selected: false };
@@ -19,7 +20,6 @@ class Search extends Component {
         style={{ cursor: "pointer" }}
         onClick={() => {
           this.props.showSelectedEntry(data)
-          this.setState({ selected: true })
         }}
         header={`${data.dateDisplay}, ${data.timeOnly}`}
         description={data.note.substring(0, 40)}
@@ -37,7 +37,9 @@ class Search extends Component {
           <Button>Back</Button>
         </Link>
         <Divider />
-        {this.renderResults()}
+        <Card.Group>
+          {this.renderResults()}
+        </Card.Group>
       </div>
     )
   }
@@ -47,4 +49,4 @@ function mapStateToProps({ search_term, data }) {
   return { search_term, data };
 }
 
-export default connect(mapStateToProps)(Search);
+export default connect(mapStateToProps, { showSelectedEntry })(Search);
