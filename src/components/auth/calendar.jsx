@@ -187,11 +187,20 @@ class Calendar extends Component {
     )
   }
 
-  buttonName() {
+  renderButton() {
     if(this.props.editor) {
-      return "Set Date"
+      return (
+        <Button fluid color="blue"
+          disabled={this.state.selected === 0}
+          onClick={() => {
+            this.props.setSelectedDate(this.state.selected, this.state.month + 1, this.state.year, this.props.editor)
+          }}
+          >
+          <Icon name="add to calendar" />
+          Set Date
+        </Button>
+      )
     }
-    return "Add"
   }
 
   render() {
@@ -200,19 +209,8 @@ class Calendar extends Component {
         <Segment basic>
           <Divider hidden />
           {this.renderCalendarHead()}
-          <Button fluid color="blue"
-            disabled={this.state.selected === 0}
-            onClick={() => {
-              this.props.setSelectedDate(this.state.selected, this.state.month + 1, this.state.year, this.props.editor)
-            }}
-            >
-            <Icon name="add to calendar" />
-            {this.buttonName()}
-          </Button>
           {this.renderCalendarBody()}
-
-
-
+          {this.renderButton()}
         </Segment>
 
     )

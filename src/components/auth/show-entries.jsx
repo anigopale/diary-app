@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Segment, Container, Button, Divider, Icon, Card } from 'semantic-ui-react';
 import marked from 'marked';
-import { fetchData, showSelectedEntry, deleteFilter, deleteEntry, setEditorData, removeSelected } from '../../actions';
+import { fetchData, showSelectedEntry, deleteFilter, setEditorData, removeSelected } from '../../actions';
 
 class ShowEntries extends Component {
   constructor(props) {
     super(props);
-    this.state = { selected: false }
   }
 
   componentDidMount() {
@@ -15,61 +14,9 @@ class ShowEntries extends Component {
   }
 
 
-  markUp(note) {
-
-    let text = marked(note, {sanitize: true});
-    return {
-      __html: text
-    };
-  }
-
-  showEntry() {
-    return (
-      <Segment basic>
-      <Container>
-        <Button
-          onClick={() => {
-            this.setState({ selected: false })
-          }}>
-          Back
-        </Button>
-        <Button.Group floated='right'>
-          <Button onClick={() => {
-              this.props.setEditorData(this.props.selected_data.date)
-            }}>
-            Edit
-          </Button>
-          <Button.Or />
-          <Button
-            color="red"
-            onClick={() => {
-              this.props.deleteEntry(this.props.selected_data.id)
-              this.props.fetchData()
-              this.setState({ selected: false })
-            }}>
-            Delete
-          </Button>
-        </Button.Group>
-        <h4>{this.props.selected_data.dateDisplay}, {this.props.selected_data.time}</h4>
-        <Divider />
-        <Segment basic style={{ minHeight: 270 }}>
-          <Container text>
-            <p
-              dangerouslySetInnerHTML={this.markUp(this.props.selected_data.note)}
-              />
-          </Container>
-        </Segment>
-      </Container>
-      </Segment>
-    )
-  }
-
   renderEntries() {
     if(!this.props.data) {
       return <h1>No entries found</h1>
-    }
-    if(this.state.selected) {
-      return this.showEntry();
     }
     if(this.props.date_filter.format) {
       return this.props.data.map(data => {
@@ -78,7 +25,6 @@ class ShowEntries extends Component {
             style={{ cursor: "pointer" }}
             onClick={() => {
               this.props.showSelectedEntry(data)
-              this.setState({ selected: true })
             }}
             >
             <Card.Content header={data.timeOnly} />
@@ -94,7 +40,6 @@ class ShowEntries extends Component {
           style={{ cursor: "pointer" }}
           onClick={() => {
             this.props.showSelectedEntry(data)
-            this.setState({ selected: true })
           }}
           header={`${data.dateDisplay}, ${data.timeOnly}`}
           description={data.note.substring(0, 40)}
@@ -107,51 +52,38 @@ class ShowEntries extends Component {
   }
 
   renderHead() {
-    if(!this.state.selected) {
-      if(!this.props.date_filter.display) {
-        return (
-          <div>
-            <h2>All Entries</h2>
-            <Divider />
-          </div>
-        )
-      }
+    if(!this.props.date_filter.display) {
       return (
         <div>
-          <h2>
-            {this.props.date_filter.display}
-          </h2>
-          <Button
-            onClick={() => {
-              this.props.deleteFilter()
-              this.setState({ selected: false })
-            }}>
-            Show all
-          </Button>
+          <h2>All Entries</h2>
           <Divider />
         </div>
       )
     }
-  }
-
-  renderData() {
-    if(this.state.selected) {
-      return <div>
-        {this.renderEntries()}
-      </div>
-    }
     return (
-      <Card.Group>
-        {this.renderEntries()}
-      </Card.Group>
+      <div>
+        <h2>
+          {this.props.date_filter.display}
+        </h2>
+        <Button
+          onClick={() => {
+            this.props.deleteFilter()
+          }}>
+          Show all
+        </Button>
+        <Divider />
+      </div>
     )
   }
+
 
   render() {
     return (
       <div>
         {this.renderHead()}
-        {this.renderData()}
+        <Card.Group>
+          {this.renderEntries()}
+        </Card.Group>
       </div>
     )
   }
@@ -161,4 +93,4 @@ function mapStateToProps({ data, selected_data, date_filter }) {
   return { data, selected_data, date_filter };
 }
 
-export default connect(mapStateToProps, { fetchData, showSelectedEntry, deleteFilter, deleteEntry, setEditorData, removeSelected })(ShowEntries);
+export default connect(mapStateToProps, { fetchData, showSelectedEntry, deleteFilter, setEditorData, removeSelected })(ShowEntries);

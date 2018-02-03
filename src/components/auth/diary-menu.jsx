@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Menu, Sidebar, Segment, Button, Icon, Responsive, Dropdown } from 'semantic-ui-react';
+import { Menu, Sidebar, Segment, Button, Icon, Responsive, Dropdown, Input } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { logout } from '../../actions';
+import { logout, search } from '../../actions';
 import history from '../../actions/history';
 
 class Dmenu extends Component {
@@ -37,14 +37,19 @@ class Dmenu extends Component {
 
   renderDesktopItems() {
 
-    return (
-      <Dropdown text={localStorage.getItem('user')} icon='user' floating labeled button className='icon'>
-        <Dropdown.Menu>
-          <Dropdown.Item icon="settings" text="Settings" onClick={() => {history.push('/settings')}} />
-          <Dropdown.Item onClick={() => {this.props.logout()}} icon="log out" text="Logout" />
-        </Dropdown.Menu>
-      </Dropdown>
-    )
+    return [
+      <Menu.Item position="right">
+        <Input icon="search" onChange={(e) =>{this.props.search(e.target.value)}} />
+      </Menu.Item>,
+      <Menu.Item>
+        <Dropdown text={localStorage.getItem('user')} icon='user' floating labeled button className='icon'>
+          <Dropdown.Menu>
+            <Dropdown.Item icon="settings" text="Settings" onClick={() => {history.push('/settings')}} />
+            <Dropdown.Item onClick={() => {this.props.logout()}} icon="log out" text="Logout" />
+          </Dropdown.Menu>
+        </Dropdown>
+      </Menu.Item>
+    ]
   };
 
 
@@ -55,9 +60,9 @@ class Dmenu extends Component {
     return (
       <div>
         <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-          <Segment basic floated="right" id="custom-color-1">
-            {this.renderDesktopItems()}
-            </Segment>
+            <Menu id="custom-color-1" secondary>
+              {this.renderDesktopItems()}
+            </Menu>
         </Responsive>
 
         <Responsive {...Responsive.onlyMobile}>
@@ -71,4 +76,4 @@ class Dmenu extends Component {
   }
 }
 
-export default connect(null, { logout })(Dmenu);
+export default connect(null, { logout, search })(Dmenu);

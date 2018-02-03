@@ -49,22 +49,20 @@ export default class Diary extends Component {
     return (
       <div>
           <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-
+            <Segment basic>
               <Grid>
-                <Grid.Row>
+                <Grid.Row id="custom-color-1"  verticalAlign="middle">
                 <Grid.Column width={4} id="custom-color-1">
                   <Link to="/">
-                    <Segment basic id="custom-color-1">
                       <Header size="huge" textAlign="center" inverted id="custom-color-1">Diary app</Header>
-                    </Segment>
                   </Link>
                 </Grid.Column>
-                <Grid.Column width={12} id="custom-color-1">
+                <Grid.Column width={12}>
                   <Dmenu vertical={false} />
                 </Grid.Column>
                 </Grid.Row>
               </Grid>
-
+            </Segment>
 
           </Responsive>
 

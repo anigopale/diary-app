@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Container, Sidebar, Button, Segment, Icon, Pusher, Divider } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Route } from 'react-router-dom';
 import Calendar from './calendar';
 import ShowEntries from './show-entries';
+import Search from './search';
+import ShowEntry from './show-entry';
 import { setNowDate } from '../../actions';
 
 class CalendarView extends Component {
@@ -41,7 +43,11 @@ class CalendarView extends Component {
                   Add new Entry
                 </Button>
                 <Divider hidden />
-              <ShowEntries />
+                <Switch>
+                  <Route exact path="/" component={ShowEntries} />
+                  <Route path="/search" component={Search} />
+                  <Route path="/show" component={ShowEntry} />
+                </Switch>
             </Segment>
           </Grid.Column>
         </Grid>
