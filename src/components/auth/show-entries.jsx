@@ -52,50 +52,38 @@ class ShowEntries extends Component {
   }
 
   renderHead() {
-    if(!this.state.selected) {
-      if(!this.props.date_filter.display) {
-        return (
-          <div>
-            <h2>All Entries</h2>
-            <Divider />
-          </div>
-        )
-      }
+    if(!this.props.date_filter.display) {
       return (
         <div>
-          <h2>
-            {this.props.date_filter.display}
-          </h2>
-          <Button
-            onClick={() => {
-              this.props.deleteFilter()
-            }}>
-            Show all
-          </Button>
+          <h2>All Entries</h2>
           <Divider />
         </div>
       )
     }
-  }
-
-  renderData() {
-    if(this.state.selected) {
-      return <div>
-        {this.renderEntries()}
-      </div>
-    }
     return (
-      <Card.Group>
-        {this.renderEntries()}
-      </Card.Group>
+      <div>
+        <h2>
+          {this.props.date_filter.display}
+        </h2>
+        <Button
+          onClick={() => {
+            this.props.deleteFilter()
+          }}>
+          Show all
+        </Button>
+        <Divider />
+      </div>
     )
   }
+
 
   render() {
     return (
       <div>
         {this.renderHead()}
-        {this.renderData()}
+        <Card.Group>
+          {this.renderEntries()}
+        </Card.Group>
       </div>
     )
   }
