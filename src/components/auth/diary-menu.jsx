@@ -60,9 +60,9 @@ class Dmenu extends Component {
     return (
       <div>
         <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-          <Menu id="custom-color-1">
-            {this.renderDesktopItems()}
-          </Menu>
+            <Menu id="custom-color-1" secondary>
+              {this.renderDesktopItems()}
+            </Menu>
         </Responsive>
 
         <Responsive {...Responsive.onlyMobile}>

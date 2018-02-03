@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 
-export default class Search extends Component {
+class Search extends Component {
   render() {
     return (
       <div>
@@ -13,3 +14,5 @@ export default class Search extends Component {
     )
   }
 }
+
+export default connect(null)(Search);

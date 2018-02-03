@@ -3,7 +3,21 @@ import CryptoJS from 'crypto-js';
 import moment from 'moment';
 import history from './history';
 import _ from 'lodash';
-import { RESET_APP, USER, LOGIN, LOGOUT, DELETE, SET_DATE, DELETE_DATE, FETCH_DATA, SELECT_DATA, DELETE_SELECTED, SET_FILTER, DELETE_FILTER } from './types';
+import {
+  RESET_APP,
+  USER,
+  LOGIN,
+  LOGOUT,
+  DELETE,
+  SET_DATE,
+  DELETE_DATE,
+  FETCH_DATA,
+  SELECT_DATA,
+  DELETE_SELECTED,
+  SET_FILTER,
+  DELETE_FILTER,
+  SEARCH_TERM
+} from './types';
 
 export function createUserDB(username, password) {
   return function(dispatch) {
@@ -327,12 +341,14 @@ export function search(term) {
   if(!term) {
     history.push('/')
     return {
-      type: ""
+      type: SEARCH_TERM,
+      payload: term
     }
   }
   history.push('/search')
   return {
-    type: ""
+    type: SEARCH_TERM,
+    payload: term
   }
 }
 
