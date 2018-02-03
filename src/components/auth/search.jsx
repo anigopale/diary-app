@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Divider, Card } from 'semantic-ui-react';
+import { Button, Divider, Card, Responsive } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { showSelectedEntry } from '../../actions';

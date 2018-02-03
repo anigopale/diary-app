@@ -4,6 +4,7 @@ import Mmenu from './mmenu';
 import Settings from './settings';
 import CalendarView from './calendar-view';
 import Editor from './editor';
+import SearchBar from './search-bar';
 import { Link, Route, Switch } from 'react-router-dom';
 import {
   Header,
