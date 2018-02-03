@@ -75,7 +75,7 @@ export default class Diary extends Component {
 
 
           <Sidebar.Pushable>
-              <Sidebar visible={this.state.visible} animation="push" inverted onClick={()=>{this.setState({ visible: false })}} as={Segment} id="custom-color-1">
+              <Sidebar visible={this.state.visible} animation="overlay" inverted onClick={()=>{this.setState({ visible: false })}} as={Segment} id="custom-color-1">
                 <Responsive {...Responsive.onlyMobile}>
                   <Header as="h1" textAlign="center" inverted>Diary app</Header>
                   <Header as="h2" inverted><Icon name="user" />{localStorage.getItem('user')}</Header>
