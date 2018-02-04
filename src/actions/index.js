@@ -1,3 +1,5 @@
+/*global gapi*/
+
 import Dexie from 'dexie';
 import CryptoJS from 'crypto-js';
 import moment from 'moment';
@@ -25,8 +27,9 @@ export function createUserDB(username, password, googleUser) {
     Dexie.exists(username)
     .then((exists) => {
       if(exists) {
+        // if userDB already exists
         if(googleUser) {
-          // if user signs in via google
+          // if user logs in via google
           localStorage.setItem('user', username);
           localStorage.setItem('googleSignin', true);
             let d = new Dexie(username)
@@ -50,7 +53,9 @@ export function createUserDB(username, password, googleUser) {
               type: GOOGLE_SIGNIN
             });
         }
-        alert('username already in use');
+        if(!googleUser) {
+          alert('username already in use');
+        }
       }
       else {
         //createDB
@@ -74,7 +79,9 @@ export function createUserDB(username, password, googleUser) {
 
         localStorage.setItem('user', username);
         localStorage.setItem('key', phrase.toString());
-
+        if(googleUser) {
+          localStorage.setItem('googleSignin', true);
+        }
         dispatch({
           type: LOGIN
         })
@@ -148,9 +155,12 @@ export function resetApp() {
 export function logout() {
   if(localStorage.getItem('googleSignin')) {
     // for google signout
-    var GoogleAuth;
-    GoogleAuth = window.gapi.auth2.getAuthInstance();
-    GoogleAuth.signOut();
+    window.gapi.auth2.init()
+    .then(() => {
+      var GoogleAuth;
+      GoogleAuth = window.gapi.auth2.getAuthInstance();
+      GoogleAuth.signOut();
+    })
   }
   localStorage.clear();
   history.push('/');
@@ -163,9 +173,12 @@ export function logout() {
 export function deleteAccount() {
   if(localStorage.getItem('googleSignin')) {
     // for revoking all scopes that the user has granted
-    var GoogleAuth;
-    GoogleAuth = window.gapi.auth2.getAuthInstance();
-    GoogleAuth.disconnect();
+    window.gapi.auth2.init()
+    .then(() => {
+      var GoogleAuth;
+      GoogleAuth = window.gapi.auth2.getAuthInstance();
+      GoogleAuth.disconnect();
+    })
   }
   return function(dispatch) {
     Dexie.delete(localStorage.getItem('user'));

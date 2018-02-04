@@ -45,7 +45,6 @@ export default class Landing extends Component {
                  </Button.Group>
                  <Divider hidden />
                  <GoogleSignin />
-                  <div class="g-signin2" data-onsuccess={this.onSignIn} onsuccess={this.onSignIn} data-theme="dark"></div>
 
                </Segment>
 
