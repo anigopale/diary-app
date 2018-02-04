@@ -11,3 +11,4 @@ export const DELETE_SELECTED = 'DELETE_SELECTED';
 export const SET_FILTER = 'SET_FILTER';
 export const DELETE_FILTER = 'DELETE_FILTER';
 export const SEARCH_TERM = 'SEARCH_TERM';
+export const GOOGLE_SIGNIN = 'GOOGLE_SIGNIN';

@@ -75,15 +75,15 @@ export default class Diary extends Component {
 
 
           <Sidebar.Pushable>
-            <Responsive {...Responsive.onlyMobile}>
-                <Sidebar visible={this.state.visible} animation="overlay" inverted onClick={()=>{this.setState({ visible: false })}} as={Segment} id="custom-color-1">
+              <Sidebar visible={this.state.visible} animation="overlay" inverted onClick={()=>{this.setState({ visible: false })}} as={Segment} id="custom-color-1">
+                <Responsive {...Responsive.onlyMobile}>
                   <Header as="h1" textAlign="center" inverted>Diary app</Header>
                   <Header as="h2" inverted><Icon name="user" />{localStorage.getItem('user')}</Header>
                   <Dmenu vertical={true} />
-                </Sidebar>
-            </Responsive>
+                </Responsive>
+              </Sidebar>
 
-            <Sidebar.Pusher>
+            <Sidebar.Pusher onClick={()=>{this.setState({ visible: false })}}>
               {this.renderContent()}
             </Sidebar.Pusher>
           </Sidebar.Pushable>

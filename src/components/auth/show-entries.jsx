@@ -55,7 +55,6 @@ class ShowEntries extends Component {
     if(!this.props.date_filter.display) {
       return (
         <div>
-          <h2>All Entries</h2>
           <Divider />
         </div>
       )

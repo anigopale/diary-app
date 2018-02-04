@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import DeleteAcc from './delete-acc';
 import ChangePass from './change-pass';
 import ExportCal from './export-cal';
 import { Route, Switch, Link } from 'react-router-dom';
 import { Menu, Container, Responsive, Sidebar, Segment, Grid, Divider, Header } from 'semantic-ui-react';
 
-export default class Settings extends Component {
+class Settings extends Component {
 
   settings = [
     { link: "/settings/delete", name: "Delete Account" },
@@ -26,9 +27,15 @@ export default class Settings extends Component {
 
   renderSettingsMenu() {
     return this.settings.map((item) => {
+      if(this.props.google_auth && item.name === "Change Password") {
+        return <Menu.Item name={item.name} disabled />
+      }
       return (
         <Link to={item.link}>
-          <Menu.Item name={item.name} active={this.props.history.location.pathname === item.link} />
+          <Menu.Item
+            name={item.name}
+            active={this.props.history.location.pathname === item.link}
+            />
         </Link>
       )
     });
@@ -68,3 +75,9 @@ export default class Settings extends Component {
 const Sett = () => {
   return <div>Manage your account</div>
 }
+
+function mapStateToProps({ google_auth }) {
+  return { google_auth }
+}
+
+export default connect(mapStateToProps)(Settings);

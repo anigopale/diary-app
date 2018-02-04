@@ -9,7 +9,7 @@ import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 import App from './App';
 import reducers from './reducers';
-import { LOGIN } from './actions/types';
+import { LOGIN, GOOGLE_SIGNIN } from './actions/types';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
@@ -17,6 +17,11 @@ const store = createStoreWithMiddleware(reducers);
 if(localStorage.getItem('key')) {
   store.dispatch({
     type: LOGIN
+  })
+}
+if(localStorage.getItem('googleSignin')) {
+  store.dispatch({
+    type: GOOGLE_SIGNIN
   })
 }
 
