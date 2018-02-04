@@ -3,8 +3,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'semantic-ui-react';
+import { createUserDB } from '../actions';
 
-export default class GoogleSignin extends Component {
+class GoogleSignin extends Component {
   constructor(props) {
     super(props);
     this.googleSignin = this.googleSignin.bind(this);
@@ -17,13 +18,20 @@ export default class GoogleSignin extends Component {
     var GoogleAuth;
     GoogleAuth = window.gapi.auth2.getAuthInstance();
     GoogleAuth.signIn();
-    var user = GoogleAuth.currentUser.get();
-    console.log(user);
-    console.log(user.getId());
-    var basicProfile = user.getBasicProfile();
-    console.log(basicProfile.getEmail());
-    var s = GoogleAuth.isSignedIn.get();
-    console.log(s);
+    var signedIn = GoogleAuth.isSignedIn.get();
+    GoogleAuth.isSignedIn.listen(status => {
+      if(status) {
+        var user = GoogleAuth.currentUser.get();
+        var basicProfile = user.getBasicProfile();
+        this.props.createUserDB(basicProfile.getEmail(), user.getId(), true);
+      }
+    })
+    if(signedIn) {
+      var user = GoogleAuth.currentUser.get();
+      var basicProfile = user.getBasicProfile();
+      this.props.createUserDB(basicProfile.getEmail(), user.getId(), true);
+    }
+
   }
   googleSignout() {
     var GoogleAuth;
@@ -52,3 +60,5 @@ export default class GoogleSignin extends Component {
     )
   }
 }
+
+export default connect(null, { createUserDB })(GoogleSignin);

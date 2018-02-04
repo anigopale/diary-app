@@ -19,11 +19,31 @@ import {
   SEARCH_TERM
 } from './types';
 
-export function createUserDB(username, password) {
+export function createUserDB(username, password, googleUser) {
   return function(dispatch) {
     Dexie.exists(username)
     .then((exists) => {
       if(exists) {
+        if(googleUser) {
+            localStorage.setItem('user', username)
+              let d = new Dexie(username)
+              d.version(1).stores({
+                data: '++id, date, time, note',
+                key: '++id, key'
+              });
+
+              d.key.get(1)
+              .then((response) => {
+                let key = checkPassword(response.key, password);
+                if(key) {
+                  key = key.replace(`${password} `,"");
+                  localStorage.setItem('key', key);
+                  dispatch({
+                    type: LOGIN
+                  });
+                }
+              });
+        }
         alert('username already in use');
       }
       else {
