@@ -16,7 +16,8 @@ import {
   DELETE_SELECTED,
   SET_FILTER,
   DELETE_FILTER,
-  SEARCH_TERM
+  SEARCH_TERM,
+  GOOGLE_SIGNIN
 } from './types';
 
 export function createUserDB(username, password, googleUser) {
@@ -25,24 +26,29 @@ export function createUserDB(username, password, googleUser) {
     .then((exists) => {
       if(exists) {
         if(googleUser) {
-            localStorage.setItem('user', username)
-              let d = new Dexie(username)
-              d.version(1).stores({
-                data: '++id, date, time, note',
-                key: '++id, key'
-              });
+          // if user signs in via google
+          localStorage.setItem('user', username);
+          localStorage.setItem('googleSignin', true);
+            let d = new Dexie(username)
+            d.version(1).stores({
+              data: '++id, date, time, note',
+              key: '++id, key'
+            });
 
-              d.key.get(1)
-              .then((response) => {
-                let key = checkPassword(response.key, password);
-                if(key) {
-                  key = key.replace(`${password} `,"");
-                  localStorage.setItem('key', key);
-                  dispatch({
-                    type: LOGIN
-                  });
-                }
-              });
+            d.key.get(1)
+            .then((response) => {
+              let key = checkPassword(response.key, password);
+              if(key) {
+                key = key.replace(`${password} `,"");
+                localStorage.setItem('key', key);
+                dispatch({
+                  type: LOGIN
+                });
+              }
+            });
+            dispatch({
+              type: GOOGLE_SIGNIN
+            });
         }
         alert('username already in use');
       }
@@ -140,6 +146,12 @@ export function resetApp() {
 
 
 export function logout() {
+  if(localStorage.getItem('googleSignin')) {
+    // for google signout
+    var GoogleAuth;
+    GoogleAuth = window.gapi.auth2.getAuthInstance();
+    GoogleAuth.signOut();
+  }
   localStorage.clear();
   history.push('/');
   return {
@@ -149,6 +161,12 @@ export function logout() {
 
 
 export function deleteAccount() {
+  if(localStorage.getItem('googleSignin')) {
+    // for revoking all scopes that the user has granted
+    var GoogleAuth;
+    GoogleAuth = window.gapi.auth2.getAuthInstance();
+    GoogleAuth.disconnect();
+  }
   return function(dispatch) {
     Dexie.delete(localStorage.getItem('user'));
     localStorage.clear();
