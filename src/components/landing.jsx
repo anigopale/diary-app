@@ -8,6 +8,7 @@ import {
   Icon
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import GoogleSignin from './google-signin';
 
 export default class Landing extends Component {
   render() {
@@ -43,9 +44,9 @@ export default class Landing extends Component {
                    </Link>
                  </Button.Group>
                  <Divider hidden />
-                 <Button color='google plus'>
-                   <Icon name='google plus' /> Login with Google
-                  </Button>
+                 <GoogleSignin />
+                  <div class="g-signin2" data-onsuccess={this.onSignIn} onsuccess={this.onSignIn} data-theme="dark"></div>
+
                </Segment>
 
             </Container>

@@ -7,6 +7,7 @@ import selected_data from './selected-data-reducer';
 import calendar from './calendar-reducer';
 import date_filter from './date-filter-reducer';
 import search_term from './search-term-reducer';
+import google_auth from './google-auth-reducer';
 
 const rootReducer = combineReducers({
   user,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   selected_data,
   calendar,
   date_filter,
-  search_term
+  search_term,
+  google_auth
 });
 
 export default rootReducer;
