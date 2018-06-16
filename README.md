@@ -2,10 +2,25 @@
 
 A password protected offline diary for storing personal entries with a calendar view for filtering entries. The app allows users to login with their google accounts.
 
-### Prerequisites
+## Demo
+[diary app]()
+
+## Contents
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Features](#features)
+- [Screenshots](#screenshots)
+    - [Landing page](#landing page)
+    - [Calendar view](#calendar view)
+    - [Editor](#editor)
+    - [Settings](#settings)
+- [Usage](#usage)
+- [License](#license)
+
+## Prerequisites
 * [npm](https://www.npmjs.com/get-npm)
 
-### installation
+## Installation
 Clone the app repository and install necessary packages.
 
 ```
@@ -14,7 +29,7 @@ $ cd diary-app
 $ npm install
 ```
 
-### Features
+## Features
 * password protected
 * allows Google login
 * markdown support
@@ -23,25 +38,25 @@ $ npm install
 * stores encrypted entries in browser based Database(IndexedDB)
 * calendar export (.ics format)
 
-### Screenshots
+## Screenshots
 
-#### Landing page
+### Landing page
 ![landing page](assets/img/landing_page.png)
 
-#### Calendar view
+### Calendar view
 ![calendar view](assets/img/calendar_view.png)
 
-#### Editor
+### Editor
 ![editor](assets/img/editor.png)
 
-#### Settings
+### Settings
 ![app settings](assets/img/app_settings.png)
 
-### Usage
+## Usage
 Run the start script and navigate to ``localhost:3000`` in your browser.
 ```
-npm run start
+$ npm run start
 ```
 
-### License
+## License
 [MIT](LICENSE)
