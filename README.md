@@ -3,7 +3,7 @@
 A password protected offline diary for storing personal entries with a calendar view for filtering entries. The app allows users to login with their google accounts.
 
 ## Demo
-[diary app]()
+[diary app](https://ani-diary.herokuapp.com)
 
 ## Contents
 - [Prerequisites](#prerequisites)
